@@ -1,0 +1,33 @@
+{
+  "title": "V2.1.1\\Location",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 39
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "ON_STREET",
+        "PARKING_GARAGE",
+        "UNDERGROUND_GARAGE",
+        "PARKING_LOT",
+        "OTHER",
+        "UNKNOWN"
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "address"
+  ]
+}

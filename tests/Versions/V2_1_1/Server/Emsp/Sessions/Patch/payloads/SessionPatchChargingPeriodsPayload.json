@@ -1,0 +1,30 @@
+{
+  "charging_periods": [
+    {
+      "start_date_time": "2015-06-29T22:39:09Z",
+      "dimensions": [
+        {
+          "type": "ENERGY",
+          "volume": 123
+        },
+        {
+          "type": "FLAT",
+          "volume": 213
+        }
+      ]
+    },
+    {
+      "start_date_time": "2015-07-30T22:39:09Z",
+      "dimensions": [
+        {
+          "type": "MAX_CURRENT",
+          "volume": 5
+        },
+        {
+          "type": "PARKING_TIME",
+          "volume": 3
+        }
+      ]
+    }
+  ]
+}
