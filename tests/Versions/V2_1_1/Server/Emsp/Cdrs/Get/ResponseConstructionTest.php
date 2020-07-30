@@ -101,7 +101,7 @@ class ResponseConstructionTest extends TestCase
             [
                 'start_date_time' => (new DateTime('2015-06-29T21:39:09Z'))->format(DateTime::ISO8601),
                 'dimensions' => [
-                    [
+                    'TIME' => [
                         'type' => 'TIME',
                         'volume' => 1.973
                     ]
