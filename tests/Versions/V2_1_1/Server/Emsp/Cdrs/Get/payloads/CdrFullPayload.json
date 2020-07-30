@@ -1,0 +1,124 @@
+{
+  "id": "12345",
+  "start_date_time": "2015-06-29T21:39:09Z",
+  "stop_date_time": "2015-06-29T23:37:32Z",
+  "auth_id": "DE8ACC12E46L89",
+  "auth_method": "WHITELIST",
+  "location": {
+    "id": "LOC1",
+    "type": "ON_STREET",
+    "name": "Gent Zuid",
+    "address": "F.Rooseveltlaan 3A",
+    "city": "Gent",
+    "postal_code": "9000",
+    "country": "BEL",
+    "coordinates": {
+      "latitude": "3.729944",
+      "longitude": "51.047599"
+    },
+    "evses": [
+      {
+        "uid": "3256",
+        "evse_id": "BE-BEC-E041503003",
+        "status": "AVAILABLE",
+        "connectors": [
+          {
+            "id": "1",
+            "standard": "IEC_62196_T2",
+            "format": "SOCKET",
+            "power_type": "AC_1_PHASE",
+            "voltage": 230,
+            "amperage": 64,
+            "tariff_id": "11",
+            "last_updated": "2015-06-29T21:39:01Z"
+          }
+        ],
+        "last_updated": "2015-06-29T21:39:01Z"
+      }
+    ],
+    "last_updated": "2015-06-29T21:39:01Z"
+  },
+  "currency": "EUR",
+  "tariffs": [
+    {
+      "id": "12",
+      "currency": "EUR",
+      "tariff_alt_text": [
+        {
+          "language": "FR",
+          "text": "Chere"
+        }
+      ],
+      "tariff_alt_url": "https://google.com",
+      "elements": [
+        {
+          "price_components": [
+            {
+              "type": "TIME",
+              "price": 2.00,
+              "step_size": 300
+            }
+          ],
+          "restrictions": {
+            "start_time": "09:00",
+            "end_time": "20:00",
+            "start_date": "2020-01-09",
+            "end_date": "2020-02-09",
+            "min_kwh": 5.5,
+            "max_kwh": 10.4,
+            "min_power": 3.3,
+            "max_power": 5.6,
+            "min_duration": 1,
+            "max_duration": 2,
+            "day_of_week": [
+              "MONDAY",
+              "TUESDAY",
+              "WEDNESDAY"
+            ]
+          }
+        },
+        {
+          "price_components": [
+            {
+              "type": "TIME",
+              "price": 2.00,
+              "step_size": 300
+            }
+          ]
+        }
+      ],
+      "last_updated": "2015-02-02T14:15:01Z"
+    },
+    {
+      "id": "12",
+      "currency": "EUR",
+      "elements": [
+        {
+          "price_components": [
+            {
+              "type": "TIME",
+              "price": 2.00,
+              "step_size": 300
+            }
+          ]
+        }
+      ],
+      "last_updated": "2015-02-02T14:15:01Z"
+    }
+  ],
+  "charging_periods": [
+    {
+      "start_date_time": "2015-06-29T21:39:09Z",
+      "dimensions": [
+        {
+          "type": "TIME",
+          "volume": 1.973
+        }
+      ]
+    }
+  ],
+  "total_cost": 4.00,
+  "total_energy": 15.342,
+  "total_time": 1.973,
+  "last_updated": "2015-06-29T22:01:13Z"
+}
