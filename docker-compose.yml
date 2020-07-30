@@ -1,0 +1,9 @@
+version: '3'
+services:
+  chargemap_emp_ocpi_test:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    container_name: chargemap_emp_ocpi_test
+    volumes:
+      - .:/opt/project
