@@ -29,7 +29,7 @@ class EVSE implements JsonSerializable
     private ?string $physicalReference;
 
     /** @var DisplayText[] */
-    private array $directions;
+    private array $directions = [];
 
     /** @var ParkingRestriction[] */
     private array $parkingRestrictions = [];
