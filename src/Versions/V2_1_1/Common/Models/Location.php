@@ -3,8 +3,9 @@
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
 use DateTime;
+use JsonSerializable;
 
-class Location
+class Location implements JsonSerializable
 {
     private string $id;
 
