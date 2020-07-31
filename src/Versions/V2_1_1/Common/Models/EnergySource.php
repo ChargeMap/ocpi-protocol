@@ -16,6 +16,16 @@ class EnergySource implements JsonSerializable
         $this->percentage = $percentage;
     }
 
+    public function getSource(): EnergySourceCategory
+    {
+        return $this->source;
+    }
+
+    public function getPercentage(): float
+    {
+        return $this->percentage;
+    }
+
     public function jsonSerialize()
     {
         return [

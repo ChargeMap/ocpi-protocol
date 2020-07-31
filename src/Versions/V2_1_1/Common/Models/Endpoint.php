@@ -16,6 +16,16 @@ class Endpoint implements JsonSerializable
         $this->url = $url;
     }
 
+    public function getModuleId(): ModuleId
+    {
+        return $this->moduleId;
+    }
+
+    public function getUrl(): string
+    {
+        return $this->url;
+    }
+
     public function jsonSerialize(): array
     {
         return [
