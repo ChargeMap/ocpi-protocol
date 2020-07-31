@@ -16,6 +16,16 @@ class EnvironmentalImpact implements JsonSerializable
         $this->amount = $amount;
     }
 
+    public function getSource(): EnvironmentalImpactCategory
+    {
+        return $this->source;
+    }
+
+    public function getAmount(): float
+    {
+        return $this->amount;
+    }
+
     public function jsonSerialize(): array
     {
         return [

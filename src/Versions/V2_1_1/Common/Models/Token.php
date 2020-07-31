@@ -38,6 +38,51 @@ class Token implements JsonSerializable
         $this->lastUpdated = $lastUpdated;
     }
 
+    public function getUid(): string
+    {
+        return $this->uid;
+    }
+
+    public function getType(): TokenType
+    {
+        return $this->type;
+    }
+
+    public function getAuthId(): string
+    {
+        return $this->authId;
+    }
+
+    public function getVisualNumber(): ?string
+    {
+        return $this->visualNumber;
+    }
+
+    public function getIssuer(): string
+    {
+        return $this->issuer;
+    }
+
+    public function isValid(): bool
+    {
+        return $this->valid;
+    }
+
+    public function getWhiteList(): WhiteList
+    {
+        return $this->whiteList;
+    }
+
+    public function getLanguage(): ?string
+    {
+        return $this->language;
+    }
+
+    public function getLastUpdated(): DateTime
+    {
+        return $this->lastUpdated;
+    }
+
     public function jsonSerialize(): array
     {
         $return = [

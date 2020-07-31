@@ -17,6 +17,16 @@ class ExceptionalPeriod implements JsonSerializable
         $this->periodEnd = $periodEnd;
     }
 
+    public function getPeriodBegin(): DateTime
+    {
+        return $this->periodBegin;
+    }
+
+    public function getPeriodEnd(): DateTime
+    {
+        return $this->periodEnd;
+    }
+
     public function jsonSerialize()
     {
         return [
