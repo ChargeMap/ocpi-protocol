@@ -63,9 +63,13 @@ class PartialSession implements JsonSerializable
         $this->lastUpdated = $lastUpdated;
     }
 
-    public function addChargingPeriod(ChargingPeriod $period): void
+    public function addChargingPeriod(ChargingPeriod $period): self
     {
+        if ($this->chargingPeriods === null) {
+            $this->chargingPeriods = [];
+        }
         $this->chargingPeriods[] = $period;
+        return $this;
     }
 
     public function getId(): ?string
@@ -113,7 +117,7 @@ class PartialSession implements JsonSerializable
         return $this->meterId;
     }
 
-    public function getChargingPeriods(): array
+    public function getChargingPeriods(): ?array
     {
         return $this->chargingPeriods;
     }
@@ -158,7 +162,7 @@ class PartialSession implements JsonSerializable
         if ($this->currency !== null) {
             $return['currency'] = $this->currency;
         }
-        if (!empty($this->chargingPeriods)) {
+        if ($this->chargingPeriods !== null) {
             $return['charging_periods'] = $this->chargingPeriods;
         }
         if ($this->status !== null) {
