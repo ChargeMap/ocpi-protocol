@@ -11,7 +11,7 @@ class OcpiEmspLocationGetRequest extends OcpiBaseRequest
 {
     use LocationRequestTrait;
 
-    protected function __construct(RequestInterface $request, LocationRequestParams $params)
+    public function __construct(RequestInterface $request, LocationRequestParams $params)
     {
         parent::__construct($request);
         $this->dispatchParams($params);

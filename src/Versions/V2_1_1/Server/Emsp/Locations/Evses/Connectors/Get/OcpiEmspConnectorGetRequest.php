@@ -11,7 +11,7 @@ class OcpiEmspConnectorGetRequest extends OcpiEmspEvseGetRequest
 {
     protected string $connectorId;
 
-    protected function __construct(RequestInterface $request, LocationRequestParams $params)
+    public function __construct(RequestInterface $request, LocationRequestParams $params)
     {
         parent::__construct($request, $params);
         $connectorId = $params->getConnectorId();

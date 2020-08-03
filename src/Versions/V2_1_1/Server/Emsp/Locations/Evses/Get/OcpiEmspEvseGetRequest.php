@@ -11,7 +11,7 @@ class OcpiEmspEvseGetRequest extends OcpiEmspLocationGetRequest
 {
     protected string $evseUid;
 
-    protected function __construct(RequestInterface $request, LocationRequestParams $params)
+    public function __construct(RequestInterface $request, LocationRequestParams $params)
     {
         parent::__construct($request, $params);
         $evseUid = $params->getEvseUid();
