@@ -150,6 +150,9 @@ class PartialSession implements JsonSerializable
         if ($this->location !== null) {
             $return['location'] = $this->location;
         }
+        if ($this->currency !== null) {
+            $return['currency'] = $this->currency;
+        }
         if (!empty($this->chargingPeriods)) {
             $return['charging_periods'] = $this->chargingPeriods;
         }

@@ -124,6 +124,7 @@ class Session implements JsonSerializable
             'auth_id' => $this->authId,
             'auth_method' => $this->authMethod,
             'location' => $this->location,
+            'currency' => $this->currency,
             'charging_periods' => $this->chargingPeriods,
             'status' => $this->status,
             'last_updated' => $this->lastUpdated->format(DateTime::ISO8601)
