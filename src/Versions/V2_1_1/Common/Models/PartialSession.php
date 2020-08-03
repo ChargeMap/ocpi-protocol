@@ -26,7 +26,7 @@ class PartialSession implements JsonSerializable
     private ?string $currency;
 
     /** @var ChargingPeriod[]|null */
-    private ?array $chargingPeriods;
+    private ?array $chargingPeriods = null;
 
     private ?float $totalCost;
 

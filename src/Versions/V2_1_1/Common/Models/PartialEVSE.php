@@ -15,13 +15,13 @@ class PartialEVSE implements JsonSerializable
     private ?EVSEStatus $status;
 
     /** @var StatusSchedule[]|null */
-    private ?array $statusSchedule;
+    private ?array $statusSchedule = null;
 
     /** @var Capability[]|null */
-    private ?array $capabilities;
+    private ?array $capabilities = null;
 
     /** @var Connector[]|null */
-    private ?array $connectors;
+    private ?array $connectors = null;
 
     private ?string $floorLevel;
 
@@ -30,13 +30,13 @@ class PartialEVSE implements JsonSerializable
     private ?string $physicalReference;
 
     /** @var DisplayText[]|null */
-    private ?array $directions;
+    private ?array $directions = null;
 
     /** @var ParkingRestriction[]|null */
-    private ?array $parkingRestrictions;
+    private ?array $parkingRestrictions = null;
 
     /** @var Image[]|null */
-    private ?array $images;
+    private ?array $images = null;
 
     private ?DateTime $lastUpdated;
 
@@ -109,25 +109,25 @@ class PartialEVSE implements JsonSerializable
     }
 
     /**
-     * @return StatusSchedule[]
+     * @return StatusSchedule[]|null
      */
-    public function getStatusSchedule(): array
+    public function getStatusSchedule(): ?array
     {
         return $this->statusSchedule;
     }
 
     /**
-     * @return Capability[]
+     * @return Capability[]|null
      */
-    public function getCapabilities(): array
+    public function getCapabilities(): ?array
     {
         return $this->capabilities;
     }
 
     /**
-     * @return Connector[]
+     * @return Connector[]|null
      */
-    public function getConnectors(): array
+    public function getConnectors(): ?array
     {
         return $this->connectors;
     }
@@ -148,25 +148,25 @@ class PartialEVSE implements JsonSerializable
     }
 
     /**
-     * @return DisplayText[]
+     * @return DisplayText[]|null
      */
-    public function getDirections(): array
+    public function getDirections(): ?array
     {
         return $this->directions;
     }
 
     /**
-     * @return ParkingRestriction[]
+     * @return ParkingRestriction[]|null
      */
-    public function getParkingRestrictions(): array
+    public function getParkingRestrictions(): ?array
     {
         return $this->parkingRestrictions;
     }
 
     /**
-     * @return Image[]
+     * @return Image[]|null
      */
-    public function getImages(): array
+    public function getImages(): ?array
     {
         return $this->images;
     }

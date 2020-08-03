@@ -24,13 +24,13 @@ class PartialLocation implements JsonSerializable
     private ?GeoLocation $coordinates;
 
     /** @var AdditionalGeoLocation[]|null */
-    private ?array $relatedLocations;
+    private ?array $relatedLocations = null;
 
     /** @var EVSE[]|null */
-    private ?array $evses;
+    private ?array $evses = null;
 
     /** @var DisplayText[]|null */
-    private ?array $directions;
+    private ?array $directions = null;
 
     private ?BusinessDetails $operator;
 
@@ -39,7 +39,7 @@ class PartialLocation implements JsonSerializable
     private ?BusinessDetails $owner;
 
     /** @var Facility[]|null */
-    private ?array $facilities;
+    private ?array $facilities = null;
 
     private ?string $timeZone;
 
@@ -48,7 +48,7 @@ class PartialLocation implements JsonSerializable
     private ?bool $chargingWhenClosed;
 
     /** @var Image[]|null */
-    private ?array $images;
+    private ?array $images = null;
 
     private ?EnergyMix $energyMix;
 
