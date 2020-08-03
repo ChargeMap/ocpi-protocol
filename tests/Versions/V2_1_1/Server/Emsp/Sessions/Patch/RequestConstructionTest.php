@@ -25,6 +25,7 @@ class RequestConstructionTest extends TestCase
         $this->assertEquals(new DateTime('2015-06-29T22:39:09Z'), $session->getStartDate());
         $this->assertEquals('DE8ACC12E46L89', $session->getAuthId());
         $this->assertEquals('AUTH_REQUEST', $session->getAuthMethod()->getValue());
+        $this->assertCount(2, $session->getChargingPeriods());
         $location = $session->getLocation();
         $this->assertEquals('LOC1', $location->getId());
         $this->assertEquals('ON_STREET', $location->getLocationType()->getValue());

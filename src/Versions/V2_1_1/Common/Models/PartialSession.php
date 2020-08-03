@@ -65,9 +65,6 @@ class PartialSession implements JsonSerializable
 
     public function addChargingPeriod(ChargingPeriod $period): self
     {
-        if ($this->chargingPeriods === null) {
-            $this->chargingPeriods = [];
-        }
         $this->chargingPeriods[] = $period;
         return $this;
     }
