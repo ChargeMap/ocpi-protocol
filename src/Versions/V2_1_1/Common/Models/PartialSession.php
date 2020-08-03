@@ -103,6 +103,11 @@ class PartialSession implements JsonSerializable
         return $this->location;
     }
 
+    public function getCurrency(): ?string
+    {
+        return $this->currency;
+    }
+
     public function getMeterId(): ?string
     {
         return $this->meterId;
