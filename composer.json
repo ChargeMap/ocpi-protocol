@@ -1,8 +1,8 @@
 {
     "name": "chargemap/ocpi-protocol",
-    "description": "Library to handle OCPI calls",
+    "description": "Library to handle OCPI. Compatible with PSRs. Uses JsonSchema to validate payloads.",
     "type": "library",
-    "license": "proprietary",
+    "license": "MIT",
     "require": {
         "ext-json": "*",
         "psr/log": "^1.1",
@@ -19,6 +19,11 @@
         "http-interop/http-factory-guzzle": "^1.0",
         "guzzlehttp/psr7": "^1.6"
     },
+    "suggest": {
+        "php-http/guzzle6-adapter": "^2.0",
+        "http-interop/http-factory-guzzle": "^1.0",
+        "guzzlehttp/psr7": "^1.6"
+    },
     "autoload": {
         "psr-4": {
             "Chargemap\\OCPI\\": "src/"
@@ -29,4 +34,4 @@
             "Tests\\Chargemap\\OCPI\\": "tests/"
         }
     }
-}
+},
