@@ -1,0 +1,219 @@
+{
+  "id": "LOC1",
+  "type": "ON_STREET",
+  "name": "Gent Zuid",
+  "address": "F.Rooseveltlaan 3A",
+  "city": "Gent",
+  "postal_code": "9000",
+  "country": "BEL",
+  "coordinates": {
+    "latitude": "3.729944",
+    "longitude": "51.047599"
+  },
+  "related_locations": [
+    {
+      "latitude": "3.729944",
+      "longitude": "51.047599",
+      "name": {
+        "language": "en",
+        "text": "Nice place"
+      }
+    },
+    {
+      "latitude": "3.729944",
+      "longitude": "51.047599",
+      "name": {
+        "language": "en",
+        "text": "Beautiful place"
+      }
+    }
+  ],
+  "evses": [
+    {
+      "uid": "3256",
+      "evse_id": "BE-BEC-E041503001",
+      "status": "AVAILABLE",
+      "status_schedule": [
+        {
+          "period_begin": "2014-06-24T00:00:00Z",
+          "period_end": "2014-06-25T00:00:00Z",
+          "status": "INOPERATIVE"
+        },
+        {
+          "period_begin": "2014-06-25T00:00:00Z",
+          "period_end": "2014-06-26T00:00:00Z",
+          "status": "OUTOFORDER"
+        }
+      ],
+      "directions": [
+        {
+          "language": "en",
+          "text": "Turn left"
+        },
+        {
+          "language": "en",
+          "text": "Turn right"
+        }
+      ],
+      "parking_restrictions": [
+        "PLUGGED",
+        "CUSTOMERS"
+      ],
+      "coordinates": {
+        "latitude": "3.729944",
+        "longitude": "51.047599"
+      },
+      "capabilities": [
+        "RESERVABLE"
+      ],
+      "connectors": [
+        {
+          "id": "1",
+          "standard": "IEC_62196_T2",
+          "format": "CABLE",
+          "power_type": "AC_3_PHASE",
+          "voltage": 220,
+          "amperage": 16,
+          "tariff_id": "11",
+          "last_updated": "2015-03-16T10:10:02Z"
+        },
+        {
+          "id": "2",
+          "standard": "IEC_62196_T2",
+          "format": "SOCKET",
+          "power_type": "AC_3_PHASE",
+          "voltage": 220,
+          "amperage": 16,
+          "tariff_id": "11",
+          "last_updated": "2015-03-18T08:12:01Z"
+        }
+      ],
+      "physical_reference": "1",
+      "floor_level": "-1",
+      "images": [
+        {
+          "url": "https://google.com",
+          "thumbnail": "https://google.com",
+          "category": "NETWORK",
+          "type": "jpeg",
+          "width": 455,
+          "height": 343
+        },
+        {
+          "url": "https://google.com",
+          "thumbnail": "https://google.com",
+          "category": "CHARGER",
+          "type": "png",
+          "width": 234,
+          "height": 456
+        }
+      ],
+      "last_updated": "2015-06-28T08:12:01Z"
+    },
+    {
+      "uid": "3257",
+      "evse_id": "BE-BEC-E041503002",
+      "status": "RESERVED",
+      "capabilities": [
+        "RESERVABLE"
+      ],
+      "connectors": [
+        {
+          "id": "1",
+          "standard": "IEC_62196_T2",
+          "format": "SOCKET",
+          "power_type": "AC_3_PHASE",
+          "voltage": 220,
+          "amperage": 16,
+          "tariff_id": "12",
+          "last_updated": "2015-03-18T08:12:01Z"
+        }
+      ],
+      "physical_reference": "2",
+      "floor_level": "-2",
+      "last_updated": "2015-06-29T20:39:09Z"
+    }
+  ],
+  "directions": [
+    {
+      "language": "en",
+      "text": "Right"
+    },
+    {
+      "language": "en",
+      "text": "Up"
+    }
+  ],
+  "operator": {
+    "name": "BeCharged"
+  },
+  "suboperator": {
+    "name": "BeCharged2"
+  },
+  "owner": {
+    "name": "BeCharged3"
+  },
+  "facilities": [
+    "HOTEL",
+    "MUSEUM"
+  ],
+  "time_zone": "Europe/Paris",
+  "opening_times": {
+    "twentyfourseven": true,
+    "exceptional_openings": [
+      {
+        "period_begin": "2015-06-29T22:39:09Z",
+        "period_end": "2015-06-29T22:39:09Z"
+      }
+    ],
+    "exceptional_closings": [
+      {
+        "period_begin": "2015-06-29T22:39:09Z",
+        "period_end": "2015-06-29T22:39:09Z"
+      }
+    ]
+  },
+  "charging_when_closed": false,
+  "images": [
+    {
+      "url": "https://google.com",
+      "thumbnail": "https://google.com",
+      "category": "NETWORK",
+      "type": "jpeg",
+      "width": 455,
+      "height": 343
+    },
+    {
+      "url": "https://google.com",
+      "thumbnail": "https://google.com",
+      "category": "CHARGER",
+      "type": "png",
+      "width": 234,
+      "height": 456
+    }
+  ],
+  "energy_mix": {
+    "is_green_energy": true,
+    "energy_sources": [
+      {
+        "source": "NUCLEAR",
+        "percentage": 50
+      },
+      {
+        "source": "GAS",
+        "percentage": 50
+      }
+    ],
+    "environ_impact": [
+      {
+        "source": "NUCLEAR_WASTE",
+        "amount": 500
+      },
+      {
+        "source": "CARBON_DIOXIDE",
+        "amount": 1000
+      }
+    ]
+  },
+  "last_updated": "2015-06-29T20:39:09Z"
+}
