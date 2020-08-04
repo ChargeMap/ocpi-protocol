@@ -9,7 +9,7 @@ class Hours implements JsonSerializable
     /** @var RegularHours[] */
     private array $regularHours = [];
 
-    private bool $twentyForSeven;
+    private bool $twentyFourSeven;
 
     /** @var ExceptionalPeriod[] */
     private array $exceptionalOpenings = [];
@@ -17,14 +17,14 @@ class Hours implements JsonSerializable
     /** @var ExceptionalPeriod[] */
     private array $exceptionalClosings = [];
 
-    public function __construct(bool $twentyForSeven)
+    public function __construct(bool $twentyFourSeven)
     {
-        $this->twentyForSeven = $twentyForSeven;
+        $this->twentyFourSeven = $twentyFourSeven;
     }
 
     public function addHours(RegularHours $hours): self
     {
-        if (!$this->twentyForSeven) {
+        if (!$this->twentyFourSeven) {
             $this->regularHours[] = $hours;
         }
 
@@ -51,9 +51,9 @@ class Hours implements JsonSerializable
         return $this->regularHours;
     }
 
-    public function isTwentyForSeven(): bool
+    public function isTwentyFourSeven(): bool
     {
-        return $this->twentyForSeven;
+        return $this->twentyFourSeven;
     }
 
     /**
@@ -79,8 +79,8 @@ class Hours implements JsonSerializable
             'exceptional_closings' => $this->exceptionalClosings
         ];
 
-        if ($this->twentyForSeven) {
-            $return['twentyforseven'] = $this->twentyForSeven;
+        if ($this->twentyFourSeven) {
+            $return['twentyfourseven'] = $this->twentyFourSeven;
         } else {
             $return['regular_hours'] = $this->regularHours;
         }
