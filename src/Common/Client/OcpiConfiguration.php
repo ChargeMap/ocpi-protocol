@@ -4,15 +4,15 @@ namespace Chargemap\OCPI\Common\Client;
 
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
-use League\Uri\Uri;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\UriInterface;
 use Psr\Log\LoggerInterface;
 
 class OcpiConfiguration
 {
-    protected ?Uri $versionEndpoint;
+    protected ?UriInterface $versionEndpoint;
 
     /** @var OcpiEndpoint[] */
     protected array $endpoints;
@@ -60,7 +60,7 @@ class OcpiConfiguration
         return $this->loggerInterface;
     }
 
-    public function getVersionEndpoint(): ?Uri
+    public function getVersionEndpoint(): ?UriInterface
     {
         return $this->versionEndpoint;
     }
@@ -100,7 +100,7 @@ class OcpiConfiguration
         return $this;
     }
 
-    public function withVersionEndpoint(Uri $versionEndpoint): self
+    public function withVersionEndpoint(UriInterface $versionEndpoint): self
     {
         $this->versionEndpoint = $versionEndpoint;
         return $this;

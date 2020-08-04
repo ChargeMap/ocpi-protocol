@@ -2,7 +2,7 @@
 
 namespace Chargemap\OCPI\Common\Client;
 
-use League\Uri\Uri;
+use Psr\Http\Message\UriInterface;
 
 class OcpiEndpoint
 {
@@ -10,9 +10,9 @@ class OcpiEndpoint
 
     private OcpiModule $module;
 
-    private Uri $uri;
+    private UriInterface $uri;
 
-    public function __construct(OcpiVersion $protocolVersion, OcpiModule $module, Uri $url)
+    public function __construct(OcpiVersion $protocolVersion, OcpiModule $module, UriInterface $url)
     {
         $this->protocolVersion = $protocolVersion;
         $this->module = $module;
@@ -29,7 +29,7 @@ class OcpiEndpoint
         return $this->module;
     }
 
-    public function getUri(): Uri
+    public function getUri(): UriInterface
     {
         return $this->uri;
     }

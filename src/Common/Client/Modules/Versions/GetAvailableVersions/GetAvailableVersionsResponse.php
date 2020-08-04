@@ -3,7 +3,7 @@
 namespace Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions;
 
 use Chargemap\OCPI\Common\Client\OcpiVersion;
-use League\Uri\Uri;
+use Http\Discovery\Psr17FactoryDiscovery;
 use Psr\Http\Message\ResponseInterface;
 
 class GetAvailableVersionsResponse
@@ -18,7 +18,7 @@ class GetAvailableVersionsResponse
         foreach ($responseAsJson as $item) {
             $response->versions[] = new VersionEndpoint(
                 OcpiVersion::fromVersionNumber($item->version),
-                Uri::createFromString($item->url)
+                Psr17FactoryDiscovery::findUrlFactory()->createUri($item->url)
             );
         }
 
