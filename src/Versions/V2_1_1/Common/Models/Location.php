@@ -261,7 +261,7 @@ class Location implements JsonSerializable
             'directions' => $this->directions,
             'facilities' => $this->facilities,
             'images' => $this->images,
-            'last_updates' => $this->lastUpdated->format(DateTime::ISO8601),
+            'last_updated' => $this->lastUpdated->format(DateTime::ISO8601),
         ];
 
         if ($this->name !== null) {
