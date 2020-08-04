@@ -3,15 +3,15 @@
 namespace Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions;
 
 use Chargemap\OCPI\Common\Client\OcpiVersion;
-use League\Uri\Uri;
+use Psr\Http\Message\UriInterface;
 
 class VersionEndpoint
 {
     private OcpiVersion $version;
 
-    private Uri $uri;
+    private UriInterface $uri;
 
-    public function __construct(OcpiVersion $version, Uri $uri)
+    public function __construct(OcpiVersion $version, UriInterface $uri)
     {
         $this->version = $version;
         $this->uri = $uri;
@@ -22,7 +22,7 @@ class VersionEndpoint
         return $this->version;
     }
 
-    public function getUri(): Uri
+    public function getUri(): UriInterface
     {
         return $this->uri;
     }

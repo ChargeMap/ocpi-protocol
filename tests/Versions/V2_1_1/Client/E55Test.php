@@ -8,7 +8,7 @@ use Chargemap\OCPI\Common\Client\OcpiEndpoint;
 use Chargemap\OCPI\Common\Client\OcpiModule;
 use Chargemap\OCPI\Common\Client\OcpiVersion;
 use Chargemap\OCPI\Versions\V2_1_1\Client\Locations\GetListing\GetLocationsListingRequest;
-use League\Uri\Uri;
+use GuzzleHttp\Psr7\Uri;
 use PHPUnit\Framework\TestCase;
 
 class E55Test extends TestCase
@@ -19,7 +19,7 @@ class E55Test extends TestCase
 
         $ocpiClient = new OcpiClient(
             (new OcpiConfiguration('TOCMP-OCPI-TOKEN-c7007237-94c4-4bd5-82ff-4af30a44233d'))
-                ->withEndpoint(new OcpiEndpoint(OcpiVersion::V2_1_1(), OcpiModule::LOCATIONS(), Uri::createFromString('https://testing.e55c.com/ocpi/cpo/2.1.1/locations')))
+                ->withEndpoint(new OcpiEndpoint(OcpiVersion::V2_1_1(), OcpiModule::LOCATIONS(), new Uri('https://testing.e55c.com/ocpi/cpo/2.1.1/locations')))
         );
 
         $ocpiListingRequest = (new GetLocationsListingRequest())->withLimit(10)->withOffset(0);
