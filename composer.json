@@ -20,9 +20,9 @@
         "guzzlehttp/psr7": "^1.6"
     },
     "suggest": {
-        "php-http/guzzle6-adapter": "^2.0",
-        "http-interop/http-factory-guzzle": "^1.0",
-        "guzzlehttp/psr7": "^1.6"
+        "php-http/guzzle6-adapter": "HTTP Client",
+        "http-interop/http-factory-guzzle": "Request, Response, Stream factories.",
+        "guzzlehttp/psr7": "Url factory"
     },
     "autoload": {
         "psr-4": {
