@@ -70,7 +70,7 @@ class RequestConstructionTest extends TestCase
         $this->assertNull($location->getId());
         $this->assertNotEmpty($location->getOpeningTimes()->getExceptionalOpenings());
         $this->assertNotEmpty($location->getOpeningTimes()->getExceptionalClosings());
-        $this->assertTrue($location->getOpeningTimes()->isTwentyForSeven());
+        $this->assertTrue($location->getOpeningTimes()->isTwentyFourSeven());
         $this->assertNotNull($location->getChargingWhenClosed());
         $this->assertFalse($location->getChargingWhenClosed());
     }

@@ -16,7 +16,7 @@ class RequestConstructionTest extends TestCase
             ->createRequest('PUT', 'randomUrl')
             ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
             ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(
-                file_get_contents(__DIR__ . '/payloads/SessionPutPayload.json')
+                file_get_contents(__DIR__ . '/payloads/SessionPutFullPayload.json')
             ));
 
         $request = new OcpiEmspSessionPutRequest($requestInterface, 'FR', 'TNM', '101');
