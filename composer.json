@@ -1,5 +1,5 @@
 {
-    "name": "chargemap-emp/ocpi-protocol",
+    "name": "chargemap/ocpi-protocol",
     "description": "Library to handle OCPI calls",
     "type": "library",
     "license": "proprietary",
