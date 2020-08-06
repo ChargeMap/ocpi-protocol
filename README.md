@@ -14,13 +14,17 @@ So it is quite easy to construct valid listing response or get the next request.
 ```php
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Put\OcpiEmspSessionPutRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Put\OcpiEmspSessionPutResponse;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
-$sessionPutRequest = new OcpiEmspSessionPutRequest($httpRequest, $countryCode, $partyId, $sessionId);
+/** @var RequestInterface $httpRequest */
+$sessionPutRequest = new OcpiEmspSessionPutRequest($httpRequest, 'NL', 'TNM', '101');
 $session = $sessionPutRequest->getSession();
 
 // Some code...
 
 $sessionPutResponse = new OcpiEmspSessionPutResponse($session);
+/** @var ResponseInterface $response */
 $response = $sessionPutResponse->getResponseInterface();
 ```
 Each request and response class correspond to an eMSP interface route.
@@ -35,7 +39,10 @@ It can be converted to PSR-7 compatible response instance using *getResponseInte
 ```php
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Tokens\Get\OcpiEmspTokenGetRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Tokens\Get\OcpiEmspTokenGetResponse;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
+/** @var RequestInterface $httpRequest */
 $tokenGetRequest = new OcpiEmspTokenGetRequest($httpRequest);
 $tokens = [];
 $tokenCount = 0;
@@ -43,10 +50,11 @@ $tokenCount = 0;
 //Fetch tokens from database...
 
 $tokenGetResponse = new OcpiEmspTokenGetResponse($tokenGetRequest, $tokenCount, count($tokens));
-foreach ($items as $item) {
-    $tokenGetResponse->addToken($item);
+foreach ($tokens as $token) {
+    $tokenGetResponse->addToken($token);
 }
 // X-Total-Count, X-Limit and Link headers are already set in $response
+/** @var ResponseInterface $response */
 $response = $tokenGetResponse->getResponseInterface();
 ```
 
@@ -62,11 +70,6 @@ use Chargemap\OCPI\Common\Client\OcpiEndpoint;
 use Chargemap\OCPI\Common\Client\OcpiVersion;
 use Chargemap\OCPI\Common\Client\OcpiModule;
 
-$getLocationListingRequest = (new GetLocationsListingRequest())
-                                ->withOffset(0)
-                                ->withLimit(100)
-                                ->withDateFrom($dateFrom)
-                                ->withDateTo($dateTo);
 $ocpiClient = new OcpiClient(
             (new OcpiConfiguration($supervisorAuthString))
                 ->withEndpoint(new OcpiEndpoint(
@@ -75,6 +78,11 @@ $ocpiClient = new OcpiClient(
                     new Uri('ocpi/cpo2.0/locations'))
                 )
         );
+$getLocationListingRequest = (new GetLocationsListingRequest())
+                                ->withOffset(0)
+                                ->withLimit(100)
+                                ->withDateFrom($dateFrom)
+                                ->withDateTo($dateTo);
 $locationResponse = $ocpiClient->V2_1_1()->locations()->getListing($getLocationListingRequest);
 /** @var Location[] $locations */
 $locations = $locationResponse->getLocations();
@@ -119,9 +127,11 @@ It ensures correct HTTP error code as well as OCPI status code.
 
 ```php
 use Chargemap\OCPI\Common\Server\Errors\OcpiGenericClientError;
+use Psr\Http\Message\ResponseInterface;
 
 $error = new OcpiGenericClientError('Client error');
 //Correct payload and HTTP error code is already set
+/** @var ResponseInterface $response */
 $response = $error->getResponseInterface();
 ```
 
