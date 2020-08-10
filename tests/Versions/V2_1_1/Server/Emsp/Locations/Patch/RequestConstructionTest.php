@@ -2,9 +2,9 @@
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch;
 
+use Chargemap\OCPI\Versions\V2_1_1\Common\Models\GeoLocation;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch\OcpiEmspLocationPatchRequest;
-use Chargemap\OCPI\Versions\V2_1_1\Common\Models\GeoLocation;
 use DateTime;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 

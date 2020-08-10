@@ -10,7 +10,9 @@ use Chargemap\OCPI\Versions\V2_1_1\Client\V2_1_1;
 class OcpiClient
 {
     private OcpiConfiguration $configuration;
+
     private Versions $versions;
+
     private Locations $locations;
 
     public function __construct(OcpiConfiguration $configuration)

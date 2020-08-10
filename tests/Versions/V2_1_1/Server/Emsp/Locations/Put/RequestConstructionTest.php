@@ -2,9 +2,9 @@
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Put;
 
+use Chargemap\OCPI\Versions\V2_1_1\Common\Models\GeoLocation;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Put\OcpiEmspLocationPutRequest;
-use Chargemap\OCPI\Versions\V2_1_1\Common\Models\GeoLocation;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 
 class RequestConstructionTest extends OcpiTestCase

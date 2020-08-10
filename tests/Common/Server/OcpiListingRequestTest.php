@@ -14,7 +14,7 @@ class OcpiListingRequestTest extends TestCase
     {
         return [
             ['-1', '0'],
-            ['0','-1'],
+            ['0', '-1'],
         ];
     }
 
@@ -30,8 +30,8 @@ class OcpiListingRequestTest extends TestCase
         $reflectedClass = new ReflectionClass(OcpiListingRequest::class);
         $constructor = $reflectedClass->getConstructor();
         $serverRequestInterface = Psr17FactoryDiscovery::findServerRequestFactory()
-            ->createServerRequest('GET', 'randomUrl' )
-            ->withQueryParams( [ 'offset' => $offset, 'limit'=> $limit])
+            ->createServerRequest('GET', 'randomUrl')
+            ->withQueryParams(['offset' => $offset, 'limit' => $limit])
             ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=');
         $this->expectException(InvalidArgumentException::class);
         $constructor->invoke($mock, $serverRequestInterface);

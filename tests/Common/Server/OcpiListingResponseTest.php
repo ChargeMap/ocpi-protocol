@@ -6,7 +6,6 @@ use Chargemap\OCPI\Common\Server\OcpiListingResponse;
 use Chargemap\OCPI\Common\Server\StatusCodes\OcpiSuccessHttpCode;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Tokens\Get\OcpiEmspTokenGetRequest;
 use Http\Discovery\Psr17FactoryDiscovery;
-use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 
@@ -17,7 +16,7 @@ class OcpiListingResponseTest extends OcpiTestCase
         $request = new OcpiEmspTokenGetRequest(
             Psr17FactoryDiscovery::findServerRequestFactory()
                 ->createServerRequest('GET', '/test')
-                ->withQueryParams( [ 'offset' => '10', 'limit'=> '10'])
+                ->withQueryParams(['offset' => '10', 'limit' => '10'])
                 ->withHeader('Authorization', 'Token PLOPPLOP')
         );
 

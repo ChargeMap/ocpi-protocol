@@ -3,8 +3,6 @@
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Credentials\Post;
 
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Credentials\Post\OcpiEmspCredentialsPostRequest;
-use Http\Discovery\Psr17FactoryDiscovery;
-use PHPUnit\Framework\TestCase;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 
 class RequestConstructionTest extends OcpiTestCase

@@ -3,9 +3,9 @@
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Versions\Details\Get;
 
 use Chargemap\OCPI\Common\Server\Models\VersionNumber;
-use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Versions\Details\Get\OcpiEmspVersionDetailsGetResponse;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Endpoint;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\ModuleId;
+use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Versions\Details\Get\OcpiEmspVersionDetailsGetResponse;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 

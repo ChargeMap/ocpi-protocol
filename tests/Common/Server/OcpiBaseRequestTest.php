@@ -7,7 +7,6 @@ use Chargemap\OCPI\Common\Server\Errors\OcpiNotEnoughInformationClientError;
 use Chargemap\OCPI\Common\Server\OcpiBaseRequest;
 use Chargemap\OCPI\Common\Server\OcpiUpdateRequest;
 use Http\Discovery\Psr17FactoryDiscovery;
-use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 

@@ -10,13 +10,6 @@ trait LocationRequestTrait
 
     protected string $locationId;
 
-    protected function dispatchParams(LocationRequestParams $params)
-    {
-        $this->countryCode = $params->getCountryCode();
-        $this->partyId = $params->getPartyId();
-        $this->locationId = $params->getLocationId();
-    }
-
     public function getCountryCode(): string
     {
         return $this->countryCode;
@@ -30,5 +23,12 @@ trait LocationRequestTrait
     public function getLocationId(): string
     {
         return $this->locationId;
+    }
+
+    protected function dispatchParams(LocationRequestParams $params)
+    {
+        $this->countryCode = $params->getCountryCode();
+        $this->partyId = $params->getPartyId();
+        $this->locationId = $params->getLocationId();
     }
 }

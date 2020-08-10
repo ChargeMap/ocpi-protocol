@@ -3,8 +3,8 @@
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Tokens\Post;
 
 use Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError;
-use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Tokens\Post\OcpiEmspTokenPostRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\TokenType;
+use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Tokens\Post\OcpiEmspTokenPostRequest;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 
@@ -14,7 +14,7 @@ class RequestConstructionTest extends OcpiTestCase
     {
         $serverRequestInterface = Psr17FactoryDiscovery::findServerRequestFactory()
             ->createServerRequest('GET', 'randomUrl')
-            ->withQueryParams([ 'type' => 'rfid'])
+            ->withQueryParams(['type' => 'rfid'])
             ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
             ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(
                 file_get_contents(__DIR__ . '/payloads/TokenPostPayload.json')
@@ -29,7 +29,7 @@ class RequestConstructionTest extends OcpiTestCase
     {
         $serverRequestInterface = Psr17FactoryDiscovery::findServerRequestFactory()
             ->createServerRequest('GET', 'randomUrl')
-            ->withQueryParams([ 'type' => 'other'])
+            ->withQueryParams(['type' => 'other'])
             ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
             ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(
                 file_get_contents(__DIR__ . '/payloads/TokenPostPayload.json')
@@ -55,7 +55,7 @@ class RequestConstructionTest extends OcpiTestCase
 
         $serverRequestInterface = Psr17FactoryDiscovery::findServerRequestFactory()
             ->createServerRequest('GET', 'randomUrl')
-            ->withQueryParams([ 'type' => 'rfid'])
+            ->withQueryParams(['type' => 'rfid'])
             ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
             ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(
                 file_get_contents(__DIR__ . '/payloads/ErrorInPayload.json')

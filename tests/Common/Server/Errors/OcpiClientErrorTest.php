@@ -16,12 +16,12 @@ class OcpiClientErrorTest extends TestCase
         $errorResponse = $clientError->getResponseInterface();
         $errorResponseBody = json_decode($errorResponse->getBody()->getContents(), false);
 
-        $this->assertSame( OcpiClientErrorStatusCode::ERROR_CLIENT, $errorResponseBody->status_code);
-        $this->assertSame( 'Message!', $errorResponseBody->status_message );
+        $this->assertSame(OcpiClientErrorStatusCode::ERROR_CLIENT, $errorResponseBody->status_code);
+        $this->assertSame('Message!', $errorResponseBody->status_message);
 
         // As timestamp is generated live, with need to check that it was generated about at the same time,
         // but not exact time as the test may take a little while to run
-        $this->assertTrue( (new DateTime($errorResponseBody->timestamp))->getTimestamp() - (new DateTime())->getTimestamp() < 1 );
+        $this->assertTrue((new DateTime($errorResponseBody->timestamp))->getTimestamp() - (new DateTime())->getTimestamp() < 1);
 
         $this->assertSame(OcpiErrorHttpCode::HTTP_BAD_REQUEST, $errorResponse->getStatusCode());
     }
