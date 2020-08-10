@@ -25,7 +25,7 @@ class ResponseConstructionTest extends TestCase
         return new OcpiEmspTokenGetRequest(
             Psr17FactoryDiscovery::findServerRequestFactory()->createServerRequest('GET', '/test?offset=10&limit=10')
                 ->withQueryParams(['offset' => '10', 'limit' => '10'])
-                ->withHeader('Authorization', 'Token PLOPPLOP')
+                ->withHeader('Authorization', 'Token 01234567-0123-0123-0123-0123456789ab')
         );
     }
 

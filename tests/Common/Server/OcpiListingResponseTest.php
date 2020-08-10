@@ -17,7 +17,7 @@ class OcpiListingResponseTest extends OcpiTestCase
             Psr17FactoryDiscovery::findServerRequestFactory()
                 ->createServerRequest('GET', '/test')
                 ->withQueryParams(['offset' => '10', 'limit' => '10'])
-                ->withHeader('Authorization', 'Token PLOPPLOP')
+                ->withHeader('Authorization', 'Token 01234567-0123-0123-0123-0123456789ab')
         );
 
         $mock = $this->getMockBuilder(OcpiListingResponse::class)
