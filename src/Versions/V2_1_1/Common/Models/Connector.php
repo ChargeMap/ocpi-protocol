@@ -3,6 +3,7 @@
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
 
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use DateTime;
 use JsonSerializable;
 
@@ -105,7 +106,7 @@ class Connector implements JsonSerializable
             'power_type' => $this->powerType,
             'voltage' => $this->voltage,
             'amperage' => $this->amperage,
-            'last_updated' => $this->lastUpdated === null ? null : $this->lastUpdated->format(DateTime::ISO8601)
+            'last_updated' => DateTimeFormatter::format($this->lastUpdated),
         ];
 
         if ($this->tariffId !== null) {

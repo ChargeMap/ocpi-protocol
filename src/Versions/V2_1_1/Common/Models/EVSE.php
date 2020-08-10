@@ -2,6 +2,7 @@
 
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use DateTime;
 use JsonSerializable;
 
@@ -190,14 +191,32 @@ class EVSE implements JsonSerializable
         $return = [
             'uid' => $this->uid,
             'status' => $this->status,
-            'status_schedule' => $this->statusSchedule,
-            'capabilities' => $this->capabilities,
-            'connectors' => $this->connectors,
-            'directions' => $this->directions,
-            'parking_restrictions' => $this->parkingRestrictions,
-            'images' => $this->images,
-            'last_updated' => $this->lastUpdated->format(DateTime::ISO8601),
+            'last_updated' => DateTimeFormatter::format($this->lastUpdated),
         ];
+
+        if (count($this->connectors) > 0) {
+            $return['connectors'] = $this->connectors;
+        }
+
+        if (count($this->statusSchedule) > 0) {
+            $return['status_schedule'] = $this->statusSchedule;
+        }
+
+        if (count($this->capabilities) > 0) {
+            $return['capabilities'] = $this->capabilities;
+        }
+
+        if (count($this->directions) > 0) {
+            $return['directions'] = $this->directions;
+        }
+
+        if (count($this->parkingRestrictions) > 0) {
+            $return['parking_restrictions'] = $this->parkingRestrictions;
+        }
+
+        if (count($this->images) > 0) {
+            $return['images'] = $this->images;
+        }
 
         if ($this->evseId !== null) {
             $return['evse_id'] = $this->evseId;

@@ -2,6 +2,7 @@
 
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use DateTime;
 use JsonSerializable;
 
@@ -19,7 +20,13 @@ class ChargingPeriod implements JsonSerializable
 
     public function addDimension(CdrDimension $dimension): void
     {
-        $this->cdrDimensions[$dimension->getType()->getValue()] = $dimension;
+        $previousIndex = $this->searchCdrDimension($dimension->getType());
+
+        if ($previousIndex !== null) {
+            $this->cdrDimensions[$previousIndex] = $dimension;
+        } else {
+            $this->cdrDimensions[] = $dimension;
+        }
     }
 
     public function getStartDate(): DateTime
@@ -35,14 +42,31 @@ class ChargingPeriod implements JsonSerializable
 
     public function getCdrDimension(CdrDimensionType $dimensionType): ?CdrDimension
     {
-        return array_key_exists($dimensionType->getValue(), $this->cdrDimensions) ? $this->cdrDimensions[$dimensionType->getValue()] : null;
+        $index = $this->searchCdrDimension($dimensionType);
+
+        if ($index === null) {
+            return null;
+        }
+
+        return $this->cdrDimensions[$index];
     }
 
     public function jsonSerialize(): array
     {
         return [
-            'start_date_time' => $this->startDate->format(DateTime::ISO8601),
+            'start_date_time' => DateTimeFormatter::format($this->startDate),
             'dimensions' => $this->cdrDimensions
         ];
+    }
+
+    private function searchCdrDimension(CdrDimensionType $dimensionType): ?int
+    {
+        foreach ($this->cdrDimensions as $index => $cdrDimension) {
+            if ($cdrDimension->getType()->equals($dimensionType)) {
+                return $index;
+            }
+        }
+
+        return null;
     }
 }

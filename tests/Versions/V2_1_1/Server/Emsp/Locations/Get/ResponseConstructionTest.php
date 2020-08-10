@@ -3,6 +3,7 @@
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Get;
 
 use Chargemap\OCPI\Common\Server\StatusCodes\OcpiSuccessHttpCode;
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\LocationFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Get\OcpiEmspLocationGetResponse;
 use DateTime;
@@ -108,6 +109,6 @@ class ResponseConstructionTest extends TestCase
                 ]
             ]
         ], $jsonLocation['energy_mix']);
-        $this->assertEquals((new DateTime('2015-06-29T20:39:09Z'))->format(DateTime::ISO8601), $jsonLocation['last_updated']);
+        $this->assertEquals(DateTimeFormatter::format(new DateTime('2015-06-29T20:39:09Z')), $jsonLocation['last_updated']);
     }
 }

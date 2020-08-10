@@ -3,8 +3,9 @@
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Cdrs\Get;
 
 use Chargemap\OCPI\Common\Server\StatusCodes\OcpiSuccessHttpCode;
-use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\CdrFactory;
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Cdrs\Get\OcpiEmspCdrGetResponse;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\CdrFactory;
 use DateTime;
 use Http\Discovery\Psr17FactoryDiscovery;
 use PHPUnit\Framework\TestCase;
@@ -19,14 +20,14 @@ class ResponseConstructionTest extends TestCase
         $response = new OcpiEmspCdrGetResponse($cdr);
 
         $responseInterface = $response->getResponseInterface($responseFactory, $streamFactory);
-        $this->assertEquals(OcpiSuccessHttpCode::HTTP_OK, $responseInterface->getStatusCode());
+        $this->assertSame(OcpiSuccessHttpCode::HTTP_OK, $responseInterface->getStatusCode());
         $jsonCdr = json_decode($responseInterface->getBody()->getContents(), true)['data'];
-        $this->assertEquals('12345', $jsonCdr['id']);
-        $this->assertEquals((new DateTime('2015-06-29T21:39:09Z'))->format(DateTime::ISO8601), $jsonCdr['start_date_time']);
-        $this->assertEquals((new DateTime('2015-06-29T23:37:32Z'))->format(DateTime::ISO8601), $jsonCdr['stop_date_time']);
-        $this->assertEquals('DE8ACC12E46L89', $jsonCdr['auth_id']);
-        $this->assertEquals('WHITELIST', $jsonCdr['auth_method']);
-        $this->assertEquals('EUR', $jsonCdr['currency']);
+        $this->assertSame('12345', $jsonCdr['id']);
+        $this->assertSame(DateTimeFormatter::format(new DateTime('2015-06-29T21:39:09Z')), $jsonCdr['start_date_time']);
+        $this->assertSame(DateTimeFormatter::format(new DateTime('2015-06-29T23:37:32Z')), $jsonCdr['stop_date_time']);
+        $this->assertSame('DE8ACC12E46L89', $jsonCdr['auth_id']);
+        $this->assertSame('WHITELIST', $jsonCdr['auth_method']);
+        $this->assertSame('EUR', $jsonCdr['currency']);
         $this->assertEquals([
             [
                 'id' => '12',
@@ -71,12 +72,11 @@ class ResponseConstructionTest extends TestCase
                                 'type' => 'TIME',
                                 'price' => 2.00,
                                 'step_size' => 300
-                            ]
+                            ],
                         ],
-                        'restrictions' => null,
-                    ]
+                    ],
                 ],
-                'last_updated' => (new DateTime('2015-02-02T14:15:01Z'))->format(DateTime::ISO8601),
+                'last_updated' => DateTimeFormatter::format(new DateTime('2015-02-02T14:15:01Z')),
             ],
             [
                 'id' => '12',
@@ -88,29 +88,27 @@ class ResponseConstructionTest extends TestCase
                                 'type' => 'TIME',
                                 'price' => 2.00,
                                 'step_size' => 300
-                            ]
+                            ],
                         ],
-                        'restrictions' => null,
-                    ]
+                    ],
                 ],
-                'last_updated' => (new DateTime('2015-02-02T14:15:01Z'))->format(DateTime::ISO8601),
-                'tariff_alt_text' => []
+                'last_updated' => DateTimeFormatter::format(new DateTime('2015-02-02T14:15:01Z')),
             ]
         ], $jsonCdr['tariffs']);
         $this->assertEquals([
             [
-                'start_date_time' => (new DateTime('2015-06-29T21:39:09Z'))->format(DateTime::ISO8601),
+                'start_date_time' => DateTimeFormatter::format(new DateTime('2015-06-29T21:39:09Z')),
                 'dimensions' => [
-                    'TIME' => [
+                    [
                         'type' => 'TIME',
                         'volume' => 1.973
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ], $jsonCdr['charging_periods']);
-        $this->assertEquals(4, $jsonCdr['total_cost']);
-        $this->assertEquals(15.342, $jsonCdr['total_energy']);
-        $this->assertEquals(1.973, $jsonCdr['total_time']);
-        $this->assertEquals((new DateTime('2015-06-29T22:01:13Z'))->format(DateTime::ISO8601), $jsonCdr['last_updated']);
+        $this->assertSame(4, $jsonCdr['total_cost']);
+        $this->assertSame(15.342, $jsonCdr['total_energy']);
+        $this->assertSame(1.973, $jsonCdr['total_time']);
+        $this->assertEquals(DateTimeFormatter::format(new DateTime('2015-06-29T22:01:13Z')), $jsonCdr['last_updated']);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use DateTime;
 use JsonSerializable;
 
@@ -92,10 +93,13 @@ class Tariff implements JsonSerializable
         $return = [
             'id' => $this->id,
             'currency' => $this->currency,
-            'tariff_alt_text' => $this->tariffAltText,
             'elements' => $this->elements,
-            'last_updated' => $this->lastUpdated->format(DateTime::ISO8601),
+            'last_updated' => DateTimeFormatter::format($this->lastUpdated),
         ];
+
+        if (count($this->tariffAltText) > 0) {
+            $return['tariff_alt_text'] = $this->tariffAltText;
+        }
 
         if ($this->tariffAltUrl !== null) {
             $return['tariff_alt_url'] = $this->tariffAltUrl;

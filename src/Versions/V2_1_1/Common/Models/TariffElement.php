@@ -38,9 +38,14 @@ class TariffElement implements JsonSerializable
 
     public function jsonSerialize(): array
     {
-        return [
+        $return = [
             'price_components' => $this->priceComponents,
-            'restrictions' => $this->restrictions,
         ];
+
+        if ($this->restrictions !== null) {
+            $return['restrictions'] = $this->restrictions;
+        }
+
+        return $return;
     }
 }
