@@ -18,9 +18,9 @@ class AbstractFeatures
     {
         $endpointUrl = $this->ocpiConfiguration->getEndpoint($request->getModule(), $request->getVersion())->getUri();
 
-        $requestInterface = $request->getRequestInterface($this->ocpiConfiguration->getRequestFactory(), $this->ocpiConfiguration->getStreamFactory());
+        $serverRequestInterface = $request->getServerRequestInterface($this->ocpiConfiguration->getServerRequestFactory(), $this->ocpiConfiguration->getStreamFactory());
 
-        $uri = $requestInterface->getUri()
+        $uri = $serverRequestInterface->getUri()
             ->withPath($endpointUrl->getPath())
             ->withScheme($endpointUrl->getScheme())
             ->withHost($endpointUrl->getHost());
@@ -33,8 +33,8 @@ class AbstractFeatures
             $uri = $uri->withUserInfo($endpointUrl->getUserInfo());
         }
 
-        $requestInterface = $requestInterface->withUri($uri)->withHeader('Authorization', 'Token ' . $this->ocpiConfiguration->getToken());
-        return $this->ocpiConfiguration->getHttpClient()->sendRequest($requestInterface);
+        $serverRequestInterface = $serverRequestInterface->withUri($uri)->withHeader('Authorization', 'Token ' . $this->ocpiConfiguration->getToken());
+        return $this->ocpiConfiguration->getHttpClient()->sendRequest($serverRequestInterface);
     }
 
 }

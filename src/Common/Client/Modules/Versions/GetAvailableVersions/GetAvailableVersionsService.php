@@ -8,8 +8,8 @@ class GetAvailableVersionsService extends AbstractFeatures
 {
     public function get(GetAvailableVersionsRequest $request): GetAvailableVersionsResponse
     {
-        $requestInterface = $request->getRequestInterface($this->ocpiConfiguration->getRequestFactory());
-        $responseInterface = $this->ocpiConfiguration->getHttpClient()->sendRequest($requestInterface);
+        $serverRequestInterface = $request->getServerRequestInterface($this->ocpiConfiguration->getServerRequestFactory());
+        $responseInterface = $this->ocpiConfiguration->getHttpClient()->sendRequest($serverRequestInterface);
         return GetAvailableVersionsResponse::fromResponseInterface($responseInterface);
     }
 }

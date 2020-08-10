@@ -2,21 +2,21 @@
 
 namespace Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses;
 
+use Chargemap\OCPI\Common\Server\Errors\OcpiNotEnoughInformationClientError;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\OcpiLocationUpdateRequest;
-use InvalidArgumentException;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 abstract class BaseEvseUpdateRequest extends OcpiLocationUpdateRequest
 {
     protected string $evseUid;
 
-    protected function __construct(RequestInterface $request, LocationRequestParams $params)
+    protected function __construct(ServerRequestInterface $request, LocationRequestParams $params)
     {
         parent::__construct($request, $params);
         $evseUid = $params->getEvseUid();
         if ($evseUid === null) {
-            throw new InvalidArgumentException('EVSE UID should be provided.');
+            throw new OcpiNotEnoughInformationClientError('EVSE UID should be provided.');
         }
         $this->evseUid = $evseUid;
     }

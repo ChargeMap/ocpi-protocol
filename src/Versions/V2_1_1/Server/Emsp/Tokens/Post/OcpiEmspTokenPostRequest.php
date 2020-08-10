@@ -6,7 +6,7 @@ use Chargemap\OCPI\Common\Server\OcpiUpdateRequest;
 use Chargemap\OCPI\Common\Utils\PayloadValidation;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\LocationReferences;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\TokenType;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class OcpiEmspTokenPostRequest extends OcpiUpdateRequest
 {
@@ -16,12 +16,12 @@ class OcpiEmspTokenPostRequest extends OcpiUpdateRequest
 
     private ?LocationReferences $locationReferences;
 
-    public function __construct(RequestInterface $request, string $tokenUid)
+    public function __construct(ServerRequestInterface $request, string $tokenUid)
     {
         parent::__construct($request);
 
-        $params = [];
-        parse_str($request->getUri()->getQuery(), $params);
+        $params = $request->getQueryParams();
+
         $tokenType = array_key_exists('type', $params) ? new TokenType(mb_strtoupper($params['type'])) : TokenType::RFID();
 
         if (!empty($request->getBody()->__toString())) {

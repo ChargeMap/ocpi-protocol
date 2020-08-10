@@ -16,14 +16,14 @@ class ResponseConstructionTest extends TestCase
     private function getRequest(): OcpiEmspTokenGetRequest
     {
         return new OcpiEmspTokenGetRequest(
-            Psr17FactoryDiscovery::findRequestFactory()->createRequest('GET', '/test?offset=10&limit=10')
+            Psr17FactoryDiscovery::findServerRequestFactory()->createServerRequest('GET', '/test?offset=10&limit=10')
+                ->withQueryParams([ 'offset' => '10', 'limit' => '10'])
                 ->withHeader('Authorization', 'Token PLOPPLOP')
         );
     }
 
     public function testShouldReturnEmptyArrayWithoutTokens(): void
     {
-
         $response = new OcpiEmspTokenGetResponse(self::getRequest(), 0, 10);
         $responseInterface = $response->getResponseInterface();
         $this->assertEquals([], json_decode($responseInterface->getBody()->getContents(), true)['data']);

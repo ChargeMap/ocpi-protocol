@@ -6,7 +6,7 @@ use Chargemap\OCPI\Common\Server\OcpiListingRequest;
 use DateTime;
 use Exception;
 use InvalidArgumentException;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class OcpiEmspTokenGetRequest extends OcpiListingRequest
 {
@@ -15,15 +15,16 @@ class OcpiEmspTokenGetRequest extends OcpiListingRequest
     private ?DateTime $dateTo;
 
     /**
-     * @param RequestInterface $request
+     * @param ServerRequestInterface $request
      * @throws Exception
      */
-    public function __construct(RequestInterface $request)
+    public function __construct(ServerRequestInterface $request)
     {
-        $params = [];
-        parse_str($request->getUri()->getQuery(), $params);
+        $params = $request->getQueryParams();
+
         $dateFrom = array_key_exists('date_from', $params) ? new DateTime($params['date_from']) : null;
         $dateTo = array_key_exists('date_to', $params) ? new DateTime($params['date_to']) : null;
+
         if ($dateFrom !== null && $dateTo !== null && $dateFrom > $dateTo) {
             throw new InvalidArgumentException(sprintf('Date ranges (from %s to %s) are not valid.', $dateFrom->format(DATE_ATOM), $dateTo->format(DATE_ATOM)));
         }

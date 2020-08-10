@@ -13,15 +13,15 @@ class OcpiListingRequestTest extends TestCase
     public function invalidParamsProvider(): array
     {
         return [
-            [-1, 0],
-            [0, -1]
+            ['-1', '0'],
+            ['0','-1'],
         ];
     }
 
     /**
      * @dataProvider invalidParamsProvider
      */
-    public function testShouldFailWithInvalidHeaders(int $offset, int $limit): void
+    public function testShouldFailWithInvalidHeaders(string $offset, string $limit): void
     {
         /** @var OcpiListingRequest $mock */
         $mock = $this->getMockBuilder(OcpiListingRequest::class)
@@ -29,11 +29,12 @@ class OcpiListingRequestTest extends TestCase
             ->getMockForAbstractClass();
         $reflectedClass = new ReflectionClass(OcpiListingRequest::class);
         $constructor = $reflectedClass->getConstructor();
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('GET', 'randomUrl?offset=' . $offset . '&limit=' . $limit)
+        $serverRequestInterface = Psr17FactoryDiscovery::findServerRequestFactory()
+            ->createServerRequest('GET', 'randomUrl' )
+            ->withQueryParams( [ 'offset' => $offset, 'limit'=> $limit])
             ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=');
         $this->expectException(InvalidArgumentException::class);
-        $constructor->invoke($mock, $requestInterface);
+        $constructor->invoke($mock, $serverRequestInterface);
     }
 
     public function validParamsProvider(): array
@@ -70,11 +71,11 @@ class OcpiListingRequestTest extends TestCase
                 $url = $url . 'offset=' . $offset;
             }
         }
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('GET', $url)
+        $serverRequestInterface = Psr17FactoryDiscovery::findServerRequestFactory()
+            ->createServerRequest('GET', $url)
             ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=');
 
-        $constructor->invoke($mock, $requestInterface);
+        $constructor->invoke($mock, $serverRequestInterface);
         $this->assertEquals($offset, $mock->getOffset());
         $this->assertEquals($limit, $mock->getLimit());
     }

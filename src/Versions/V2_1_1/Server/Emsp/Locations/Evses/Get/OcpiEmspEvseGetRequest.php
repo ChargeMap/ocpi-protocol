@@ -5,13 +5,13 @@ namespace Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Get;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Get\OcpiEmspLocationGetRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
 use InvalidArgumentException;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class OcpiEmspEvseGetRequest extends OcpiEmspLocationGetRequest
 {
     protected string $evseUid;
 
-    public function __construct(RequestInterface $request, LocationRequestParams $params)
+    public function __construct(ServerRequestInterface $request, LocationRequestParams $params)
     {
         parent::__construct($request, $params);
         $evseUid = $params->getEvseUid();

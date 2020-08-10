@@ -5,19 +5,15 @@ namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Credentials\Post;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Credentials\Post\OcpiEmspCredentialsPostRequest;
 use Http\Discovery\Psr17FactoryDiscovery;
 use PHPUnit\Framework\TestCase;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
-class RequestConstructionTest extends TestCase
+class RequestConstructionTest extends OcpiTestCase
 {
     public function testShouldConstructWithPayload(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('POST', 'randomUrl')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
-            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(
-                file_get_contents(__DIR__ . '/payloads/CredentialsPayload.json')
-            ));
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/CredentialsPayload.json');
 
-        $request = new OcpiEmspCredentialsPostRequest($requestInterface);
+        $request = new OcpiEmspCredentialsPostRequest($serverRequestInterface);
 
         $credentials = $request->getCredentials();
         $this->assertSame('https://example.com/ocpi/cpo/versions/', $credentials->getUrl());

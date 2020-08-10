@@ -6,21 +6,15 @@ use Chargemap\OCPI\Common\Server\Errors\OcpiNotEnoughInformationClientError;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Connectors\Put\OcpiEmspConnectorPutRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
 use DateTime;
-use Http\Discovery\Psr17FactoryDiscovery;
-use PHPUnit\Framework\TestCase;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
-class RequestConstructionTest extends TestCase
+class RequestConstructionTest extends OcpiTestCase
 {
     public function testShouldConstructRequestWithFullPayload(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('PUT', 'randomUrl')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
-            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(
-                file_get_contents(__DIR__ . '/payloads/ConnectorPutFullPayload.json')
-            ));
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/ConnectorPutFullPayload.json');
 
-        $request = new OcpiEmspConnectorPutRequest($requestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
+        $request = new OcpiEmspConnectorPutRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
         $this->assertEquals('FR', $request->getCountryCode());
         $this->assertEquals('TNM', $request->getPartyId());
         $this->assertEquals('LOC1', $request->getLocationId());
@@ -41,14 +35,9 @@ class RequestConstructionTest extends TestCase
 
     public function testShouldConstructWithMinPayload(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('PUT', 'randomUrl')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
-            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(
-                file_get_contents(__DIR__ . '/payloads/ConnectorPutMinPayload.json')
-            ));
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/ConnectorPutMinPayload.json');
 
-        $request = new OcpiEmspConnectorPutRequest($requestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
+        $request = new OcpiEmspConnectorPutRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
         $connector = $request->getConnector();
         $this->assertNull($connector->getTariffId());
         $this->assertNull($connector->getTermsAndConditions());
@@ -56,13 +45,9 @@ class RequestConstructionTest extends TestCase
 
     public function testShouldFailWithoutConnectorId(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('PUT', 'randomUrl')
-            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(
-                file_get_contents(__DIR__ . '/payloads/ConnectorPutFullPayload.json')
-            ));
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/ConnectorPutFullPayload.json');
 
         $this->expectException(OcpiNotEnoughInformationClientError::class);
-        new OcpiEmspConnectorPutRequest($requestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256'));
+        new OcpiEmspConnectorPutRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256'));
     }
 }

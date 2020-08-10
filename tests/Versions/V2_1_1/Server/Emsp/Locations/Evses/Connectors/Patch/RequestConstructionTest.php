@@ -7,20 +7,15 @@ use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Connectors\Patch\
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
 use DateTime;
 use Http\Discovery\Psr17FactoryDiscovery;
-use PHPUnit\Framework\TestCase;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
-class RequestConstructionTest extends TestCase
+class RequestConstructionTest extends OcpiTestCase
 {
     public function testShouldConstructRequestWithFullPayload(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('PATCH', 'randomUrl')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
-            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(
-                file_get_contents(__DIR__ . '/payloads/ConnectorPatchFullPayload.json')
-            ));
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/ConnectorPatchFullPayload.json');
 
-        $request = new OcpiEmspConnectorPatchRequest($requestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
+        $request = new OcpiEmspConnectorPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
         $this->assertEquals('FR', $request->getCountryCode());
         $this->assertEquals('TNM', $request->getPartyId());
         $this->assertEquals('LOC1', $request->getLocationId());
@@ -41,14 +36,9 @@ class RequestConstructionTest extends TestCase
 
     public function testShouldConstructWithLastUpdated()
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('PATCH', 'randomUrl')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
-            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(
-                file_get_contents(__DIR__ . '/payloads/ConnectorPatchLastUpdatedPayload.json')
-            ));
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/ConnectorPatchLastUpdatedPayload.json');
 
-        $request = new OcpiEmspConnectorPatchRequest($requestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
+        $request = new OcpiEmspConnectorPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
         $partialConnector = $request->getPartialConnector();
         $this->assertNull($partialConnector->getId());
         $this->assertNull($partialConnector->getVoltage());
@@ -73,11 +63,10 @@ class RequestConstructionTest extends TestCase
      */
     public function testShouldFailWithInvalidPayload(string $payload): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('PATCH', 'randomUrl')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
-            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream($payload));
+        $serverRequestInterface = $this->createServerRequestInterface();
+        $serverRequestInterface = $serverRequestInterface->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream($payload));
+
         $this->expectException(OcpiInvalidPayloadClientError::class);
-        new OcpiEmspConnectorPatchRequest($requestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
+        new OcpiEmspConnectorPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
     }
 }

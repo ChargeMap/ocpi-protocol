@@ -3,7 +3,7 @@
 namespace Chargemap\OCPI\Common\Server;
 
 use InvalidArgumentException;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 abstract class OcpiListingRequest extends OcpiBaseRequest
 {
@@ -11,9 +11,10 @@ abstract class OcpiListingRequest extends OcpiBaseRequest
 
     private ?int $limit;
 
-    public function __construct(RequestInterface $request)
+    public function __construct(ServerRequestInterface $request)
     {
-        parse_str($request->getUri()->getQuery(), $params);
+        $params = $request->getQueryParams();
+
         $offset = array_key_exists('offset', $params) ? (int)$params['offset'] : null;
         $limit = array_key_exists('limit', $params) ? (int)$params['limit'] : null;
 

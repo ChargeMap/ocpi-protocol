@@ -4,21 +4,15 @@ namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Patch;
 
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Patch\OcpiEmspSessionPatchRequest;
 use DateTime;
-use Http\Discovery\Psr17FactoryDiscovery;
-use PHPUnit\Framework\TestCase;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
-class RequestConstructionTest extends TestCase
+class RequestConstructionTest extends OcpiTestCase
 {
     public function testShouldConstructRequestWithFullPayload(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('PATCH', 'randomUrl')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
-            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(
-                file_get_contents(__DIR__ . '/payloads/SessionPatchFullPayload.json')
-            ));
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/SessionPatchFullPayload.json');
 
-        $request = new OcpiEmspSessionPatchRequest($requestInterface, 'FR', 'TNM', '101');
+        $request = new OcpiEmspSessionPatchRequest($serverRequestInterface, 'FR', 'TNM', '101');
         $session = $request->getPartialSession();
 
         $this->assertEquals('101', $session->getId());
@@ -34,14 +28,9 @@ class RequestConstructionTest extends TestCase
 
     public function testShouldConstructWithLocation(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('PATCH', 'randomUrl')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
-            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(
-                file_get_contents(__DIR__ . '/payloads/SessionPatchLocationPayload.json')
-            ));
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/SessionPatchLocationPayload.json');
 
-        $request = new OcpiEmspSessionPatchRequest($requestInterface, 'FR', 'TNM', '101');
+        $request = new OcpiEmspSessionPatchRequest($serverRequestInterface, 'FR', 'TNM', '101');
         $session = $request->getPartialSession();
         $this->assertNull($session->getId());
         $this->assertNotNull($session->getLocation());
@@ -49,14 +38,9 @@ class RequestConstructionTest extends TestCase
 
     public function testShouldConstructWithChargingPeriodsPayload(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('PATCH', 'randomUrl')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
-            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(
-                file_get_contents(__DIR__ . '/payloads/SessionPatchChargingPeriodsPayload.json')
-            ));
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/SessionPatchChargingPeriodsPayload.json');
 
-        $request = new OcpiEmspSessionPatchRequest($requestInterface, 'FR', 'TNM', '101');
+        $request = new OcpiEmspSessionPatchRequest($serverRequestInterface, 'FR', 'TNM', '101');
         $session = $request->getPartialSession();
         $this->assertNull($session->getId());
         $this->assertNull($session->getId());

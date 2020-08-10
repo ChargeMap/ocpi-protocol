@@ -7,14 +7,14 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\PartialEVSEFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\PartialEVSE;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\BaseEvseUpdateRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use UnexpectedValueException;
 
 class OcpiEmspEvsePatchRequest extends BaseEvseUpdateRequest
 {
     private PartialEVSE $partialEvse;
 
-    public function __construct(RequestInterface $request, LocationRequestParams $params)
+    public function __construct(ServerRequestInterface $request, LocationRequestParams $params)
     {
         parent::__construct($request, $params);
         PayloadValidation::coerce('Versions/V2_1_1/Server/Emsp/Schemas/evsePatch.schema.json', $this->jsonBody);

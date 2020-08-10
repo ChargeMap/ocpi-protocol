@@ -9,8 +9,9 @@ use Chargemap\OCPI\Common\Server\OcpiUpdateRequest;
 use Http\Discovery\Psr17FactoryDiscovery;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
-class OcpiBaseRequestTest extends TestCase
+class OcpiBaseRequestTest extends OcpiTestCase
 {
     public function invalidTokenProvider(): array
     {
@@ -33,12 +34,13 @@ class OcpiBaseRequestTest extends TestCase
             ->getMockForAbstractClass();
         $reflectedClass = new ReflectionClass(OcpiBaseRequest::class);
         $constructor = $reflectedClass->getConstructor();
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('GET', 'randomUrl')
+
+        $serverRequestInterface = Psr17FactoryDiscovery::findServerRequestFactory()
+            ->createServerRequest('GET', 'randomUrl')
             ->withHeader('Authorization', $token);
 
         $this->expectException(OcpiInvalidTokenClientError::class);
-        $constructor->invoke($mock, $requestInterface);
+        $constructor->invoke($mock, $serverRequestInterface);
     }
 
     public function testShouldThrowNotEnoughParametersExceptionWithoutAuthorizationHeader(): void
@@ -49,11 +51,12 @@ class OcpiBaseRequestTest extends TestCase
             ->getMockForAbstractClass();
         $reflectedClass = new ReflectionClass(OcpiBaseRequest::class);
         $constructor = $reflectedClass->getConstructor();
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('GET', 'randomUrl');
+
+        $serverRequestInterface = Psr17FactoryDiscovery::findServerRequestFactory()
+            ->createServerRequest('GET', 'randomUrl');
 
         $this->expectException(OcpiNotEnoughInformationClientError::class);
-        $constructor->invoke($mock, $requestInterface);
+        $constructor->invoke($mock, $serverRequestInterface);
     }
 
     public function testShouldReturnCorrectToken(): void
@@ -64,11 +67,9 @@ class OcpiBaseRequestTest extends TestCase
             ->getMockForAbstractClass();
         $reflectedClass = new ReflectionClass(OcpiBaseRequest::class);
         $constructor = $reflectedClass->getConstructor();
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('GET', 'randomUrl')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=');
+        $serverRequestInterface = $this->createServerRequestInterface();
 
-        $constructor->invoke($mock, $requestInterface);
+        $constructor->invoke($mock, $serverRequestInterface);
 
         $this->assertSame('IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=', $mock->getAuthorization());
     }
