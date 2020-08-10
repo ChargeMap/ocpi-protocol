@@ -194,28 +194,28 @@ class EVSE implements JsonSerializable
             'last_updated' => DateTimeFormatter::format($this->lastUpdated),
         ];
 
-        if(count($this->connectors) > 0 ) {
-            $return[ 'connectors' ] = $this->connectors;
+        if (count($this->connectors) > 0) {
+            $return['connectors'] = $this->connectors;
         }
 
-        if(count($this->statusSchedule) > 0 ) {
-            $return[ 'status_schedule' ] = $this->statusSchedule;
+        if (count($this->statusSchedule) > 0) {
+            $return['status_schedule'] = $this->statusSchedule;
         }
 
-        if(count($this->capabilities) > 0 ) {
-            $return[ 'capabilities' ] = $this->capabilities;
+        if (count($this->capabilities) > 0) {
+            $return['capabilities'] = $this->capabilities;
         }
 
-        if(count($this->directions) > 0 ) {
-            $return[ 'directions' ] = $this->directions;
+        if (count($this->directions) > 0) {
+            $return['directions'] = $this->directions;
         }
 
-        if(count($this->parkingRestrictions) > 0 ) {
-            $return[ 'parking_restrictions' ] = $this->parkingRestrictions;
+        if (count($this->parkingRestrictions) > 0) {
+            $return['parking_restrictions'] = $this->parkingRestrictions;
         }
 
-        if(count($this->images) > 0 ) {
-            $return[ 'images' ] = $this->images;
+        if (count($this->images) > 0) {
+            $return['images'] = $this->images;
         }
 
         if ($this->evseId !== null) {

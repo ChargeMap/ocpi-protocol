@@ -11,15 +11,15 @@ class DateTimeFormatter
 {
     public static function format(?DateTime $date): ?string
     {
-        if($date === null) {
+        if ($date === null) {
             return null;
         }
 
         $defaultTimeZone = new DateTimeZone('UTC');
 
         // Force the format to UTC, as OCPI specifies that all timestamps should be expressed as UTC
-        if($date->getTimezone() !== $defaultTimeZone ) {
-            $date->setTimezone( $defaultTimeZone );
+        if ($date->getTimezone() !== $defaultTimeZone) {
+            $date->setTimezone($defaultTimeZone);
         }
 
         // As DateTime::ISO8601 exports with +00:00 and from the OCPI documentation, it is not the same as Zulu Time

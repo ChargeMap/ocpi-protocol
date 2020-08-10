@@ -77,12 +77,12 @@ class Hours implements JsonSerializable
         $return = [
         ];
 
-        if( count($this->exceptionalOpenings) > 0 ) {
-            $return[ 'exceptional_openings' ] = $this->exceptionalOpenings;
+        if (count($this->exceptionalOpenings) > 0) {
+            $return['exceptional_openings'] = $this->exceptionalOpenings;
         }
 
-        if( count($this->exceptionalClosings) > 0) {
-            $return[ 'exceptional_closings' ] = $this->exceptionalClosings;
+        if (count($this->exceptionalClosings) > 0) {
+            $return['exceptional_closings'] = $this->exceptionalClosings;
         }
 
         if ($this->twentyFourSeven) {

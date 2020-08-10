@@ -192,7 +192,7 @@ class Cdr implements JsonSerializable
             'last_updated' => DateTimeFormatter::format($this->lastUpdated),
         ];
 
-        if(count($this->tariffs) > 0) {
+        if (count($this->tariffs) > 0) {
             $return['tariffs'] = $this->tariffs;
         }
 

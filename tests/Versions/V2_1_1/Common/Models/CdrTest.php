@@ -28,12 +28,12 @@ class CdrTest extends TestCase
     /**
      * @param stdClass $payload
      * @dataProvider getJsonSerializeData()
-     * @covers \Chargemap\OCPI\Versions\V2_1_1\Common\Models\Cdr::jsonSerialize()
+     * @covers       \Chargemap\OCPI\Versions\V2_1_1\Common\Models\Cdr::jsonSerialize()
      */
     public function testJsonSerialize(stdClass $payload): void
     {
         $cdr = CdrFactory::fromJson($payload);
 
-        Assert::assertEquals( $payload, json_decode(json_encode($cdr)));
+        Assert::assertEquals($payload, json_decode(json_encode($cdr)));
     }
 }

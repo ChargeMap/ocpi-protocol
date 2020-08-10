@@ -22,7 +22,7 @@ class ChargingPeriod implements JsonSerializable
     {
         $previousIndex = $this->searchCdrDimension($dimension->getType());
 
-        if($previousIndex !== null) {
+        if ($previousIndex !== null) {
             $this->cdrDimensions[$previousIndex] = $dimension;
         } else {
             $this->cdrDimensions[] = $dimension;
@@ -44,7 +44,7 @@ class ChargingPeriod implements JsonSerializable
     {
         $index = $this->searchCdrDimension($dimensionType);
 
-        if($index === null) {
+        if ($index === null) {
             return null;
         }
 
@@ -61,8 +61,8 @@ class ChargingPeriod implements JsonSerializable
 
     private function searchCdrDimension(CdrDimensionType $dimensionType): ?int
     {
-        foreach($this->cdrDimensions as $index => $cdrDimension) {
-            if($cdrDimension->getType()->equals($dimensionType)) {
+        foreach ($this->cdrDimensions as $index => $cdrDimension) {
+            if ($cdrDimension->getType()->equals($dimensionType)) {
                 return $index;
             }
         }

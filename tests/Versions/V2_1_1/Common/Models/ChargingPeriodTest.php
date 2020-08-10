@@ -39,20 +39,20 @@ class ChargingPeriodTest extends TestCase
         // Simple dimension add
         $chargingPeriod->addDimension(new CdrDimension(CdrDimensionType::TIME(), 45.));
 
-        Assert::assertCount(1, $chargingPeriod->getCdrDimensions() );
-        Assert::assertSame( 45., $chargingPeriod->getCdrDimension(CdrDimensionType::TIME())->getVolume() );
+        Assert::assertCount(1, $chargingPeriod->getCdrDimensions());
+        Assert::assertSame(45., $chargingPeriod->getCdrDimension(CdrDimensionType::TIME())->getVolume());
 
         // Now test overwriting the dimension
         $chargingPeriod->addDimension(new CdrDimension(CdrDimensionType::TIME(), 55.));
 
-        Assert::assertCount(1, $chargingPeriod->getCdrDimensions() );
-        Assert::assertSame( 55., $chargingPeriod->getCdrDimension(CdrDimensionType::TIME())->getVolume() );
+        Assert::assertCount(1, $chargingPeriod->getCdrDimensions());
+        Assert::assertSame(55., $chargingPeriod->getCdrDimension(CdrDimensionType::TIME())->getVolume());
 
         // Now test adding another dimension
         $chargingPeriod->addDimension(new CdrDimension(CdrDimensionType::ENERGY(), 25.));
 
-        Assert::assertCount(2, $chargingPeriod->getCdrDimensions() );
-        Assert::assertSame( 25., $chargingPeriod->getCdrDimension(CdrDimensionType::ENERGY())->getVolume() );
+        Assert::assertCount(2, $chargingPeriod->getCdrDimensions());
+        Assert::assertSame(25., $chargingPeriod->getCdrDimension(CdrDimensionType::ENERGY())->getVolume());
     }
 
     public function testGetDimension(): void
@@ -71,12 +71,12 @@ class ChargingPeriodTest extends TestCase
     /**
      * @param stdClass $payload
      * @dataProvider getJsonSerializeData()
-     * @covers \Chargemap\OCPI\Versions\V2_1_1\Common\Models\ChargingPeriod::jsonSerialize()
+     * @covers       \Chargemap\OCPI\Versions\V2_1_1\Common\Models\ChargingPeriod::jsonSerialize()
      */
     public function testJsonSerialize(stdClass $payload): void
     {
         $chargingPeriod = ChargingPeriodFactory::fromJson($payload);
 
-        Assert::assertEquals( $payload, json_decode(json_encode($chargingPeriod)));
+        Assert::assertEquals($payload, json_decode(json_encode($chargingPeriod)));
     }
 }

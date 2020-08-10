@@ -21,19 +21,19 @@ class DateTimeFormatterTest extends TestCase
 
         yield 'UTC date' => [
             'expectation' => '2020-08-07T11:30:00Z',
-            'dateTime' => new DateTime( '2020-08-07 11:30:00', new DateTimeZone('UTC')),
+            'dateTime' => new DateTime('2020-08-07 11:30:00', new DateTimeZone('UTC')),
         ];
 
         yield 'Non-UTC date' => [
             'expectation' => '2020-08-07T11:30:00Z',
-            'dateTime' => new DateTime( '2020-08-07 13:30:00', new DateTimeZone('Europe/Paris')),
+            'dateTime' => new DateTime('2020-08-07 13:30:00', new DateTimeZone('Europe/Paris')),
         ];
     }
 
     /**
      * @param string|null $expectation
      * @param DateTime|null $dateTime
-     * @covers \Chargemap\OCPI\Common\Utils\DateTimeFormatter::format()
+     * @covers       \Chargemap\OCPI\Common\Utils\DateTimeFormatter::format()
      * @dataProvider getFormatData()
      */
     public function testFormat(?string $expectation, ?DateTime $dateTime): void
