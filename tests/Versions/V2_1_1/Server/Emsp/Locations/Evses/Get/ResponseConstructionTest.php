@@ -3,6 +3,7 @@
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Get;
 
 use Chargemap\OCPI\Common\Server\StatusCodes\OcpiSuccessHttpCode;
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\EVSEFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Get\OcpiEmspEvseGetResponse;
 use DateTime;
@@ -57,6 +58,6 @@ class ResponseConstructionTest extends TestCase
             'width' => 455,
             'height' => 343
         ], $jsonEvse['images'][0]);
-        $this->assertEquals((new DateTime('2015-06-28T08:12:01Z'))->format(DateTime::ISO8601), $jsonEvse['last_updated']);
+        $this->assertEquals(DateTimeFormatter::format(new DateTime('2015-06-28T08:12:01Z')), $jsonEvse['last_updated']);
     }
 }

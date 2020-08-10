@@ -2,6 +2,7 @@
 
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use DateTime;
 use JsonSerializable;
 
@@ -178,19 +179,22 @@ class Cdr implements JsonSerializable
     {
         $return = [
             'id' => $this->id,
-            'start_date_time' => $this->startDateTime->format(DateTime::ISO8601),
-            'stop_date_time' => $this->stopDateTime->format(DateTime::ISO8601),
+            'start_date_time' => DateTimeFormatter::format($this->startDateTime),
+            'stop_date_time' => DateTimeFormatter::format($this->stopDateTime),
             'auth_id' => $this->authId,
             'auth_method' => $this->authMethod,
             'location' => $this->location,
             'currency' => $this->currency,
-            'tariffs' => $this->tariffs,
             'charging_periods' => $this->chargingPeriods,
             'total_cost' => $this->totalCost,
             'total_energy' => $this->totalEnergy,
             'total_time' => $this->totalTime,
-            'last_updated' => $this->lastUpdated->format(DateTime::ISO8601),
+            'last_updated' => DateTimeFormatter::format($this->lastUpdated),
         ];
+
+        if(count($this->tariffs) > 0) {
+            $return['tariffs'] = $this->tariffs;
+        }
 
         if ($this->meterId !== null) {
             $return['meter_id'] = $this->meterId;

@@ -3,6 +3,7 @@
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Connectors\Get;
 
 use Chargemap\OCPI\Common\Server\StatusCodes\OcpiSuccessHttpCode;
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\ConnectorFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Connectors\Get\OcpiEmspConnectorGetResponse;
 use DateTime;
@@ -29,6 +30,6 @@ class ResponseConstructionTest extends TestCase
         $this->assertSame(16, $jsonConnector['amperage']);
         $this->assertSame('11', $jsonConnector['tariff_id']);
         $this->assertSame('https://google.com', $jsonConnector['terms_and_conditions']);
-        $this->assertEquals((new DateTime('2015-03-16T10:10:02Z'))->format(DateTime::ISO8601), $jsonConnector['last_updated']);
+        $this->assertEquals(DateTimeFormatter::format(new DateTime('2015-03-16T10:10:02Z')), $jsonConnector['last_updated']);
     }
 }

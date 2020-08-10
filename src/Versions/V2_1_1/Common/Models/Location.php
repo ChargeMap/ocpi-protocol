@@ -2,6 +2,7 @@
 
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use DateTime;
 use JsonSerializable;
 
@@ -256,13 +257,25 @@ class Location implements JsonSerializable
             'postal_code' => $this->postalCode,
             'country' => $this->country,
             'coordinates' => $this->coordinates,
-            'related_locations' => $this->relatedLocations,
             'evses' => $this->evses,
-            'directions' => $this->directions,
-            'facilities' => $this->facilities,
-            'images' => $this->images,
-            'last_updated' => $this->lastUpdated->format(DateTime::ISO8601),
+            'last_updated' => DateTimeFormatter::format($this->lastUpdated),
         ];
+
+        if (count($this->relatedLocations) > 0) {
+            $return['related_locations'] = $this->relatedLocations;
+        }
+
+        if (count($this->directions) > 0) {
+            $return['directions'] = $this->directions;
+        }
+
+        if (count($this->facilities) > 0) {
+            $return['facilities'] = $this->facilities;
+        }
+
+        if (count($this->images) > 0) {
+            $return['images'] = $this->images;
+        }
 
         if ($this->name !== null) {
             $return['name'] = $this->name;
