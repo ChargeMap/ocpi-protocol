@@ -15,7 +15,7 @@ class ListingResponseFactoryTest extends TestCase
             ->withHeader('Content-Type', 'application/json')
             ->withHeader('X-Total-Count', 1)
             ->withBody(
-                Psr17FactoryDiscovery::findStreamFactory()->createStream(file_get_contents( __DIR__ . '/../payloads/location.json'))
+                Psr17FactoryDiscovery::findStreamFactory()->createStream(file_get_contents(__DIR__ . '/../payloads/location.json'))
             );
 
         // first item of list
