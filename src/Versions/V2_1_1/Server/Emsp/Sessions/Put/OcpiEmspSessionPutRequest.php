@@ -6,14 +6,14 @@ use Chargemap\OCPI\Common\Utils\PayloadValidation;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\SessionFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Session;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\OcpiSessionUpdateRequest;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use UnexpectedValueException;
 
 class OcpiEmspSessionPutRequest extends OcpiSessionUpdateRequest
 {
     private Session $session;
 
-    public function __construct(RequestInterface $request, string $countryCode, string $partyId, string $sessionId)
+    public function __construct(ServerRequestInterface $request, string $countryCode, string $partyId, string $sessionId)
     {
         parent::__construct($request, $countryCode, $partyId, $sessionId);
         PayloadValidation::coerce('Versions/V2_1_1/Server/Emsp/Schemas/sessionPut.schema.json', $this->jsonBody);

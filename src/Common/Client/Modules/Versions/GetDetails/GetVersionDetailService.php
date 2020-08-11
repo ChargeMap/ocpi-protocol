@@ -8,8 +8,8 @@ class GetVersionDetailService extends AbstractFeatures
 {
     public function get(GetVersionDetailRequest $request): GetVersionDetailResponse
     {
-        $requestInterface = $request->getRequestInterface($this->ocpiConfiguration->getRequestFactory());
-        $responseInterface = $this->ocpiConfiguration->getHttpClient()->sendRequest($requestInterface);
+        $serverRequestInterface = $request->getServerRequestInterface($this->ocpiConfiguration->getServerRequestFactory());
+        $responseInterface = $this->ocpiConfiguration->getHttpClient()->sendRequest($serverRequestInterface);
         return GetVersionDetailResponse::fromResponseInterface($responseInterface);
     }
 }

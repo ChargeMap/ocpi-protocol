@@ -6,20 +6,15 @@ use Chargemap\OCPI\Common\Server\Errors\OcpiNotEnoughInformationClientError;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Put\OcpiEmspSessionPutRequest;
 use DateTime;
 use Http\Discovery\Psr17FactoryDiscovery;
-use PHPUnit\Framework\TestCase;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
-class RequestConstructionTest extends TestCase
+class RequestConstructionTest extends OcpiTestCase
 {
     public function testShouldConstructRequestWithPayload(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('PUT', 'randomUrl')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
-            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(
-                file_get_contents(__DIR__ . '/payloads/SessionPutFullPayload.json')
-            ));
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/SessionPutFullPayload.json');
 
-        $request = new OcpiEmspSessionPutRequest($requestInterface, 'FR', 'TNM', '101');
+        $request = new OcpiEmspSessionPutRequest($serverRequestInterface, 'FR', 'TNM', '101');
         $this->assertEquals('FR', $request->getCountryCode());
         $this->assertEquals('TNM', $request->getPartyId());
         $this->assertEquals('101', $request->getSessionId());
@@ -37,14 +32,9 @@ class RequestConstructionTest extends TestCase
 
     public function testShouldConstructWithUnusualLocation(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('PUT', 'randomUrl')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
-            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(
-                file_get_contents(__DIR__ . '/payloads/SessionPutPayloadLocationNotAlwaysOpen.json')
-            ));
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/SessionPutPayloadLocationNotAlwaysOpen.json');
 
-        $request = new OcpiEmspSessionPutRequest($requestInterface, 'FR', 'TNM', '101');
+        $request = new OcpiEmspSessionPutRequest($serverRequestInterface, 'FR', 'TNM', '101');
         $session = $request->getSession();
         $location = $session->getLocation();
         $this->assertCount(2, $location->getOpeningTimes()->getRegularHours());
@@ -52,10 +42,10 @@ class RequestConstructionTest extends TestCase
 
     public function testWithoutBody(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('PUT', 'randomUrl')
-            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(""));
+        $serverRequestInterface = $this->createServerRequestInterface();
+        $serverRequestInterface = $serverRequestInterface->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(""));
+
         $this->expectException(OcpiNotEnoughInformationClientError::class);
-        new OcpiEmspSessionPutRequest($requestInterface, 'FR', 'TNM', '101');
+        new OcpiEmspSessionPutRequest($serverRequestInterface, 'FR', 'TNM', '101');
     }
 }

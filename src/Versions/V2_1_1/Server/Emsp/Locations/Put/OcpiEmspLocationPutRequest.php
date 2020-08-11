@@ -7,14 +7,14 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\LocationFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Location;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\OcpiLocationUpdateRequest;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use UnexpectedValueException;
 
 class OcpiEmspLocationPutRequest extends OcpiLocationUpdateRequest
 {
     private Location $location;
 
-    public function __construct(RequestInterface $request, LocationRequestParams $params)
+    public function __construct(ServerRequestInterface $request, LocationRequestParams $params)
     {
         parent::__construct($request, $params);
         PayloadValidation::coerce('Versions/V2_1_1/Server/Emsp/Schemas/locationPut.schema.json', $this->jsonBody);

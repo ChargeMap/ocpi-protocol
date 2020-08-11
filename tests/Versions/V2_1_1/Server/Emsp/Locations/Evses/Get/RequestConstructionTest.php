@@ -4,27 +4,24 @@ namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Get;
 
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Get\OcpiEmspEvseGetRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
-use Http\Discovery\Psr17FactoryDiscovery;
 use InvalidArgumentException;
-use PHPUnit\Framework\TestCase;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
-class RequestConstructionTest extends TestCase
+class RequestConstructionTest extends OcpiTestCase
 {
     public function testShouldFailWithoutEvseUid(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('GET', 'randomUrl')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=');
+        $serverRequestInterface = $this->createServerRequestInterface();
+
         $this->expectException(InvalidArgumentException::class);
-        new OcpiEmspEvseGetRequest($requestInterface, new LocationRequestParams('EN', 'PID', 'locationId'));
+        new OcpiEmspEvseGetRequest($serverRequestInterface, new LocationRequestParams('EN', 'PID', 'locationId'));
     }
 
     public function testShouldConstructWithValidRequest(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('GET', 'randomUrl')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=');
-        $request = new OcpiEmspEvseGetRequest($requestInterface, new LocationRequestParams('EN', 'PID', 'locationId', 'evseUid'));
+        $serverRequestInterface = $this->createServerRequestInterface();
+
+        $request = new OcpiEmspEvseGetRequest($serverRequestInterface, new LocationRequestParams('EN', 'PID', 'locationId', 'evseUid'));
         $this->assertInstanceOf(OcpiEmspEvseGetRequest::class, $request);
         $this->assertEquals('evseUid', $request->getEvseUid());
     }

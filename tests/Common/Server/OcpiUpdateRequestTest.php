@@ -20,11 +20,11 @@ class OcpiUpdateRequestTest extends TestCase
         $reflectedClass = new ReflectionClass(OcpiUpdateRequest::class);
         $constructor = $reflectedClass->getConstructor();
         $constructor->setAccessible(true);
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('GET', 'randomUrl')
+        $serverRequestInterface = Psr17FactoryDiscovery::findServerRequestFactory()
+            ->createServerRequest('GET', 'randomUrl')
             ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=');
         $this->expectException(OcpiNotEnoughInformationClientError::class);
-        $constructor->invoke($mock, $requestInterface);
+        $constructor->invoke($mock, $serverRequestInterface);
     }
 
     public function testShouldFailWithEmptyBody(): void
@@ -36,12 +36,12 @@ class OcpiUpdateRequestTest extends TestCase
         $reflectedClass = new ReflectionClass(OcpiUpdateRequest::class);
         $constructor = $reflectedClass->getConstructor();
         $constructor->setAccessible(true);
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('GET', 'randomUrl')
+        $serverRequestInterface = Psr17FactoryDiscovery::findServerRequestFactory()
+            ->createServerRequest('GET', 'randomUrl')
             ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
             ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(""));
         $this->expectException(OcpiNotEnoughInformationClientError::class);
-        $constructor->invoke($mock, $requestInterface);
+        $constructor->invoke($mock, $serverRequestInterface);
     }
 
     public function testShouldSetJsonBody(): void
@@ -53,12 +53,13 @@ class OcpiUpdateRequestTest extends TestCase
         $reflectedClass = new ReflectionClass(OcpiUpdateRequest::class);
         $constructor = $reflectedClass->getConstructor();
         $constructor->setAccessible(true);
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('GET', 'randomUrl')
+        $serverRequestInterface = Psr17FactoryDiscovery::findServerRequestFactory()
+            ->createServerRequest('GET', 'randomUrl')
             ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
             ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream('{}'));
 
-        $constructor->invoke($mock, $requestInterface);
+        $constructor->invoke($mock, $serverRequestInterface);
         $this->assertEquals(new stdClass(), $mock->getJsonBody());
     }
+
 }

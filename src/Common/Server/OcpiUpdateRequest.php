@@ -3,7 +3,7 @@
 namespace Chargemap\OCPI\Common\Server;
 
 use Chargemap\OCPI\Common\Server\Errors\OcpiNotEnoughInformationClientError;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use stdClass;
 
 abstract class OcpiUpdateRequest extends OcpiBaseRequest
@@ -11,7 +11,7 @@ abstract class OcpiUpdateRequest extends OcpiBaseRequest
     /** @var stdClass */
     protected $jsonBody;
 
-    protected function __construct(RequestInterface $request)
+    protected function __construct(ServerRequestInterface $request)
     {
         if (empty($request->getBody()->__toString())) {
             throw new OcpiNotEnoughInformationClientError('Request body is empty.');

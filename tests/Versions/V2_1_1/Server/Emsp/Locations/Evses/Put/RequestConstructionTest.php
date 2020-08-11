@@ -3,25 +3,19 @@
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Put;
 
 use Chargemap\OCPI\Common\Server\Errors\OcpiNotEnoughInformationClientError;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Models\GeoLocation;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Put\OcpiEmspEvsePutRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
-use Chargemap\OCPI\Versions\V2_1_1\Common\Models\GeoLocation;
 use DateTime;
-use Http\Discovery\Psr17FactoryDiscovery;
-use PHPUnit\Framework\TestCase;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
-class RequestConstructionTest extends TestCase
+class RequestConstructionTest extends OcpiTestCase
 {
     public function testShouldConstructRequestWithPayload(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('PUT', 'randomUrl')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
-            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(
-                file_get_contents(__DIR__ . '/payloads/EvsePutFullPayload.json')
-            ));
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/EvsePutFullPayload.json');
 
-        $request = new OcpiEmspEvsePutRequest($requestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256'));
+        $request = new OcpiEmspEvsePutRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256'));
         $this->assertEquals('FR', $request->getCountryCode());
         $this->assertEquals('TNM', $request->getPartyId());
         $this->assertEquals('LOC1', $request->getLocationId());
@@ -52,14 +46,10 @@ class RequestConstructionTest extends TestCase
 
     public function testShouldFailWithoutEvseId(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('PUT', 'randomUrl')
-            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(
-                file_get_contents(__DIR__ . '/payloads/EvsePutFullPayload.json')
-            ));
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/EvsePutFullPayload.json');
 
         $this->expectException(OcpiNotEnoughInformationClientError::class);
 
-        new OcpiEmspEvsePutRequest($requestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1'));
+        new OcpiEmspEvsePutRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1'));
     }
 }

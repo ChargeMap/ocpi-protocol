@@ -3,17 +3,16 @@
 namespace Tests\Chargemap\OCPI\Common\Server\GetAll;
 
 use Chargemap\OCPI\Common\Server\GetAll\OcpiGetAllVersionsRequest;
-use Http\Discovery\Psr17FactoryDiscovery;
-use PHPUnit\Framework\TestCase;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
-class RequestConstructionTest extends TestCase
+class RequestConstructionTest extends OcpiTestCase
 {
     public function testShouldConstructWithValidRequest(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('GET', 'randomUrl?offset=0&limit=10')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=');
-        $request = new OcpiGetAllVersionsRequest($requestInterface);
+        $serverRequestInterface = $this->createServerRequestInterface()
+            ->withQueryParams(['offset' => '10', 'limit' => '10']);
+
+        $request = new OcpiGetAllVersionsRequest($serverRequestInterface);
         $this->assertInstanceOf(OcpiGetAllVersionsRequest::class, $request);
     }
 }

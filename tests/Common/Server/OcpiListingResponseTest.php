@@ -6,16 +6,18 @@ use Chargemap\OCPI\Common\Server\OcpiListingResponse;
 use Chargemap\OCPI\Common\Server\StatusCodes\OcpiSuccessHttpCode;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Tokens\Get\OcpiEmspTokenGetRequest;
 use Http\Discovery\Psr17FactoryDiscovery;
-use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
-class OcpiListingResponseTest extends TestCase
+class OcpiListingResponseTest extends OcpiTestCase
 {
     public function testShouldConstructCorrectly()
     {
         $request = new OcpiEmspTokenGetRequest(
-            Psr17FactoryDiscovery::findRequestFactory()->createRequest('GET', '/test?offset=10&limit=10')
-                ->withHeader('Authorization', 'Token PLOPPLOP')
+            Psr17FactoryDiscovery::findServerRequestFactory()
+                ->createServerRequest('GET', '/test')
+                ->withQueryParams(['offset' => '10', 'limit' => '10'])
+                ->withHeader('Authorization', 'Token 01234567-0123-0123-0123-0123456789ab')
         );
 
         $mock = $this->getMockBuilder(OcpiListingResponse::class)

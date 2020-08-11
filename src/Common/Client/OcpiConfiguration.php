@@ -5,7 +5,7 @@ namespace Chargemap\OCPI\Common\Client;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UriInterface;
 use Psr\Log\LoggerInterface;
@@ -21,7 +21,7 @@ class OcpiConfiguration
 
     protected ClientInterface $httpClient;
 
-    protected RequestFactoryInterface $requestFactory;
+    protected ServerRequestFactoryInterface $serverRequestFactory;
 
     protected StreamFactoryInterface $streamFactory;
 
@@ -30,7 +30,7 @@ class OcpiConfiguration
     public function __construct(string $token)
     {
         $this->httpClient = Psr18ClientDiscovery::find();
-        $this->requestFactory = Psr17FactoryDiscovery::findRequestFactory();
+        $this->serverRequestFactory = Psr17FactoryDiscovery::findServerRequestFactory();
         $this->streamFactory = Psr17FactoryDiscovery::findStreamFactory();
         $this->token = $token;
     }
@@ -40,9 +40,9 @@ class OcpiConfiguration
         return $this->httpClient;
     }
 
-    public function getRequestFactory(): RequestFactoryInterface
+    public function getServerRequestFactory(): ServerRequestFactoryInterface
     {
-        return $this->requestFactory;
+        return $this->serverRequestFactory;
     }
 
     public function getStreamFactory(): StreamFactoryInterface
@@ -82,9 +82,9 @@ class OcpiConfiguration
         return $this;
     }
 
-    public function withRequestFactory(RequestFactoryInterface $requestFactory): self
+    public function withServerRequestFactory(ServerRequestFactoryInterface $serverRequestFactory): self
     {
-        $this->requestFactory = $requestFactory;
+        $this->serverRequestFactory = $serverRequestFactory;
         return $this;
     }
 

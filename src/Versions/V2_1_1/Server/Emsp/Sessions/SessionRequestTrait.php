@@ -12,6 +12,21 @@ trait SessionRequestTrait
 
     protected string $sessionId;
 
+    public function getCountryCode(): string
+    {
+        return $this->countryCode;
+    }
+
+    public function getPartyId(): string
+    {
+        return $this->partyId;
+    }
+
+    public function getSessionId(): string
+    {
+        return $this->sessionId;
+    }
+
     protected function dispatchParams(string $countryCode, string $partyId, string $sessionId)
     {
         if (empty($countryCode) || mb_strlen($countryCode) !== 2) {
@@ -28,20 +43,5 @@ trait SessionRequestTrait
         $this->countryCode = $countryCode;
         $this->partyId = $partyId;
         $this->sessionId = $sessionId;
-    }
-
-    public function getCountryCode(): string
-    {
-        return $this->countryCode;
-    }
-
-    public function getPartyId(): string
-    {
-        return $this->partyId;
-    }
-
-    public function getSessionId(): string
-    {
-        return $this->sessionId;
     }
 }

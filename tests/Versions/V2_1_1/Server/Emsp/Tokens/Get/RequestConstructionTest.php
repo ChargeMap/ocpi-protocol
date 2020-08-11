@@ -4,63 +4,57 @@ namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Tokens\Get;
 
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Tokens\Get\OcpiEmspTokenGetRequest;
 use DateTime;
-use Http\Discovery\Psr17FactoryDiscovery;
 use InvalidArgumentException;
-use PHPUnit\Framework\TestCase;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
-class RequestConstructionTest extends TestCase
+class RequestConstructionTest extends OcpiTestCase
 {
     public function testShouldConstructWithoutDates(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('GET', 'randomUrl?offset=0&limit=10')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=');
+        $serverRequestInterface = $this->createServerRequestInterface()
+            ->withQueryParams(['offset' => '0', 'limit' => '10']);
 
-        $request = new OcpiEmspTokenGetRequest($requestInterface);
+        $request = new OcpiEmspTokenGetRequest($serverRequestInterface);
         $this->assertNull($request->getDateTo());
         $this->assertNull($request->getDateFrom());
     }
 
     public function testShouldConstructWithDateFrom(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('GET', 'randomUrl?offset=0&limit=10&date_from=25-05-2020')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=');
+        $serverRequestInterface = $this->createServerRequestInterface()
+            ->withQueryParams(['offset' => '0', 'limit' => '10', 'date_from' => '2020-05-25']);
 
-        $request = new OcpiEmspTokenGetRequest($requestInterface);
+        $request = new OcpiEmspTokenGetRequest($serverRequestInterface);
         $this->assertSame((new DateTime('25-05-2020'))->format(DateTime::ISO8601), $request->getDateFrom()->format(DateTime::ISO8601));
         $this->assertNull($request->getDateTo());
     }
 
     public function testShouldConstructWithDateTo(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('GET', 'randomUrl?offset=0&limit=10&date_to=25-05-2020')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=');
+        $serverRequestInterface = $this->createServerRequestInterface()
+            ->withQueryParams(['offset' => '0', 'limit' => '10', 'date_to' => '25-05-2020']);
 
-        $request = new OcpiEmspTokenGetRequest($requestInterface);
+        $request = new OcpiEmspTokenGetRequest($serverRequestInterface);
         $this->assertSame((new DateTime('25-05-2020'))->format(DateTime::ISO8601), $request->getDateTo()->format(DateTime::ISO8601));
         $this->assertNull($request->getDateFrom());
     }
 
     public function testShouldConstructWithDates(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('GET', 'randomUrl?offset=0&limit=10&date_from=25-05-2020&date_to=26-05-2020')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=');
+        $serverRequestInterface = $this->createServerRequestInterface()
+            ->withQueryParams(['offset' => '0', 'limit' => '10', 'date_from' => '25-05-2020', 'date_to' => '26-05-2020']);
 
-        $request = new OcpiEmspTokenGetRequest($requestInterface);
+        $request = new OcpiEmspTokenGetRequest($serverRequestInterface);
         $this->assertSame((new DateTime('25-05-2020'))->format(DateTime::ISO8601), $request->getDateFrom()->format(DateTime::ISO8601));
         $this->assertSame((new DateTime('26-05-2020'))->format(DateTime::ISO8601), $request->getDateTo()->format(DateTime::ISO8601));
     }
 
     public function testShouldThrowWithInvalidDates(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('GET', 'randomUrl?offset=0&limit=10&date_from=26-05-2020&date_to=25-05-2020')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=');
+        $serverRequestInterface = $this->createServerRequestInterface()
+            ->withQueryParams(['offset' => '0', 'limit' => '10', 'date_from' => '26-05-2020', 'date_to' => '25-05-2020']);
 
         $this->expectException(InvalidArgumentException::class);
-        new OcpiEmspTokenGetRequest($requestInterface);
+        new OcpiEmspTokenGetRequest($serverRequestInterface);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch;
 
-use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch\OcpiEmspLocationPatchResponse;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\PartialLocation;
+use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch\OcpiEmspLocationPatchResponse;
 use PHPUnit\Framework\TestCase;
 
 class ResponseConstructionTest extends TestCase

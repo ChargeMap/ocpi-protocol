@@ -2,8 +2,8 @@
 
 namespace Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions;
 
-use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestFactoryInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class GetAvailableVersionsRequest
 {
@@ -14,8 +14,8 @@ class GetAvailableVersionsRequest
         $this->versionsUrl = $versionsUrl;
     }
 
-    public function getRequestInterface(RequestFactoryInterface $requestFactory): RequestInterface
+    public function getServerRequestInterface(ServerRequestFactoryInterface $serverRequestFactory): ServerRequestInterface
     {
-        return $requestFactory->createRequest('GET', $this->versionsUrl);
+        return $serverRequestFactory->createServerRequest('GET', $this->versionsUrl);
     }
 }

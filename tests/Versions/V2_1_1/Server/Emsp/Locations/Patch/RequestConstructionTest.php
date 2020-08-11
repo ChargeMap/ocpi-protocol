@@ -2,25 +2,19 @@
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch;
 
+use Chargemap\OCPI\Versions\V2_1_1\Common\Models\GeoLocation;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch\OcpiEmspLocationPatchRequest;
-use Chargemap\OCPI\Versions\V2_1_1\Common\Models\GeoLocation;
 use DateTime;
-use Http\Discovery\Psr17FactoryDiscovery;
-use PHPUnit\Framework\TestCase;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
-class RequestConstructionTest extends TestCase
+class RequestConstructionTest extends OcpiTestCase
 {
     public function testShouldConstructRequestWithFullPayload(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('PATCH', 'randomUrl')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
-            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(
-                file_get_contents(__DIR__ . '/payloads/LocationPatchFullPayload.json')
-            ));
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/LocationPatchFullPayload.json');
 
-        $request = new OcpiEmspLocationPatchRequest($requestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1'));
+        $request = new OcpiEmspLocationPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1'));
 
         $this->assertEquals('FR', $request->getCountryCode());
         $this->assertEquals('TNM', $request->getPartyId());
@@ -43,14 +37,9 @@ class RequestConstructionTest extends TestCase
 
     public function testShouldConstructWithEVSEs(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('PATCH', 'randomUrl')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
-            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(
-                file_get_contents(__DIR__ . '/payloads/LocationPatchEvsesPayload.json')
-            ));
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/LocationPatchEvsesPayload.json');
 
-        $request = new OcpiEmspLocationPatchRequest($requestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1'));
+        $request = new OcpiEmspLocationPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1'));
         $location = $request->getPartialLocation();
         $this->assertNull($location->getId());
         $this->assertNotNull($location->getEvses());
@@ -58,14 +47,9 @@ class RequestConstructionTest extends TestCase
 
     public function testShouldConstructWithOpeningTimes(): void
     {
-        $requestInterface = Psr17FactoryDiscovery::findRequestFactory()
-            ->createRequest('PATCH', 'randomUrl')
-            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
-            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(
-                file_get_contents(__DIR__ . '/payloads/LocationPatchOpeningTimesPayload.json')
-            ));
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/LocationPatchOpeningTimesPayload.json');
 
-        $request = new OcpiEmspLocationPatchRequest($requestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1'));
+        $request = new OcpiEmspLocationPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1'));
         $location = $request->getPartialLocation();
         $this->assertNull($location->getId());
         $this->assertNotEmpty($location->getOpeningTimes()->getExceptionalOpenings());

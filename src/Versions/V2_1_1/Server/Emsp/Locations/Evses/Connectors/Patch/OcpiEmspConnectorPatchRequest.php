@@ -7,14 +7,14 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\PartialConnectorFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\PartialConnector;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Connectors\BaseConnectorUpdateRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use UnexpectedValueException;
 
 class OcpiEmspConnectorPatchRequest extends BaseConnectorUpdateRequest
 {
     private PartialConnector $partialConnector;
 
-    public function __construct(RequestInterface $request, LocationRequestParams $params)
+    public function __construct(ServerRequestInterface $request, LocationRequestParams $params)
     {
         parent::__construct($request, $params);
         PayloadValidation::coerce('Versions/V2_1_1/Server/Emsp/Schemas/connectorPatch.schema.json', $this->jsonBody);

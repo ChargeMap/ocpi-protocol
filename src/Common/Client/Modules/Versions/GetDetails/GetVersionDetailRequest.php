@@ -3,8 +3,8 @@
 namespace Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails;
 
 use Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions\VersionEndpoint;
-use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestFactoryInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class GetVersionDetailRequest
 {
@@ -15,8 +15,8 @@ class GetVersionDetailRequest
         $this->versionEndpoint = $versionEndpoint;
     }
 
-    public function getRequestInterface(RequestFactoryInterface $requestFactory): RequestInterface
+    public function getServerRequestInterface(ServerRequestFactoryInterface $serverRequestFactory): ServerRequestInterface
     {
-        return $requestFactory->createRequest('GET', $this->versionEndpoint->getUri()->__toString());
+        return $serverRequestFactory->createServerRequest('GET', $this->versionEndpoint->getUri()->__toString());
     }
 }

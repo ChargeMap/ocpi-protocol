@@ -37,7 +37,8 @@ abstract class OcpiListingResponse extends OcpiSuccessResponse
             ->withHeader('X-Limit', $this->limit);
 
         $uri = $this->listingRequest->getRawRequest()->getUri();
-        parse_str($uri->getQuery(), $query);
+        $query = $this->listingRequest->getRawRequest()->getQueryParams();
+
         if ($query['offset'] + $this->limit < $this->totalCount) {
             $query['offset'] += $this->limit;
 

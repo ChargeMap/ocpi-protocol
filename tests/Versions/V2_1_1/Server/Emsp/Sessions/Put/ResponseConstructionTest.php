@@ -2,8 +2,8 @@
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Put;
 
-use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Put\OcpiEmspSessionPutResponse;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Session;
+use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Put\OcpiEmspSessionPutResponse;
 use PHPUnit\Framework\TestCase;
 
 class ResponseConstructionTest extends TestCase

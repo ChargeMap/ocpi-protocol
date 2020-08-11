@@ -6,8 +6,8 @@ use Chargemap\OCPI\Common\Client\Modules\ListingRequest;
 use Chargemap\OCPI\Common\Client\Modules\Locations\GetListing\GetLocationsListingRequest as BaseRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Client\VersionTrait;
 use DateTime;
-use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestFactoryInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
 class GetLocationsListingRequest extends BaseRequest
@@ -31,9 +31,9 @@ class GetLocationsListingRequest extends BaseRequest
         return $this;
     }
 
-    function getRequestInterface(RequestFactoryInterface $requestFactory, ?StreamFactoryInterface $streamFactory): RequestInterface
+    public function getServerRequestInterface(ServerRequestFactoryInterface $serverRequestFactory, ?StreamFactoryInterface $streamFactory): ServerRequestInterface
     {
-        return $requestFactory->createRequest('GET', '?' . $this->getQueryString());
+        return $serverRequestFactory->createServerRequest('GET', '?' . $this->getQueryString());
     }
 
     private function getQueryString(): string

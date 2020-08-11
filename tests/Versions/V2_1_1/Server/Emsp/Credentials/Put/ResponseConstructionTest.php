@@ -2,8 +2,8 @@
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Credentials\Put;
 
-use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Credentials\Put\OcpiEmspCredentialsPutResponse;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\CredentialsFactory;
+use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Credentials\Put\OcpiEmspCredentialsPutResponse;
 use PHPUnit\Framework\TestCase;
 
 class ResponseConstructionTest extends TestCase
