@@ -31,7 +31,7 @@ class GetLocationsListingRequest extends BaseRequest
         return $this;
     }
 
-    function getServerRequestInterface(ServerRequestFactoryInterface $serverRequestFactory, ?StreamFactoryInterface $streamFactory): ServerRequestInterface
+    public function getServerRequestInterface(ServerRequestFactoryInterface $serverRequestFactory, ?StreamFactoryInterface $streamFactory): ServerRequestInterface
     {
         return $serverRequestFactory->createServerRequest('GET', '?' . $this->getQueryString());
     }
