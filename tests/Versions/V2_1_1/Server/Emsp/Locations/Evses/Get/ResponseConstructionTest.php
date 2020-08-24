@@ -27,8 +27,8 @@ class ResponseConstructionTest extends TestCase
         $this->assertSame('AVAILABLE', $jsonEvse['status']);
         $this->assertCount(2, $jsonEvse['status_schedule']);
         $this->assertSame([
-                'period_begin' => (new DateTime('2014-06-24T00:00:00Z'))->format(DateTime::ISO8601),
-                'period_end' => (new DateTime('2014-06-25T00:00:00Z'))->format(DateTime::ISO8601),
+                'period_begin' => DateTimeFormatter::format((new DateTime('2014-06-24T00:00:00Z'))),
+                'period_end' => DateTimeFormatter::format((new DateTime('2014-06-25T00:00:00Z'))),
                 'status' => 'INOPERATIVE'
             ]
             , $jsonEvse['status_schedule'][0]);

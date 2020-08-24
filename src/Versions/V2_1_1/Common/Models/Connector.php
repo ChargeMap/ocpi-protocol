@@ -97,7 +97,7 @@ class Connector implements JsonSerializable
         return $this->lastUpdated;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         $return = [
             'id' => $this->id,

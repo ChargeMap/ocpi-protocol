@@ -3,6 +3,7 @@
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Get;
 
 use Chargemap\OCPI\Common\Server\StatusCodes\OcpiSuccessHttpCode;
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\SessionFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Get\OcpiEmspSessionGetResponse;
 use DateTime;
@@ -19,7 +20,7 @@ class ResponseConstructionTest extends TestCase
 
         $jsonSession = json_decode($responseInterface->getBody()->getContents(), true)['data'];
         $this->assertSame('101', $jsonSession['id']);
-        $this->assertSame((new DateTime('2015-06-29T22:39:09Z'))->format(DateTime::ISO8601), $jsonSession['start_datetime']);
+        $this->assertSame(DateTimeFormatter::format((new DateTime('2015-06-29T22:39:09Z'))), $jsonSession['start_datetime']);
         $this->assertEquals(0.00, $jsonSession['kwh']);
         $this->assertSame('DE8ACC12E46L89', $jsonSession['auth_id']);
         $this->assertSame('AUTH_REQUEST', $jsonSession['auth_method']);
@@ -29,6 +30,6 @@ class ResponseConstructionTest extends TestCase
         $this->assertCount(2, $jsonSession['charging_periods']);
         $this->assertEquals(2.50, $jsonSession['total_cost']);
         $this->assertSame('PENDING', $jsonSession['status']);
-        $this->assertSame((new DateTime('2015-06-29T22:39:09Z'))->format(DateTime::ISO8601), $jsonSession['last_updated']);
+        $this->assertSame(DateTimeFormatter::format((new DateTime('2015-06-29T22:39:09Z'))), $jsonSession['last_updated']);
     }
 }

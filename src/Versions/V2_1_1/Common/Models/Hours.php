@@ -72,7 +72,7 @@ class Hours implements JsonSerializable
         return $this->exceptionalClosings;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         $return = [
         ];

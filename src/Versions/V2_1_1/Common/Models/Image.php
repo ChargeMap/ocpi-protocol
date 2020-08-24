@@ -67,7 +67,7 @@ class Image implements JsonSerializable
         return $this->height;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         $return = [
             'url' => $this->url,

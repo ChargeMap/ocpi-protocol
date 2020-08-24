@@ -26,7 +26,7 @@ class EnergySource implements JsonSerializable
         return $this->percentage;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'source' => $this->source,

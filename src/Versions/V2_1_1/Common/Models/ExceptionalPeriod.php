@@ -2,6 +2,7 @@
 
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use DateTime;
 use JsonSerializable;
 
@@ -27,11 +28,11 @@ class ExceptionalPeriod implements JsonSerializable
         return $this->periodEnd;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
-            'period_begin' => $this->periodBegin->format(DateTime::ISO8601),
-            'period_end' => $this->periodEnd->format(DateTime::ISO8601),
+            'period_begin' => DateTimeFormatter::format($this->periodBegin),
+            'period_end' => DateTimeFormatter::format($this->periodEnd),
         ];
     }
 }

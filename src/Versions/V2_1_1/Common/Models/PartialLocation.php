@@ -2,6 +2,7 @@
 
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use DateTime;
 use JsonSerializable;
 
@@ -288,7 +289,7 @@ class PartialLocation implements JsonSerializable
             $return['images'] = $this->images;
         }
         if ($this->lastUpdated !== null) {
-            $return['last_updated'] = $this->lastUpdated->format(DateTime::ISO8601);
+            $return['last_updated'] = DateTimeFormatter::format($this->lastUpdated);
         }
         if ($this->name !== null) {
             $return['name'] = $this->name;

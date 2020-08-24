@@ -2,6 +2,7 @@
 
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use DateTime;
 use JsonSerializable;
 
@@ -92,7 +93,7 @@ class Token implements JsonSerializable
             'issuer' => $this->issuer,
             'valid' => $this->valid,
             'whitelist' => $this->whiteList,
-            'last_updated' => $this->lastUpdated->format(DateTime::ISO8601)
+            'last_updated' => DateTimeFormatter::format($this->lastUpdated)
         ];
 
         if ($this->visualNumber !== null) {

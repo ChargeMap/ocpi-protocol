@@ -64,14 +64,14 @@ class ResponseConstructionTest extends TestCase
         $this->assertSame([
             'exceptional_openings' => [
                 [
-                    'period_begin' => (new DateTime('2015-06-29T22:39:09Z'))->format(DateTime::ISO8601),
-                    'period_end' => (new DateTime('2015-06-29T22:39:09Z'))->format(DateTime::ISO8601)
+                    'period_begin' => DateTimeFormatter::format((new DateTime('2015-06-29T22:39:09Z'))),
+                    'period_end' => DateTimeFormatter::format((new DateTime('2015-06-29T22:39:09Z')))
                 ]
             ],
             'exceptional_closings' => [
                 [
-                    'period_begin' => (new DateTime('2015-06-29T22:39:09Z'))->format(DateTime::ISO8601),
-                    'period_end' => (new DateTime('2015-06-29T22:39:09Z'))->format(DateTime::ISO8601)
+                    'period_begin' => DateTimeFormatter::format((new DateTime('2015-06-29T22:39:09Z'))),
+                    'period_end' => DateTimeFormatter::format((new DateTime('2015-06-29T22:39:09Z')))
                 ]
             ],
             'twentyfourseven' => true

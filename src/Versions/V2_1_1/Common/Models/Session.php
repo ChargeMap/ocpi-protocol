@@ -2,6 +2,7 @@
 
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use DateTime;
 use JsonSerializable;
 
@@ -124,7 +125,7 @@ class Session implements JsonSerializable
     {
         $return = [
             'id' => $this->id,
-            'start_datetime' => $this->startDate->format(DateTime::ISO8601),
+            'start_datetime' => DateTimeFormatter::format($this->startDate),
             'kwh' => $this->kwh,
             'auth_id' => $this->authId,
             'auth_method' => $this->authMethod,
@@ -132,7 +133,7 @@ class Session implements JsonSerializable
             'currency' => $this->currency,
             'charging_periods' => $this->chargingPeriods,
             'status' => $this->status,
-            'last_updated' => $this->lastUpdated->format(DateTime::ISO8601)
+            'last_updated' => DateTimeFormatter::format($this->lastUpdated)
         ];
 
         if ($this->meterId !== null) {
@@ -144,7 +145,7 @@ class Session implements JsonSerializable
         }
 
         if ($this->endDate !== null) {
-            $return['end_datetime'] = $this->endDate->format(DateTime::ISO8601);
+            $return['end_datetime'] = DateTimeFormatter::format($this->endDate);
         }
 
         return $return;

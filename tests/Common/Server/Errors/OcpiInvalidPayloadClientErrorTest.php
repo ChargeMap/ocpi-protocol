@@ -4,6 +4,7 @@ namespace Tests\Chargemap\OCPI\Common\Server\Errors;
 
 use Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError;
 use Chargemap\OCPI\Common\Server\StatusCodes\OcpiClientErrorStatusCode;
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use DateTime;
 use PHPUnit\Framework\TestCase;
 
@@ -17,7 +18,7 @@ class OcpiInvalidPayloadClientErrorTest extends TestCase
         $this->assertEquals([
             'status_code' => OcpiClientErrorStatusCode::ERROR_CLIENT_INVALID_PARAMETERS,
             'status_message' => 'Provided payload is invalid',
-            'timestamp' => (new DateTime())->format(DateTime::ISO8601),
+            'timestamp' => DateTimeFormatter::format((new DateTime())),
         ], $errorResponseBody);
     }
 }
