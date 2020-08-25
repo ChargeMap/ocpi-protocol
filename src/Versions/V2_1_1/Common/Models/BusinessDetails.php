@@ -34,7 +34,7 @@ class BusinessDetails implements JsonSerializable
         return $this->logo;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         $return = [
             'name' => $this->name,

@@ -2,6 +2,7 @@
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Tokens\Get;
 
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Token;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\TokenType;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\WhiteList;
@@ -54,7 +55,7 @@ class ResponseConstructionTest extends TestCase
                 'valid' => true,
                 'whitelist' => WhiteList::ALLOWED(),
                 'language' => 'EN',
-                'last_updated' => (new DateTime())->format(DateTime::ISO8601)
+                'last_updated' => DateTimeFormatter::format((new DateTime()))
             ]
         ], json_decode($responseInterface->getBody()->getContents(), true)['data']);
     }

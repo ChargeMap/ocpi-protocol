@@ -186,7 +186,7 @@ class EVSE implements JsonSerializable
         return $this->lastUpdated;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         $return = [
             'uid' => $this->uid,

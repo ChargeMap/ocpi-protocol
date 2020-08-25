@@ -2,6 +2,7 @@
 
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use DateTime;
 use JsonSerializable;
 
@@ -112,7 +113,7 @@ class PartialConnector implements JsonSerializable
             $return['terms_and_conditions'] = $this->termsAndConditions;
         }
         if ($this->lastUpdated !== null) {
-            $return['last_updated'] = $this->lastUpdated->format(DateTime::ISO8601);
+            $return['last_updated'] = DateTimeFormatter::format($this->lastUpdated);
         }
 
         return $return;

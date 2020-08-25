@@ -5,6 +5,7 @@ namespace Tests\Chargemap\OCPI\Common\Server\Errors;
 use Chargemap\OCPI\Common\Server\Errors\OcpiServerError;
 use Chargemap\OCPI\Common\Server\StatusCodes\OcpiErrorHttpCode;
 use Chargemap\OCPI\Common\Server\StatusCodes\OcpiServerErrorStatusCode;
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use DateTime;
 use PHPUnit\Framework\TestCase;
 
@@ -18,7 +19,7 @@ class OcpiServerErrorTest extends TestCase
         $this->assertEquals([
             'status_code' => OcpiServerErrorStatusCode::ERROR_SERVER,
             'status_message' => 'Message!',
-            'timestamp' => (new DateTime())->format(DateTime::ISO8601),
+            'timestamp' => DateTimeFormatter::format((new DateTime())),
         ], $errorResponseBody);
         $this->assertEquals(OcpiErrorHttpCode::HTTP_BAD_REQUEST, $errorResponse->getStatusCode());
     }

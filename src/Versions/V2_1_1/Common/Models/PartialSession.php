@@ -2,6 +2,7 @@
 
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use DateTime;
 use JsonSerializable;
 
@@ -142,7 +143,7 @@ class PartialSession implements JsonSerializable
             $return['id'] = $this->id;
         }
         if ($this->startDate !== null) {
-            $return['start_datetime'] = $this->startDate->format(DateTime::ISO8601);
+            $return['start_datetime'] = DateTimeFormatter::format($this->startDate);
         }
         if ($this->kwh !== null) {
             $return['kwh'] = $this->kwh;
@@ -166,7 +167,7 @@ class PartialSession implements JsonSerializable
             $return['status'] = $this->status;
         }
         if ($this->lastUpdated !== null) {
-            $return['last_updated'] = $this->lastUpdated->format(DateTime::ISO8601);
+            $return['last_updated'] = DateTimeFormatter::format($this->lastUpdated);
         }
         if ($this->meterId !== null) {
             $return['meter_id'] = $this->meterId;
@@ -175,7 +176,7 @@ class PartialSession implements JsonSerializable
             $return['total_cost'] = $this->totalCost;
         }
         if ($this->endDate !== null) {
-            $return['end_datetime'] = $this->endDate->format(DateTime::ISO8601);
+            $return['end_datetime'] = DateTimeFormatter::format($this->endDate);
         }
         return $return;
     }

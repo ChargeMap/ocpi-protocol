@@ -4,6 +4,7 @@ namespace Chargemap\OCPI\Common\Server;
 
 use Chargemap\OCPI\Common\Server\StatusCodes\OcpiHttpCode;
 use Chargemap\OCPI\Common\Server\StatusCodes\OcpiStatusCode;
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use DateTime;
 use Http\Discovery\Psr17FactoryDiscovery;
 use JsonSerializable;
@@ -48,7 +49,7 @@ abstract class OcpiBaseResponse implements JsonSerializable
     {
         $return = [
             'status_code' => $this->ocpiStatusCode,
-            'timestamp' => $this->timestamp->format(DateTime::ISO8601),
+            'timestamp' => DateTimeFormatter::format($this->timestamp),
         ];
 
         if (!empty($this->statusMessage)) {
