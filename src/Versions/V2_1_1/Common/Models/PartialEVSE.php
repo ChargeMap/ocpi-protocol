@@ -172,7 +172,7 @@ class PartialEVSE implements JsonSerializable
         return $this->images;
     }
 
-    public function getLastUpdated(): DateTime
+    public function getLastUpdated(): ?DateTime
     {
         return $this->lastUpdated;
     }
