@@ -39,8 +39,9 @@ abstract class OcpiListingResponse extends OcpiSuccessResponse
         $uri = $this->listingRequest->getRawRequest()->getUri();
         $query = $this->listingRequest->getRawRequest()->getQueryParams();
 
-        if ($query['offset'] + $this->limit < $this->totalCount) {
-            $query['offset'] += $this->limit;
+        $offset = $query['offset'] ?? 0;
+        if ($offset + $this->limit < $this->totalCount) {
+            $query['offset'] = $offset + $this->limit;
 
             $uri = $uri->withQuery(http_build_query($query));
             $response = $response->withHeader('Link', $uri->__toString());
