@@ -6,6 +6,8 @@ use Chargemap\OCPI\Common\Client\Modules\AbstractFeatures;
 use Chargemap\OCPI\Common\Client\Modules\AbstractRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Client\Locations\GetListing\GetLocationsListingRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Client\Locations\GetListing\GetLocationsListingService;
+use Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Get\GetTokenRequest;
+use Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Get\GetTokenService;
 use UnexpectedValueException;
 
 final class ServiceFactory
@@ -16,6 +18,9 @@ final class ServiceFactory
             case OcpiVersion::V2_1_1:
                 if (get_class($request) === GetLocationsListingRequest::class) {
                     return new GetLocationsListingService($configuration);
+                }
+                if (get_class($request) === GetTokenRequest::class) {
+                    return new GetTokenService($configuration);
                 }
                 break;
         }

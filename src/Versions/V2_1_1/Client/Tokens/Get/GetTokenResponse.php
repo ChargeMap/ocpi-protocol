@@ -12,7 +12,7 @@ class GetTokenResponse extends BaseResponse
 {
     private Token $token;
 
-    public function __construct(Token $token)
+    private function __construct(Token $token)
     {
         $this->token = $token;
     }

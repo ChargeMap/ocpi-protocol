@@ -8,6 +8,8 @@ class V2_1_1 extends AbstractFeatures
 {
     private Locations $locations;
 
+    private Tokens $tokens;
+
     public function locations(): Locations
     {
         if (!isset($this->locations)) {
@@ -15,5 +17,14 @@ class V2_1_1 extends AbstractFeatures
         }
 
         return $this->locations;
+    }
+
+    public function tokens(): Tokens
+    {
+        if (!isset($this->tokens)) {
+            $this->tokens = new Tokens($this->ocpiConfiguration);
+        }
+
+        return $this->tokens;
     }
 }
