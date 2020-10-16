@@ -3,12 +3,12 @@
 
 namespace Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Get;
 
-use Chargemap\OCPI\Common\Client\Modules\AbstractResponse;
+use Chargemap\OCPI\Common\Client\Modules\Tokens\Get\GetTokenResponse as BaseResponse;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\TokenFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Token;
 use Psr\Http\Message\ResponseInterface;
 
-class GetTokenResponse extends AbstractResponse
+class GetTokenResponse extends BaseResponse
 {
     private Token $token;
 
