@@ -9,6 +9,7 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Token;
 use DateTime;
 use Http\Discovery\Psr17FactoryDiscovery;
 use PHPUnit\Framework\TestCase;
+use UnexpectedValueException;
 
 class GetTokenResponseTest extends TestCase
 {
@@ -32,5 +33,31 @@ class GetTokenResponseTest extends TestCase
         $this->assertSame('ALWAYS', $token->getWhiteList()->getValue());
         $this->assertNull($token->getLanguage());
         $this->assertEquals(new DateTime('2015-06-29T22:39:09Z'), $token->getLastUpdated());
+    }
+
+    public function invalidPayloadProvider(): iterable
+    {
+        foreach (scandir(__DIR__ . '/payloads/') as $filename) {
+            if (substr($filename, 0, 3) === 'ko_') {
+                yield basename(substr($filename, 3), '.json') => [__DIR__ . '/payloads/' . $filename];
+            }
+        }
+    }
+
+    /**
+     * @dataProvider invalidPayloadProvider
+     * @param string $filename
+     */
+    public function testShouldThrowExceptionWithInvalidPayload(string $filename): void
+    {
+        $serverResponse = Psr17FactoryDiscovery::findResponseFactory()->createResponse(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->withBody(
+                Psr17FactoryDiscovery::findStreamFactory()->createStream(file_get_contents($filename))
+            );
+
+        $this->expectException(UnexpectedValueException::class);
+
+        GetTokenResponse::from($serverResponse)->getToken();
     }
 }
