@@ -32,5 +32,4 @@ class GetTokenResponse extends BaseResponse
 
         return new self($token);
     }
-
 }

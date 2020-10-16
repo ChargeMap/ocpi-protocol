@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Get;
 
+use Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Get\GetTokenRequest;
 use Http\Discovery\Psr17FactoryDiscovery;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -39,16 +40,13 @@ class GetTokenRequestTest extends TestCase
     public function invalidParametersProvider(): iterable
     {
         yield 'Country code is empty' => ['', 'CMP', '012345678'];
-        yield 'Country code is null' => [null, 'CMP', '012345678'];
         yield 'Country code is too short' => ['F', 'CMP', '012345678'];
         yield 'Country code is too long' => ['FRA', 'CMP', '012345678'];
         yield 'Party id is empty' => ['FR', '', '012345678'];
-        yield 'Party id is null' => ['EN', null, '012345678'];
         yield 'Party id is too short' => ['EN', 'C', '012345678'];
         yield 'Party id is short' => ['EN', 'CM', '012345678'];
         yield 'Party id is too long' => ['EN', 'CMPR', '012345678'];
         yield 'Token uid is empty' => ['EN', 'CMP', ''];
-        yield 'Token uid is null' => ['EN', 'CMP', null];
         yield 'Token uid is too long' => ['EN', 'CMP', '0123456780123456780123456780123456780123'];
     }
 

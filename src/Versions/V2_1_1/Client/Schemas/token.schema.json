@@ -60,5 +60,6 @@
     "valid",
     "whitelist",
     "last_updated"
-  ]
+  ],
+  "additionalProperties": false
 }

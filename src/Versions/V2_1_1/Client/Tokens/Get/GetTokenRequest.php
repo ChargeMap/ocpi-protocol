@@ -3,7 +3,6 @@
 
 namespace Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Get;
 
-
 use Chargemap\OCPI\Common\Client\Modules\Tokens\Get\GetTokenRequest as BaseRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Client\VersionTrait;
 use InvalidArgumentException;
@@ -21,15 +20,15 @@ class GetTokenRequest extends BaseRequest
 
     public function __construct(string $countryCode, string $partyId, string $tokenUid)
     {
-        if (!strlen($countryCode) === 2) {
+        if (strlen($countryCode) !== 2) {
             throw new InvalidArgumentException("Length of countryCode must be 2");
         }
 
-        if (!strlen($partyId) === 3) {
+        if (strlen($partyId) !== 3) {
             throw new InvalidArgumentException("Length of partyId must be 3");
         }
 
-        if (!strlen($tokenUid) <= 36 || empty($tokenUid)) {
+        if (strlen($tokenUid) > 36 || empty($tokenUid)) {
             throw new InvalidArgumentException("Length of tokenUid must be between 1 and 36");
         }
 
@@ -40,6 +39,6 @@ class GetTokenRequest extends BaseRequest
 
     public function getServerRequestInterface(ServerRequestFactoryInterface $serverRequestFactory, ?StreamFactoryInterface $streamFactory): ServerRequestInterface
     {
-        return $serverRequestFactory->createServerRequest('GET', '?' . $this->countryCode . '/' . $this->partyId . '/' . $this->tokenUid);
+        return $serverRequestFactory->createServerRequest('GET', '/' . $this->countryCode . '/' . $this->partyId . '/' . $this->tokenUid);
     }
 }
