@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Get;
 
+use Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Get\GetTokenResponse;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Token;
 use DateTime;
 use Http\Discovery\Psr17FactoryDiscovery;
@@ -30,7 +31,7 @@ class GetTokenResponseTest extends TestCase
         $this->assertSame('TheNewMotion', $token->getIssuer());
         $this->assertTrue($token->isValid());
         $this->assertSame('ALWAYS', $token->getWhiteList()->getValue());
-        $this->assertNull($token->getWhiteList());
+        $this->assertNull($token->getLanguage());
         $this->assertEquals(new DateTime('2015-06-29T22:39:09Z'), $token->getLastUpdated());
     }
 

@@ -1,0 +1,36 @@
+<?php
+
+
+namespace Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Get;
+
+use Chargemap\OCPI\Common\Client\Modules\AbstractResponse;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\TokenFactory;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Token;
+use Psr\Http\Message\ResponseInterface;
+
+class GetTokenResponse extends AbstractResponse
+{
+    private Token $token;
+
+    public function __construct(Token $token)
+    {
+        $this->token = $token;
+    }
+
+    public function getToken(): Token
+    {
+        return $this->token;
+    }
+
+    public static function from(ResponseInterface $response):GetTokenResponse
+    {
+        $json = self::toJson($response);
+
+        self::validate($json, __DIR__ . '/../../Schemas/token.schema.json');
+
+        $token = TokenFactory::fromJson($json);
+
+        return new self($token);
+    }
+
+}
