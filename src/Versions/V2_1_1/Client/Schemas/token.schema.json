@@ -44,7 +44,7 @@
     "language": {
       "type": "string",
       "minLength": 1,
-      "maxLength": 64
+      "maxLength": 2
     },
     "last_updated": {
       "type": "string",

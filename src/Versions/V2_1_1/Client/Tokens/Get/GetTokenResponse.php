@@ -22,7 +22,7 @@ class GetTokenResponse extends AbstractResponse
         return $this->token;
     }
 
-    public static function from(ResponseInterface $response):GetTokenResponse
+    public static function from(ResponseInterface $response): GetTokenResponse
     {
         $json = self::toJson($response);
 
