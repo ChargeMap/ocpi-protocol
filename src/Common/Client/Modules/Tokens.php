@@ -11,24 +11,24 @@ use Chargemap\OCPI\Common\Client\Modules\Tokens\Put\PutTokenService;
 
 class Tokens extends AbstractFeatures
 {
-    private GetTokenService $GetTokenService;
-    private PutTokenService $PutTokenService;
+    private GetTokenService $getTokenService;
+    private PutTokenService $putTokenService;
 
     public function get(GetTokenRequest $request): GetTokenResponse
     {
-        if ($this->GetTokenService === null) {
-            $this->GetTokenService = new GetTokenService($this->ocpiConfiguration);
+        if ($this->getTokenService === null) {
+            $this->getTokenService = new GetTokenService($this->ocpiConfiguration);
         }
 
-        return $this->GetTokenService->handle($request);
+        return $this->getTokenService->handle($request);
     }
 
     public function put(PutTokenRequest $request): PutTokenResponse
     {
-        if ($this->PutTokenService === null) {
-            $this->PutTokenService = new PutTokenService($this->ocpiConfiguration);
+        if ($this->putTokenService === null) {
+            $this->putTokenService = new PutTokenService($this->ocpiConfiguration);
         }
 
-        return $this->PutTokenService->handle($request);
+        return $this->putTokenService->handle($request);
     }
 }
