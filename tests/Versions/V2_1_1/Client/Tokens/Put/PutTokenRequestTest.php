@@ -27,8 +27,8 @@ class PutTokenRequestTest extends TestCase
      */
     public function testShouldConstructCorrectQuery(string $countryCode, string $partyId, string $tokenUid): void
     {
-        $payload = file_get_contents(__DIR__ . '/payloads/token.json');
-        $token = TokenFactory::fromJson(json_decode($payload));
+        $payload = json_decode(file_get_contents(__DIR__ . '/payloads/token.json'));
+        $token = TokenFactory::fromJson($payload);
         $request = new PutTokenRequest($countryCode, $partyId, $tokenUid, $token);
         $requestInterface = $request->getServerRequestInterface(
             Psr17FactoryDiscovery::findServerRequestFactory(),
@@ -36,7 +36,7 @@ class PutTokenRequestTest extends TestCase
         );
         $this->assertSame("/$countryCode/$partyId/$tokenUid", $requestInterface->getUri()->getPath());
         $this->assertSame('PUT', $requestInterface->getMethod());
-        $this->assertSame($payload, $requestInterface->getBody()->getContents());
+        $this->assertEquals($payload, json_decode($requestInterface->getBody()->getContents()));
     }
 
     public function invalidParametersProvider(): iterable

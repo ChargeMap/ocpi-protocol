@@ -6,6 +6,7 @@ namespace Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Put;
 use Chargemap\OCPI\Common\Client\Modules\Tokens\Put\PutTokenRequest as BaseRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Client\VersionTrait;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Token;
+use Http\Discovery\Psr17FactoryDiscovery;
 use InvalidArgumentException;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -20,7 +21,7 @@ class PutTokenRequest extends BaseRequest
     private string $tokenUid;
     private Token $token;
 
-    public function __construct(string $countryCode, string $partyId, string $tokenUid,Token $token)
+    public function __construct(string $countryCode, string $partyId, string $tokenUid, Token $token)
     {
         if (strlen($countryCode) !== 2) {
             throw new InvalidArgumentException("Length of countryCode must be 2");
@@ -42,6 +43,11 @@ class PutTokenRequest extends BaseRequest
 
     public function getServerRequestInterface(ServerRequestFactoryInterface $serverRequestFactory, ?StreamFactoryInterface $streamFactory): ServerRequestInterface
     {
+        if ($streamFactory === null) {
+            $streamFactory = Psr17FactoryDiscovery::findStreamFactory();
+        }
 
+        return $serverRequestFactory->createServerRequest('PUT', '/' . $this->countryCode . '/' . $this->partyId . '/' . $this->tokenUid)
+            ->withBody($streamFactory->createStream(json_encode($this->token)));
     }
 }
