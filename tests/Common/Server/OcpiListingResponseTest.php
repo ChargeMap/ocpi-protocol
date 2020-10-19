@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Chargemap\OCPI\Common\Server;
 
 use Chargemap\OCPI\Common\Server\OcpiListingResponse;

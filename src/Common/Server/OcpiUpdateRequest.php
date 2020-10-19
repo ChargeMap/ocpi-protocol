@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chargemap\OCPI\Common\Server;
 
 use Chargemap\OCPI\Common\Server\Errors\OcpiNotEnoughInformationClientError;

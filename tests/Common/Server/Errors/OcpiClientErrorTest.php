@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Chargemap\OCPI\Common\Server\Errors;
 
 use Chargemap\OCPI\Common\Server\Errors\OcpiClientError;
