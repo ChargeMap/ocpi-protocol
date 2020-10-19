@@ -22,7 +22,7 @@ class TokenFactory
             $json->uid,
             new TokenType($json->type),
             $json->auth_id,
-            $json->visual_number,
+            $json->visual_number ?? null,
             $json->issuer,
             $json->valid,
             new WhiteList($json->whitelist),

@@ -55,7 +55,6 @@
     "uid",
     "type",
     "auth_id",
-    "visual_number",
     "issuer",
     "valid",
     "whitelist",

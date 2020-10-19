@@ -8,7 +8,6 @@ use Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Get\GetTokenRequest;
 use Http\Discovery\Psr17FactoryDiscovery;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\ServerRequestInterface;
 
 class GetTokenRequestTest extends TestCase
 {
@@ -28,7 +27,6 @@ class GetTokenRequestTest extends TestCase
     public function testShouldConstructCorrectQuery(string $countryCode, string $partyId, string $tokenUid): void
     {
         $request = new GetTokenRequest($countryCode, $partyId, $tokenUid);
-        /** @var ServerRequestInterface $requestInterface */
         $requestInterface = $request->getServerRequestInterface(
             Psr17FactoryDiscovery::findServerRequestFactory(),
             null
