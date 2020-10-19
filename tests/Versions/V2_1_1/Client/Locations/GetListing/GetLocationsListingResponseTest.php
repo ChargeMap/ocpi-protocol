@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Client\Locations\GetLocationsListing;
+namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Client\Locations\GetListing;
 
 use Chargemap\OCPI\Versions\V2_1_1\Client\Locations\GetListing\GetLocationsListingRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Client\Locations\GetListing\GetLocationsListingResponse;
 use Http\Discovery\Psr17FactoryDiscovery;
 use PHPUnit\Framework\TestCase;
 
-class ListingResponseFactoryTest extends TestCase
+class GetLocationsListingResponseTest extends TestCase
 {
     public function testWithDocumentationExamplePayload(): void
     {

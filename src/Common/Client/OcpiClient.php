@@ -3,6 +3,7 @@
 namespace Chargemap\OCPI\Common\Client;
 
 use Chargemap\OCPI\Common\Client\Modules\Locations;
+use Chargemap\OCPI\Common\Client\Modules\Tokens;
 use Chargemap\OCPI\Common\Client\Modules\Versions;
 use Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails\GetVersionDetailRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Client\V2_1_1;
@@ -14,6 +15,8 @@ class OcpiClient
     private Versions $versions;
 
     private Locations $locations;
+
+    private Tokens $tokens;
 
     public function __construct(OcpiConfiguration $configuration)
     {
@@ -50,5 +53,14 @@ class OcpiClient
         }
 
         return $this->locations;
+    }
+
+    public function tokens(): Tokens
+    {
+        if ($this->tokens === null) {
+            $this->tokens = new Tokens($this->configuration);
+        }
+
+        return $this->tokens;
     }
 }
