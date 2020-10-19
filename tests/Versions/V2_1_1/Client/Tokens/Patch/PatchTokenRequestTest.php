@@ -3,9 +3,9 @@
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Patch;
 
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\PartialTokenFactory;
-use Chargemap\OCPI\Versions\V2_1_1\Common\Models\PartialToken;
 use Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Patch\PatchTokenRequest;
 use Http\Discovery\Psr17FactoryDiscovery;
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 class PatchTokenRequestTest extends TestCase
@@ -75,7 +75,7 @@ class PatchTokenRequestTest extends TestCase
         string $partyId,
         string $tokenUid
     ): void {
-        $payload = file_get_contents(__DIR__ . '/payloads/token.json');
+        $payload = file_get_contents(__DIR__ . '/payloads/part_of_token.json');
         $token = PartialTokenFactory::fromJson(json_decode($payload));
 
         $this->expectException(InvalidArgumentException::class);
