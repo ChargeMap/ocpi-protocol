@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chargemap\OCPI\Common\Server\Models;
 
 use MyCLabs\Enum\Enum;

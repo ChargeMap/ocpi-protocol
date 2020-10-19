@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions;
 
 use Chargemap\OCPI\Common\Client\Modules\AbstractFeatures;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Chargemap\OCPI\Common\Client;
 
 use Chargemap\OCPI\Common\Client\Modules\AbstractRequest;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Patch;
 
 use Chargemap\OCPI\Common\Utils\PayloadValidation;

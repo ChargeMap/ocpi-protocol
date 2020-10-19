@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Chargemap\OCPI\Common\Utils;
 
 use Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError;
