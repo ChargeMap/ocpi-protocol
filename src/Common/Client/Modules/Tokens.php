@@ -16,9 +16,9 @@ use Chargemap\OCPI\Common\Client\Modules\Tokens\Put\PutTokenService;
 
 class Tokens extends AbstractFeatures
 {
-    private GetTokenService $getTokenService;
-    private PutTokenService $putTokenService;
-    private PatchTokenService $patchTokenService;
+    private ?GetTokenService $getTokenService = null;
+    private ?PutTokenService $putTokenService = null;
+    private ?PatchTokenService $patchTokenService = null;
 
     public function get(GetTokenRequest $request): GetTokenResponse
     {
