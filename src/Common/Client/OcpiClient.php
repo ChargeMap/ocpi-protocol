@@ -14,11 +14,11 @@ class OcpiClient
 {
     private OcpiConfiguration $configuration;
 
-    private Versions $versions;
+    private ?Versions $versions;
 
-    private Locations $locations;
+    private ?Locations $locations;
 
-    private Tokens $tokens;
+    private ?Tokens $tokens;
 
     public function __construct(OcpiConfiguration $configuration)
     {
