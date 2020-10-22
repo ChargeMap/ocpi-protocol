@@ -15,7 +15,7 @@ class PutTokenService extends AbstractFeatures
         $service = ServiceFactory::from($request, $this->ocpiConfiguration);
 
         switch (get_class($service)) {
-            case PutTokenService::class:
+            case \Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Put\PutTokenService::class:
                 return $service->handle($request);
         }
 
