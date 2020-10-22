@@ -17,7 +17,7 @@ class OcpiListingResponseTest extends OcpiTestCase
     {
         $request = new OcpiEmspTokenGetRequest(
             Psr17FactoryDiscovery::findServerRequestFactory()
-                ->createServerRequest('GET', '/test')
+                ->createServerRequest('GET', 'http://example.com/test')
                 ->withQueryParams(['offset' => '10', 'limit' => '10'])
                 ->withHeader('Authorization', 'Token 01234567-0123-0123-0123-0123456789ab')
         );
@@ -35,7 +35,7 @@ class OcpiListingResponseTest extends OcpiTestCase
         $responseInterface = $mock->getResponseInterface();
 
         $this->assertEquals(OcpiSuccessHttpCode::HTTP_OK, $responseInterface->getStatusCode());
-        $this->assertEquals('/test?offset=20&limit=10', $responseInterface->getHeader('Link')[0]);
+        $this->assertEquals('https://example.com/test?offset=20&limit=10', $responseInterface->getHeader('Link')[0]);
         $this->assertEquals(45, $responseInterface->getHeader('X-Total-Count')[0]);
         $this->assertEquals(10, $responseInterface->getHeader('X-Limit')[0]);
     }
