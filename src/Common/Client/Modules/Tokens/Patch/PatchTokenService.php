@@ -15,7 +15,7 @@ class PatchTokenService extends AbstractFeatures
         $service = ServiceFactory::from($request, $this->ocpiConfiguration);
 
         switch (get_class($service)) {
-            case PatchTokenService::class:
+            case \Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Patch\PatchTokenService::class:
                 return $service->handle($request);
         }
 
