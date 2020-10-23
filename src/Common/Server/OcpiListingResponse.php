@@ -45,10 +45,7 @@ abstract class OcpiListingResponse extends OcpiSuccessResponse
         if ($offset + $this->limit < $this->totalCount) {
             $query['offset'] = $offset + $this->limit;
 
-            $uri = $uri
-                ->withQuery(http_build_query($query))
-                ->withPort(null)
-                ->withScheme('https');
+            $uri = $uri->withQuery(http_build_query($query));
             $response = $response->withHeader('Link', $uri->__toString());
         }
 
