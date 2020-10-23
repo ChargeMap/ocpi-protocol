@@ -49,7 +49,9 @@ class PatchTokenRequest extends BaseRequest
             $streamFactory = Psr17FactoryDiscovery::findStreamFactory();
         }
 
-        return $serverRequestFactory->createServerRequest('PATCH', '/' . $this->countryCode . '/' . $this->partyId . '/' . $this->tokenUid)
+        return $serverRequestFactory->createServerRequest('PATCH',
+            '/' . $this->countryCode . '/' . $this->partyId . '/' . $this->tokenUid)
+            ->withHeader('Content-Type', 'application/json')
             ->withBody($streamFactory->createStream(json_encode($this->partialToken)));
     }
 }
