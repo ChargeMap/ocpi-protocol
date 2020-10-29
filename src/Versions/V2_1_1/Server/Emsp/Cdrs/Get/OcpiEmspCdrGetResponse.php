@@ -12,9 +12,9 @@ class OcpiEmspCdrGetResponse extends OcpiSuccessResponse
 {
     private Cdr $cdr;
 
-    public function __construct(Cdr $cdr)
+    public function __construct(Cdr $cdr, string $statusMessage = null)
     {
-        parent::__construct(OcpiSuccessHttpCode::HTTP_OK(), null);
+        parent::__construct(OcpiSuccessHttpCode::HTTP_OK(), $statusMessage);
         $this->cdr = $cdr;
     }
 

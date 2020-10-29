@@ -11,9 +11,9 @@ class OcpiEmspConnectorPutResponse extends OcpiCreateResponse
 {
     private Connector $connector;
 
-    public function __construct(Connector $connector)
+    public function __construct(Connector $connector, string $statusMessage = 'Connector successfully created.')
     {
-        parent::__construct('Connector successfully created.');
+        parent::__construct($statusMessage);
         $this->connector = $connector;
     }
 

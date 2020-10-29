@@ -11,9 +11,9 @@ class OcpiEmspSessionPutResponse extends OcpiCreateResponse
 {
     private Session $session;
 
-    public function __construct(Session $session)
+    public function __construct(Session $session, string $statusMessage = 'Session successfully created.')
     {
-        parent::__construct('Session successfully created.');
+        parent::__construct($statusMessage);
         $this->session = $session;
     }
 

@@ -16,9 +16,9 @@ class OcpiEmspCdrPostResponse extends OcpiCreateResponse
 
     private string $cdrUrl;
 
-    public function __construct(Cdr $cdr, string $cdrUrl)
+    public function __construct(Cdr $cdr, string $cdrUrl, string $statusMessage = 'Cdr successfully created.')
     {
-        parent::__construct('Cdr successfully created.');
+        parent::__construct($statusMessage);
         $this->cdr = $cdr;
         $this->cdrUrl = $cdrUrl;
     }
