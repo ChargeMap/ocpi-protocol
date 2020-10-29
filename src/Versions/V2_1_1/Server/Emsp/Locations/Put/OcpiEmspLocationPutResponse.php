@@ -11,9 +11,9 @@ class OcpiEmspLocationPutResponse extends OcpiCreateResponse
 {
     private Location $location;
 
-    public function __construct(Location $location)
+    public function __construct(Location $location, string $statusMessage = 'Location successfully created.')
     {
-        parent::__construct('Location successfully created.');
+        parent::__construct($statusMessage);
         $this->location = $location;
     }
 

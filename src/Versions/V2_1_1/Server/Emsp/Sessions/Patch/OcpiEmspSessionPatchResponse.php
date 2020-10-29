@@ -11,9 +11,9 @@ class OcpiEmspSessionPatchResponse extends OcpiUpdateResponse
 {
     private PartialSession $session;
 
-    public function __construct(PartialSession $session)
+    public function __construct(PartialSession $session, string $statusMessage = 'Session successfully updated')
     {
-        parent::__construct('Session successfully updated');
+        parent::__construct($statusMessage);
         $this->session = $session;
     }
 

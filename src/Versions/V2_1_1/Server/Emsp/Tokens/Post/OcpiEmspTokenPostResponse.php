@@ -17,9 +17,13 @@ class OcpiEmspTokenPostResponse extends OcpiCreateResponse
 
     private ?DisplayText $info;
 
-    public function __construct(AllowedType $allowed, ?LocationReferences $location, ?DisplayText $info)
-    {
-        parent::__construct('Token successfully created.');
+    public function __construct(
+        AllowedType $allowed,
+        ?LocationReferences $location,
+        ?DisplayText $info,
+        string $statusMessage = 'Token successfully created.'
+    ) {
+        parent::__construct($statusMessage);
         $this->allowed = $allowed;
         $this->location = $location;
         $this->info = $info;

@@ -11,9 +11,11 @@ class OcpiEmspConnectorPatchResponse extends OcpiUpdateResponse
 {
     private PartialConnector $partialConnector;
 
-    public function __construct(PartialConnector $partialConnector)
-    {
-        parent::__construct('Connector successfully updated');
+    public function __construct(
+        PartialConnector $partialConnector,
+        string $statusMessage = 'Connector successfully updated'
+    ) {
+        parent::__construct($statusMessage);
         $this->partialConnector = $partialConnector;
     }
 

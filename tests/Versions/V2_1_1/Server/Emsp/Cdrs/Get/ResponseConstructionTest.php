@@ -6,6 +6,7 @@ namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Cdrs\Get;
 
 use Chargemap\OCPI\Common\Server\StatusCodes\OcpiSuccessHttpCode;
 use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Cdr;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Cdrs\Get\OcpiEmspCdrGetResponse;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\CdrFactory;
 use DateTime;
@@ -112,5 +113,20 @@ class ResponseConstructionTest extends TestCase
         $this->assertSame(15.342, $jsonCdr['total_energy']);
         $this->assertSame(1.973, $jsonCdr['total_time']);
         $this->assertEquals(DateTimeFormatter::format(new DateTime('2015-06-29T22:01:13Z')), $jsonCdr['last_updated']);
+    }
+
+    public function testShouldAddMessage(): void
+    {
+        $cdr = $this->createMock(Cdr::class);
+        $responseFactory = Psr17FactoryDiscovery::findResponseFactory();
+        $streamFactory = Psr17FactoryDiscovery::findStreamFactory();
+        $response = new OcpiEmspCdrGetResponse($cdr, 'Cdr is here');
+
+        $responseInterface = $response->getResponseInterface($responseFactory, $streamFactory);
+
+        $this->assertEquals(
+            'Cdr is here',
+            json_decode($responseInterface->getBody()->getContents())->status_message
+        );
     }
 }

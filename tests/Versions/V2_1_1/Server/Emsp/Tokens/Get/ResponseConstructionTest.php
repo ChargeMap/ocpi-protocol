@@ -50,12 +50,12 @@ class ResponseConstructionTest extends TestCase
         $this->assertEquals([
             [
                 'uid' => '123',
-                'type' => TokenType::RFID(),
+                'type' => 'RFID',
                 'auth_id' => 'D2G23404',
                 'visual_number' => '777',
                 'issuer' => 'issuer',
                 'valid' => true,
-                'whitelist' => WhiteList::ALLOWED(),
+                'whitelist' => 'ALLOWED',
                 'language' => 'EN',
                 'last_updated' => DateTimeFormatter::format((new DateTime()))
             ]

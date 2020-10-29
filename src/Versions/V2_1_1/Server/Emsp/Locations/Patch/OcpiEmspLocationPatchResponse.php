@@ -11,9 +11,9 @@ class OcpiEmspLocationPatchResponse extends OcpiUpdateResponse
 {
     private PartialLocation $partialLocation;
 
-    public function __construct(PartialLocation $partialLocation)
+    public function __construct(PartialLocation $partialLocation, string $statusMessage = 'Location successfully updated.')
     {
-        parent::__construct('Location successfully updated.');
+        parent::__construct($statusMessage);
         $this->partialLocation = $partialLocation;
     }
 

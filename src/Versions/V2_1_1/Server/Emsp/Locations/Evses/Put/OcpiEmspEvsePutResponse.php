@@ -11,9 +11,9 @@ class OcpiEmspEvsePutResponse extends OcpiCreateResponse
 {
     private EVSE $evse;
 
-    public function __construct(EVSE $evse)
+    public function __construct(EVSE $evse, string $statusMessage = 'EVSE successfully created.')
     {
-        parent::__construct('EVSE successfully created.');
+        parent::__construct($statusMessage);
         $this->evse = $evse;
     }
 

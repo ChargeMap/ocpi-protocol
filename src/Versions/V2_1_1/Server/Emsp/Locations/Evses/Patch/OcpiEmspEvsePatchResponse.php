@@ -11,9 +11,9 @@ class OcpiEmspEvsePatchResponse extends OcpiUpdateResponse
 {
     private PartialEVSE $partialEvse;
 
-    public function __construct(PartialEVSE $partialEvse)
+    public function __construct(PartialEVSE $partialEvse, string $statusMessage = 'EVSE successfully updated.')
     {
-        parent::__construct('EVSE successfully updated');
+        parent::__construct($statusMessage);
         $this->partialEvse = $partialEvse;
     }
 
