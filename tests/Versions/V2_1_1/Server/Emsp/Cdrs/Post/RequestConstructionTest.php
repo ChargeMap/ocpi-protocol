@@ -27,7 +27,7 @@ class RequestConstructionTest extends OcpiTestCase
      * @param string $filename
      * @throws Exception
      */
-    public function testShouldConstructWithFullPayload(string $filename): void
+    public function testShouldConstructWithPayload(string $filename): void
     {
         $json = json_decode(file_get_contents($filename));
         $serverRequestInterface = $this->createServerRequestInterface($filename);
