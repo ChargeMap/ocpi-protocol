@@ -88,6 +88,8 @@ class RequestConstructionTest extends OcpiTestCase
                         $jsonDay = $jsonRestrictions->day_of_week[0];
                         $day = $restrictions->getDaysOfWeek()[0];
                         $this->assertEquals($jsonDay, $day->getValue());
+                    } else {
+                        $this->assertNull($element->getRestrictions());
                     }
                 }
             }
