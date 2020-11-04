@@ -7,58 +7,82 @@ namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Cdrs\Post;
 use Chargemap\OCPI\Common\Server\Errors\OcpiNotEnoughInformationClientError;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Cdrs\Post\OcpiEmspCdrPostRequest;
 use DateTime;
+use Exception;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 
 class RequestConstructionTest extends OcpiTestCase
 {
-    public function testShouldConstructWithFullPayload(): void
+    public function validPayloadsProvider(): iterable
     {
-        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/CdrFullPayload.json');
+        foreach (scandir(__DIR__ . '/payloads/') as $filename) {
+            if (substr($filename, 0, 3) === 'ok_') {
+                yield basename(substr($filename, 3), '.json') => [__DIR__ . '/payloads/' . $filename];
+            }
+        }
+    }
+
+    /**
+     * @dataProvider validPayloadsProvider
+     * @param string $filename
+     * @throws Exception
+     */
+    public function testShouldConstructWithFullPayload(string $filename): void
+    {
+        $json = json_decode(file_get_contents($filename));
+        $serverRequestInterface = $this->createServerRequestInterface($filename);
 
         $request = new OcpiEmspCdrPostRequest($serverRequestInterface);
 
         $cdr = $request->getCdr();
-        $this->assertEquals('12345', $cdr->getId());
-        $this->assertEquals(new DateTime('2015-06-29T21:39:09Z'), $cdr->getStartDateTime());
-        $this->assertEquals(new DateTime('2015-06-29T23:37:32Z'), $cdr->getStopDateTime());
-        $this->assertEquals('DE8ACC12E46L89', $cdr->getAuthId());
-        $this->assertEquals('WHITELIST', $cdr->getAuthMethod());
-        $this->assertEquals('LOC1', $cdr->getLocation()->getId());
-        $this->assertEquals('EUR', $cdr->getCurrency());
-        $this->assertCount(2, $cdr->getTariffs());
+        $this->assertEquals($json->id, $cdr->getId());
+        $this->assertEquals(new DateTime($json->start_date_time), $cdr->getStartDateTime());
+        $this->assertEquals(new DateTime($json->stop_date_time), $cdr->getStopDateTime());
+        $this->assertEquals($json->auth_id, $cdr->getAuthId());
+        $this->assertEquals($json->auth_method, $cdr->getAuthMethod());
+        $this->assertEquals($json->location->id, $cdr->getLocation()->getId());
+        $this->assertEquals($json->currency, $cdr->getCurrency());
+        $this->assertCount(count($json->tariffs), $cdr->getTariffs());
 
+        $jsonTariff = $json->tariffs[0];
         $tariff = $cdr->getTariffs()[0];
-        $this->assertEquals('12', $tariff->getId());
-        $this->assertEquals('EUR', $tariff->getCurrency());
-        $this->assertEquals(new DateTime('2015-02-02T14:15:01Z'), $tariff->getLastUpdated());
-        $this->assertCount(1, $tariff->getTariffAltText());
-        $this->assertEquals('https://google.com', $tariff->getTariffAltUrl());
-        $this->assertCount(2, $tariff->getElements());
+        $this->assertEquals($jsonTariff->id, $tariff->getId());
+        $this->assertEquals($jsonTariff->currency, $tariff->getCurrency());
+        $this->assertEquals(new DateTime($jsonTariff->last_updated), $tariff->getLastUpdated());
+        $this->assertCount(count($jsonTariff->tariff_alt_text), $tariff->getTariffAltText());
+        $this->assertEquals($jsonTariff->tariff_alt_url, $tariff->getTariffAltUrl());
+        $this->assertCount(count($jsonTariff->elements), $tariff->getElements());
 
+        $jsonElement = $jsonTariff->elements[0];
         $element = $tariff->getElements()[0];
-        $this->assertCount(1, $element->getPriceComponents());
+        $this->assertCount(count($jsonElement->price_components), $element->getPriceComponents());
 
+        $jsonPriceComponent = $jsonElement->price_components[0];
         $priceComponent = $element->getPriceComponents()[0];
-        $this->assertEquals('TIME', $priceComponent->getType()->getValue());
-        $this->assertEquals(2.00, $priceComponent->getPrice());
-        $this->assertEquals(300, $priceComponent->getStepSize());
+        $this->assertEquals($jsonPriceComponent->type, $priceComponent->getType()->getValue());
+        $this->assertEquals($jsonPriceComponent->price, $priceComponent->getPrice());
+        $this->assertEquals($jsonPriceComponent->step_size, $priceComponent->getStepSize());
 
-        $restrictions = $element->getRestrictions();
-        $this->assertEquals('09:00', $restrictions->getStartTime());
-        $this->assertEquals('20:00', $restrictions->getEndTime());
-        $this->assertEquals('2020-01-09', $restrictions->getStartDate());
-        $this->assertEquals('2020-02-09', $restrictions->getEndDate());
-        $this->assertEquals(5.5, $restrictions->getMinKwh());
-        $this->assertEquals(10.4, $restrictions->getMaxKwh());
-        $this->assertEquals(3.3, $restrictions->getMinPower());
-        $this->assertEquals(5.6, $restrictions->getMaxPower());
-        $this->assertEquals(1, $restrictions->getMinDuration());
-        $this->assertEquals(2, $restrictions->getMaxDuration());
+        $jsonRestrictions = $jsonElement->restrictions;
 
-        $this->assertCount(3, $restrictions->getDaysOfWeek());
-        $day = $restrictions->getDaysOfWeek()[0];
-        $this->assertEquals('MONDAY', $day->getValue());
+        if($jsonRestrictions !== null) {
+            $restrictions = $element->getRestrictions();
+            $this->assertEquals($jsonRestrictions->start_time ?? null, $restrictions->getStartTime());
+            $this->assertEquals($jsonRestrictions->end_time ?? null, $restrictions->getEndTime());
+            $this->assertEquals($jsonRestrictions->start_date ?? null, $restrictions->getStartDate());
+            $this->assertEquals($jsonRestrictions->end_date ?? null, $restrictions->getEndDate());
+            $this->assertEquals($jsonRestrictions->min_kwh ?? null, $restrictions->getMinKwh());
+            $this->assertEquals($jsonRestrictions->max_kwh ?? null, $restrictions->getMaxKwh());
+            $this->assertEquals($jsonRestrictions->min_power ?? null, $restrictions->getMinPower());
+            $this->assertEquals($jsonRestrictions->max_power ?? null, $restrictions->getMaxPower());
+            $this->assertEquals($jsonRestrictions->min_duration ?? null, $restrictions->getMinDuration());
+            $this->assertEquals($jsonRestrictions->max_duration ?? null, $restrictions->getMaxDuration());
+            $this->assertCount(count($jsonRestrictions->day_of_week ?? []), $restrictions->getDaysOfWeek());
+
+            $jsonDay = $jsonRestrictions->day_of_week[0];
+            $day = $restrictions->getDaysOfWeek()[0];
+            $this->assertEquals($jsonDay, $day->getValue());
+        }
     }
 
     public function testWithoutBody(): void
