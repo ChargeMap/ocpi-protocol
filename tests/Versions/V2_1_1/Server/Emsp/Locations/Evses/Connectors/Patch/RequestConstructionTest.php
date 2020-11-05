@@ -48,6 +48,18 @@ class RequestConstructionTest extends OcpiTestCase
         $this->assertEquals(new DateTime('2015-03-16T10:10:02Z'), $partialConnector->getLastUpdated());
     }
 
+    public function testShouldConstructWithNullTermsAndConditions()
+    {
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/ConnectorPatchNullPayload.json');
+
+        $request = new OcpiEmspConnectorPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
+        $partialConnector = $request->getPartialConnector();
+        $this->assertNull($partialConnector->getId());
+        $this->assertNull($partialConnector->getVoltage());
+        $this->assertNull($partialConnector->getPowerType());
+        $this->assertEquals(null, $partialConnector->getTermsAndConditions());
+    }
+
     public function invalidPayloadProvider(): array
     {
         return [
@@ -71,4 +83,5 @@ class RequestConstructionTest extends OcpiTestCase
         $this->expectException(OcpiInvalidPayloadClientError::class);
         new OcpiEmspConnectorPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
     }
+
 }

@@ -52,4 +52,12 @@ class RequestConstructionTest extends OcpiTestCase
         $this->expectException(OcpiNotEnoughInformationClientError::class);
         new OcpiEmspConnectorPutRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256'));
     }
+
+    public function testShouldConstructRequestWithFreshmilePayload(): void
+    {
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/ok_freshmile.json');
+        $request = new OcpiEmspConnectorPutRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
+        $connector = $request->getConnector();
+        $this->assertEquals(null,$connector->getTermsAndConditions());
+    }
 }
