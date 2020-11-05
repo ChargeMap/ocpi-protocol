@@ -64,7 +64,10 @@
       "maxLength": 36
     },
     "terms_and_conditions": {
-      "type": "string",
+      "type": [
+        "string",
+        "null"
+      ],
       "format": "uri"
     },
     "last_updated": {
