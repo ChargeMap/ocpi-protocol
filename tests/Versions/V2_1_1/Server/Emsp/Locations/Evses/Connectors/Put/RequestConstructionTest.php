@@ -55,7 +55,7 @@ class RequestConstructionTest extends OcpiTestCase
 
     public function testShouldConstructRequestWithFreshmilePayload(): void
     {
-        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/ok_freshmile.json');
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/ConnectorPutNullPayload.json');
         $request = new OcpiEmspConnectorPutRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
         $connector = $request->getConnector();
         $this->assertEquals(null,$connector->getTermsAndConditions());

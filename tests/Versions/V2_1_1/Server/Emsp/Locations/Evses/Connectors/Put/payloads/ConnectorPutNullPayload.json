@@ -1,0 +1,11 @@
+{
+  "id": "1",
+  "standard": "IEC_62196_T2",
+  "format": "CABLE",
+  "power_type": "AC_3_PHASE",
+  "voltage": 220,
+  "amperage": 16,
+  "tariff_id": "11",
+  "terms_and_conditions": null,
+  "last_updated": "2015-03-16T10:10:02Z"
+}
