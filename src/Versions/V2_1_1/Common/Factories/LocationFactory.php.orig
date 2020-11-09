@@ -1,0 +1,99 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Chargemap\OCPI\Versions\V2_1_1\Common\Factories;
+
+use Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Models\AdditionalGeoLocation;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Facility;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Models\GeoLocation;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Location;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Models\LocationType;
+use DateTime;
+use stdClass;
+
+class LocationFactory
+{
+    public static function fromJson(?stdClass $json): ?Location
+    {
+        if ($json === null) {
+            return null;
+        }
+
+        // Additional verification for freshmile who sends an empty array
+        $jsonOpeningTimes = $json->opening_times ?? null;
+        $openingTimes = null;
+
+<<<<<<< HEAD
+        if (!is_array($jsonOpeningTimes)) {
+            $openingTimes = HoursFactory::fromJson($json->opening_times ?? null);
+        }
+
+        // Note: why this check exists? In any case, this rule should be on master branch
+=======
+        $jsonOpeningTimes = $json->opening_times ?? null;
+
+        if (!is_array($jsonOpeningTimes)) {
+            $openingTimes = HoursFactory::fromJson($jsonOpeningTimes ?? null);
+        }
+
+>>>>>>> 5ba7f34e74921954b4206ac86ce07edcbc797398
+        if ($openingTimes !== null) {
+            $isTwentyFourSeven = $openingTimes->isTwentyFourSeven();
+            $regularHours = $openingTimes->getRegularHours();
+            if ($isTwentyFourSeven && !empty($regularHours)) {
+                throw new OcpiInvalidPayloadClientError('Location cannot be always open and have regular hours in the same time');
+            } elseif (!$isTwentyFourSeven && empty($regularHours)) {
+                throw new OcpiInvalidPayloadClientError('Location must be always open or have regular hours');
+            }
+        }
+
+        $location = new Location(
+            $json->id,
+            new LocationType($json->type),
+            $json->name ?? null,
+            $json->address,
+            $json->city,
+            $json->postal_code,
+            $json->country,
+            new GeoLocation($json->coordinates->latitude, $json->coordinates->longitude),
+            BusinessDetailsFactory::fromJson($json->operator ?? null),
+            BusinessDetailsFactory::fromJson($json->suboperator ?? null),
+            BusinessDetailsFactory::fromJson($json->owner ?? null),
+            $json->time_zone ?? null,
+            $openingTimes,
+            $json->charging_when_closed ?? null,
+            EnergyMixFactory::fromJson($json->energy_mix ?? null),
+            new DateTime($json->last_updated)
+        );
+
+        foreach ($json->related_locations ?? [] as $jsonRelatedLocation) {
+            $location->addRelatedLocation(new AdditionalGeoLocation(
+                new GeoLocation(
+                    $jsonRelatedLocation->latitude,
+                    $jsonRelatedLocation->longitude
+                ),
+                DisplayTextFactory::fromJson($jsonRelatedLocation->name)
+            ));
+        }
+
+        foreach ($json->evses ?? [] as $jsonEvse) {
+            $location->addEVSE(EVSEFactory::fromJson($jsonEvse));
+        }
+
+        foreach ($json->directions ?? [] as $jsonDirection) {
+            $location->addDirection(DisplayTextFactory::fromJson($jsonDirection));
+        }
+
+        foreach ($json->facilities ?? [] as $jsonFacility) {
+            $location->addFacility(new Facility($jsonFacility));
+        }
+
+        foreach ($json->images ?? [] as $jsonImage) {
+            $location->addImage(ImageFactory::fromJson($jsonImage));
+        }
+
+        return $location;
+    }
+}
