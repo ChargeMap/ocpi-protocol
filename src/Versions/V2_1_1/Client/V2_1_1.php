@@ -12,6 +12,8 @@ class V2_1_1 extends AbstractFeatures
 
     private Tokens $tokens;
 
+    private Cdrs $cdrs;
+
     public function locations(): Locations
     {
         if (!isset($this->locations)) {
@@ -28,5 +30,14 @@ class V2_1_1 extends AbstractFeatures
         }
 
         return $this->tokens;
+    }
+
+    public function cdrs(): Cdrs
+    {
+        if (!isset($this->cdrs)) {
+            $this->cdrs = new Cdrs($this->ocpiConfiguration);
+        }
+
+        return $this->cdrs;
     }
 }
