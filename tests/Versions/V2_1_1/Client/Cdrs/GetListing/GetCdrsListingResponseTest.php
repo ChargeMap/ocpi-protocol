@@ -38,8 +38,12 @@ class GetCdrsListingResponseTest extends TestCase
             $this->assertSame($item->auth_method, $cdr->getAuthMethod()->getValue());
             $this->assertSame($item->location->id, $cdr->getLocation()->getId());
             $this->assertSame($item->currency, $cdr->getCurrency());
-            $this->assertSame($item->tariffs[0]->id, $cdr->getTariffs()[0]->getId());
-            $this->assertSame($item->charging_periods[0]->start_date_time, DateTimeFormatter::format($cdr->getChargingPeriods()[0]->getStartDate()));
+            foreach ($item->tariffs ?? [] as $index => $tariff) {
+                $this->assertSame($tariff->id, $cdr->getTariffs()[$index]->getId());
+            }
+            foreach ($item->charging_periods as $index => $chargingPeriod) {
+                $this->assertSame($chargingPeriod->start_date_time, DateTimeFormatter::format($cdr->getChargingPeriods()[$index]->getStartDate()));
+            }
             $this->assertSame($item->total_cost, $cdr->getTotalCost());
             $this->assertSame($item->total_energy, $cdr->getTotalEnergy());
             $this->assertSame($item->total_time, $cdr->getTotalTime());
