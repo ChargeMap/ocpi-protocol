@@ -30,21 +30,20 @@ class GetCdrsListingResponseTest extends TestCase
             ->withOffset(0)
             ->withLimit(10), $serverResponse)
             ->getCdrs()[0];
-
-        $this->assertSame($json->data[0]->id, $cdr->getId());
-        $this->assertSame($json->data[0]->start_date_time, DateTimeFormatter::format($cdr->getStartDateTime()));
-        $this->assertSame($json->data[0]->stop_date_time, DateTimeFormatter::format($cdr->getStopDateTime()));
-        $this->assertSame($json->data[0]->auth_id, $cdr->getAuthId());
-        $this->assertSame($json->data[0]->auth_method, $cdr->getAuthMethod()->getValue());
-        $this->assertSame($json->data[0]->location->id, $cdr->getLocation()->getId());
-        $this->assertSame($json->data[0]->currency, $cdr->getCurrency());
-        $this->assertSame($json->data[0]->tariffs[0]->id, $cdr->getTariffs()[0]->getId());
-        $this->assertSame($json->data[0]->charging_periods[0]->start_date_time, DateTimeFormatter::format($cdr->getChargingPeriods()[0]->getStartDate()));
-        $this->assertSame($json->data[0]->total_cost, $cdr->getTotalCost());
-        $this->assertSame($json->data[0]->total_energy, $cdr->getTotalEnergy());
-        $this->assertSame($json->data[0]->total_time, $cdr->getTotalTime());
-        $this->assertSame($json->data[0]->last_updated, DateTimeFormatter::format($cdr->getLastUpdated()));
-
+        foreach ($json->data as $item) {
+            $this->assertSame($item->id, $cdr->getId());
+            $this->assertSame($item->start_date_time, DateTimeFormatter::format($cdr->getStartDateTime()));
+            $this->assertSame($item->stop_date_time, DateTimeFormatter::format($cdr->getStopDateTime()));
+            $this->assertSame($item->auth_id, $cdr->getAuthId());
+            $this->assertSame($item->auth_method, $cdr->getAuthMethod()->getValue());
+            $this->assertSame($item->location->id, $cdr->getLocation()->getId());
+            $this->assertSame($item->currency, $cdr->getCurrency());
+            $this->assertSame($item->tariffs[0]->id, $cdr->getTariffs()[0]->getId());
+            $this->assertSame($item->charging_periods[0]->start_date_time, DateTimeFormatter::format($cdr->getChargingPeriods()[0]->getStartDate()));
+            $this->assertSame($item->total_cost, $cdr->getTotalCost());
+            $this->assertSame($item->total_energy, $cdr->getTotalEnergy());
+            $this->assertSame($item->total_time, $cdr->getTotalTime());
+            $this->assertSame($item->last_updated, DateTimeFormatter::format($cdr->getLastUpdated()));
+        }
     }
-
 }
