@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Chargemap\OCPI\Versions\V2_1_1\Client\Locations\GetListing;
+namespace Chargemap\OCPI\Versions\V2_1_1\Client\Cdrs\GetListing;
 
 use Chargemap\OCPI\Common\Client\Modules\ListingRequest;
-use Chargemap\OCPI\Common\Client\Modules\Locations\GetListing\GetLocationsListingRequest as BaseRequest;
+use Chargemap\OCPI\Common\Client\Modules\Cdrs\GetListing\GetCdrsListingRequest as BaseRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Client\VersionTrait;
 use DateTime;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
-class GetLocationsListingRequest extends BaseRequest
+class GetCdrsListingRequest extends BaseRequest
 {
     use VersionTrait;
     use ListingRequest;

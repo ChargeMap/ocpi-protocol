@@ -6,6 +6,7 @@ namespace Chargemap\OCPI\Common\Client;
 
 use Chargemap\OCPI\Common\Client\Modules\Locations;
 use Chargemap\OCPI\Common\Client\Modules\Tokens;
+use Chargemap\OCPI\Common\Client\Modules\Cdrs;
 use Chargemap\OCPI\Common\Client\Modules\Versions;
 use Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails\GetVersionDetailRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Client\V2_1_1;
@@ -19,6 +20,8 @@ class OcpiClient
     private ?Locations $locations = null;
 
     private ?Tokens $tokens = null;
+
+    private ?Cdrs $cdrs = null;
 
     public function __construct(OcpiConfiguration $configuration)
     {
@@ -64,5 +67,14 @@ class OcpiClient
         }
 
         return $this->tokens;
+    }
+
+    public function cdrs(): Cdrs
+    {
+        if ($this->cdrs === null) {
+            $this->cdrs = new Cdrs($this->configuration);
+        }
+
+        return $this->cdrs;
     }
 }
