@@ -21,6 +21,11 @@ class GetCdrsListingRequest extends BaseRequest
 
     private ?DateTime $dateTo;
 
+    public static function builder(): self
+    {
+        return new self();
+    }
+
     public function withDateFrom(DateTime $dateFrom): self
     {
         $this->dateFrom = $dateFrom;
