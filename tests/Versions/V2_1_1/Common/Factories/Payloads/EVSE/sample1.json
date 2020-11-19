@@ -1,0 +1,45 @@
+{
+  "uid": "ELCG1",
+  "evse_id": "FR*FR1*EELCG*1",
+  "status": "AVAILABLE",
+  "status_schedule": [],
+  "capabilities": [
+    "REMOTE_START_STOP_CAPABLE",
+    "RFID_READER",
+    "UNLOCK_CAPABLE"
+  ],
+  "connectors": [
+    {
+      "id": "123456789",
+      "standard": "IEC_62196_T2",
+      "format": "SOCKET",
+      "power_type": "AC_3_PHASE",
+      "voltage": 230,
+      "amperage": 32,
+      "tariff_id": "tariff_id",
+      "terms_and_conditions": null,
+      "last_updated": "2020-06-16T17:31:23Z"
+    },
+    {
+      "id": "1234567",
+      "standard": "DOMESTIC_E",
+      "format": "SOCKET",
+      "power_type": "AC_1_PHASE",
+      "voltage": 230,
+      "amperage": 13,
+      "tariff_id": "tariff_id",
+      "terms_and_conditions": null,
+      "last_updated": "2020-06-16T17:31:23Z"
+    }
+  ],
+  "floor_level": null,
+  "coordinates": {
+    "latitude": "49.0381",
+    "longitude": "2.21181"
+  },
+  "physical_reference": null,
+  "directions": [],
+  "parking_restrictions": [],
+  "images": null,
+  "last_updated": "2020-09-02T14:55:01Z"
+}

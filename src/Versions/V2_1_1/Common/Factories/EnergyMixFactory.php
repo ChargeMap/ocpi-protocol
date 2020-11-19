@@ -27,19 +27,13 @@ class EnergyMixFactory
 
         if (property_exists($json, 'energy_sources')) {
             foreach ($json->energy_sources as $source) {
-                $energyMix->addEnergySource(new EnergySource(
-                    new EnergySourceCategory($source->source),
-                    $source->percentage
-                ));
+                $energyMix->addEnergySource(EnergySourceFactory::fromJson($source));
             }
         }
 
         if (property_exists($json, 'environ_impact')) {
             foreach ($json->environ_impact as $impact) {
-                $energyMix->addEnvironImpact(new EnvironmentalImpact(
-                    new EnvironmentalImpactCategory($impact->source),
-                    $impact->amount
-                ));
+                $energyMix->addEnvironImpact(EnvironmentalImpactFactory::fromJson($impact));
             }
         }
 

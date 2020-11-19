@@ -1,0 +1,11 @@
+{
+  "id": "1234567",
+  "standard": "DOMESTIC_E",
+  "format": "SOCKET",
+  "power_type": "AC_1_PHASE",
+  "voltage": 230,
+  "amperage": 13,
+  "tariff_id": "tariff_id",
+  "terms_and_conditions": null,
+  "last_updated": "2020-06-16T17:31:23Z"
+}

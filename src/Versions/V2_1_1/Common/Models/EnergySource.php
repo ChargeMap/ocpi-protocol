@@ -10,9 +10,9 @@ class EnergySource implements JsonSerializable
 {
     private EnergySourceCategory $source;
 
-    private float $percentage;
+    private int $percentage;
 
-    public function __construct(EnergySourceCategory $source, float $percentage)
+    public function __construct(EnergySourceCategory $source, int $percentage)
     {
         $this->source = $source;
         $this->percentage = $percentage;
@@ -23,7 +23,7 @@ class EnergySource implements JsonSerializable
         return $this->source;
     }
 
-    public function getPercentage(): float
+    public function getPercentage(): int
     {
         return $this->percentage;
     }

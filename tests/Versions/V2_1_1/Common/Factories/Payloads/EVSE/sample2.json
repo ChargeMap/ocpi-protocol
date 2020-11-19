@@ -1,0 +1,81 @@
+{
+  "uid": "3256",
+  "evse_id": "BE-BEC-E041503001",
+  "status": "AVAILABLE",
+  "status_schedule": [
+    {
+      "period_begin": "2014-06-24T00:00:00Z",
+      "period_end": "2014-06-25T00:00:00Z",
+      "status": "INOPERATIVE"
+    },
+    {
+      "period_begin": "2014-06-25T00:00:00Z",
+      "period_end": "2014-06-26T00:00:00Z",
+      "status": "OUTOFORDER"
+    }
+  ],
+  "directions": [
+    {
+      "language": "en",
+      "text": "Turn left"
+    },
+    {
+      "language": "en",
+      "text": "Turn right"
+    }
+  ],
+  "parking_restrictions": [
+    "PLUGGED",
+    "CUSTOMERS"
+  ],
+  "coordinates": {
+    "latitude": "3.729944",
+    "longitude": "51.047599"
+  },
+  "capabilities": [
+    "RESERVABLE"
+  ],
+  "connectors": [
+    {
+      "id": "1",
+      "standard": "IEC_62196_T2",
+      "format": "CABLE",
+      "power_type": "AC_3_PHASE",
+      "voltage": 220,
+      "amperage": 16,
+      "tariff_id": "11",
+      "last_updated": "2015-03-16T10:10:02Z"
+    },
+    {
+      "id": "2",
+      "standard": "IEC_62196_T2",
+      "format": "SOCKET",
+      "power_type": "AC_3_PHASE",
+      "voltage": 220,
+      "amperage": 16,
+      "tariff_id": "11",
+      "last_updated": "2015-03-18T08:12:01Z"
+    }
+  ],
+  "physical_reference": "1",
+  "floor_level": "-1",
+  "images": [
+    {
+      "url": "https://google.com",
+      "thumbnail": "https://google.com",
+      "category": "NETWORK",
+      "type": "jpeg",
+      "width": 455,
+      "height": 343
+    },
+    {
+      "url": "https://google.com",
+      "thumbnail": "https://google.com",
+      "category": "CHARGER",
+      "type": "png",
+      "width": 234,
+      "height": 456
+    }
+  ],
+  "last_updated": "2015-06-28T08:12:01Z"
+}

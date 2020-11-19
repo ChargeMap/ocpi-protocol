@@ -10,9 +10,9 @@ class EnvironmentalImpact implements JsonSerializable
 {
     private EnvironmentalImpactCategory $source;
 
-    private float $amount;
+    private int $amount;
 
-    public function __construct(EnvironmentalImpactCategory $source, float $amount)
+    public function __construct(EnvironmentalImpactCategory $source, int $amount)
     {
         $this->source = $source;
         $this->amount = $amount;
@@ -23,7 +23,7 @@ class EnvironmentalImpact implements JsonSerializable
         return $this->source;
     }
 
-    public function getAmount(): float
+    public function getAmount(): int
     {
         return $this->amount;
     }

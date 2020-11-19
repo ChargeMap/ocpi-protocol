@@ -1,0 +1,23 @@
+{
+  "is_green_energy": true,
+  "energy_sources": [
+    {
+      "source": "NUCLEAR",
+      "percentage": 50
+    },
+    {
+      "source": "GAS",
+      "percentage": 50
+    }
+  ],
+  "environ_impact": [
+    {
+      "source": "NUCLEAR_WASTE",
+      "amount": 500
+    },
+    {
+      "source": "CARBON_DIOXIDE",
+      "amount": 1000
+    }
+  ]
+}

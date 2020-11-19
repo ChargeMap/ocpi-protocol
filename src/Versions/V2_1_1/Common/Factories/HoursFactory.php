@@ -21,31 +21,21 @@ class HoursFactory
 
         $hours = new Hours(property_exists($json, 'twentyfourseven') ? $json->twentyfourseven : false);
 
-        if (property_exists($json, 'regular_hours')) {
+        if (property_exists($json, 'regular_hours') && $json->regular_hours !== null) {
             foreach ($json->regular_hours as $jsonRegularHours) {
-                $hours->addHours(new RegularHours(
-                    new Weekday($jsonRegularHours->weekday),
-                    $jsonRegularHours->period_begin,
-                    $jsonRegularHours->period_end
-                ));
+                $hours->addHours(RegularHoursFactory::fromJson($jsonRegularHours));
             }
         }
 
-        if (property_exists($json, 'exceptional_openings')) {
+        if (property_exists($json, 'exceptional_openings') && $json->exceptional_openings !== null) {
             foreach ($json->exceptional_openings as $jsonOpenings) {
-                $hours->addExceptionalOpening(new ExceptionalPeriod(
-                    new DateTime($jsonOpenings->period_begin),
-                    new DateTime($jsonOpenings->period_end)
-                ));
+                $hours->addExceptionalOpening(ExceptionalPeriodFactory::fromJson($jsonOpenings));
             }
         }
 
-        if (property_exists($json, 'exceptional_closings')) {
+        if (property_exists($json, 'exceptional_closings') && $json->exceptional_closings !== null) {
             foreach ($json->exceptional_closings as $jsonClosings) {
-                $hours->addExceptionalClosing(new ExceptionalPeriod(
-                    new DateTime($jsonClosings->period_begin),
-                    new DateTime($jsonClosings->period_end)
-                ));
+                $hours->addExceptionalClosing(ExceptionalPeriodFactory::fromJson($jsonClosings));
             }
         }
 

@@ -35,41 +35,37 @@ class EVSEFactory
             new DateTime($json->last_updated)
         );
 
-        if (property_exists($json, 'status_schedule')) {
+        if (property_exists($json, 'status_schedule') && $json->status_schedule !== null) {
             foreach ($json->status_schedule as $jsonStatusSchedule) {
-                $evse->addStatusSchedule(new StatusSchedule(
-                    new DateTime($jsonStatusSchedule->period_begin),
-                    property_exists($jsonStatusSchedule, 'period_end') ? new DateTime($jsonStatusSchedule->period_end) : null,
-                    new EVSEStatus($jsonStatusSchedule->status)
-                ));
+                $evse->addStatusSchedule(StatusScheduleFactory::fromJson($jsonStatusSchedule));
             }
         }
 
-        if (property_exists($json, 'capabilities')) {
+        if (property_exists($json, 'capabilities') && $json->capabilities !== null) {
             foreach ($json->capabilities as $capability) {
                 $evse->addCapability(new Capability($capability));
             }
         }
 
-        if (property_exists($json, 'connectors')) {
+        if (property_exists($json, 'connectors') && $json->connectors !== null) {
             foreach ($json->connectors as $connector) {
                 $evse->addConnector(ConnectorFactory::fromJson($connector));
             }
         }
 
-        if (property_exists($json, 'directions')) {
+        if (property_exists($json, 'directions') && $json->directions !== null) {
             foreach ($json->directions as $direction) {
                 $evse->addDirection(DisplayTextFactory::fromJson($direction));
             }
         }
 
-        if (property_exists($json, 'parking_restrictions')) {
+        if (property_exists($json, 'parking_restrictions') && $json->parking_restrictions !== null) {
             foreach ($json->parking_restrictions as $restriction) {
                 $evse->addParkingRestriction(new ParkingRestriction($restriction));
             }
         }
 
-        if (property_exists($json, 'images')) {
+        if (property_exists($json, 'images') && $json->images !== null) {
             foreach ($json->images as $image) {
                 $evse->addImage(ImageFactory::fromJson($image));
             }
