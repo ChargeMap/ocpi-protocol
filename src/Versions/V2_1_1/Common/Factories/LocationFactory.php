@@ -28,7 +28,7 @@ class LocationFactory
             $json->city,
             $json->postal_code,
             $json->country,
-            new GeoLocation($json->coordinates->latitude, $json->coordinates->longitude),
+            GeoLocationFactory::fromJson($json->coordinates),
             BusinessDetailsFactory::fromJson($json->operator ?? null),
             BusinessDetailsFactory::fromJson($json->suboperator ?? null),
             BusinessDetailsFactory::fromJson($json->owner ?? null),
@@ -39,37 +39,31 @@ class LocationFactory
             new DateTime($json->last_updated)
         );
 
-        if (property_exists($json, 'related_locations')) {
+        if (property_exists($json, 'related_locations') && $json->related_locations !== null) {
             foreach ($json->related_locations as $jsonRelatedLocation) {
-                $location->addRelatedLocation(new AdditionalGeoLocation(
-                    new GeoLocation(
-                        $jsonRelatedLocation->latitude,
-                        $jsonRelatedLocation->longitude
-                    ),
-                    DisplayTextFactory::fromJson($jsonRelatedLocation->name)
-                ));
+                $location->addRelatedLocation(AdditionalGeoLocationFactory::fromJson($jsonRelatedLocation));
             }
         }
 
-        if (property_exists($json, 'evses')) {
+        if (property_exists($json, 'evses') && $json->evses !== null) {
             foreach ($json->evses as $jsonEvse) {
                 $location->addEVSE(EVSEFactory::fromJson($jsonEvse));
             }
         }
 
-        if (property_exists($json, 'directions')) {
+        if (property_exists($json, 'directions') && $json->directions !== null) {
             foreach ($json->directions as $jsonDirection) {
                 $location->addDirection(DisplayTextFactory::fromJson($jsonDirection));
             }
         }
 
-        if (property_exists($json, 'facilities')) {
+        if (property_exists($json, 'facilities') && $json->facilities !== null) {
             foreach ($json->facilities as $jsonFacility) {
                 $location->addFacility(new Facility($jsonFacility));
             }
         }
 
-        if (property_exists($json, 'images')) {
+        if (property_exists($json, 'images') && $json->images !== null) {
             foreach ($json->images as $jsonImage) {
                 $location->addImage(ImageFactory::fromJson($jsonImage));
             }

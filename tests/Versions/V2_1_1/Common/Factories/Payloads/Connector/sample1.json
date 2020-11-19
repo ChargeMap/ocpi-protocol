@@ -1,0 +1,11 @@
+{
+  "id": "5a311b4d3f033",
+  "standard": "IEC_62196_T2",
+  "format": "SOCKET",
+  "power_type": "AC_3_PHASE",
+  "voltage": 230,
+  "amperage": 32,
+  "tariff_id": "tariff_id",
+  "terms_and_conditions": null,
+  "last_updated": "2020-06-16T17:31:23Z"
+}
