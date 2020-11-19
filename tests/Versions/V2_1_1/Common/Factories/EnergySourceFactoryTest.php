@@ -45,7 +45,7 @@ class EnergySourceFactoryTest extends TestCase
             Assert::assertNull($energySource);
         } else {
             Assert::assertEquals(new EnergySourceCategory($json->source), $energySource->getSource());
-            Assert::assertSame($json->percentage, $energySource->getPercentage());
+            Assert::assertSame(floatval($json->percentage), $energySource->getPercentage());
         }
     }
 }

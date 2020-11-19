@@ -28,7 +28,7 @@ class LocationFactory
             $json->city,
             $json->postal_code,
             $json->country,
-            GeoLocationFactory::fromJson($json->coordinates ?? null),
+            GeoLocationFactory::fromJson($json->coordinates),
             BusinessDetailsFactory::fromJson($json->operator ?? null),
             BusinessDetailsFactory::fromJson($json->suboperator ?? null),
             BusinessDetailsFactory::fromJson($json->owner ?? null),
