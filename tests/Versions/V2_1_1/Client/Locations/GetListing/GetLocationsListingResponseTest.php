@@ -12,10 +12,28 @@ use PHPUnit\Framework\TestCase;
 
 class GetLocationsListingResponseTest extends TestCase
 {
-    public function testWithDocumentationExamplePayload(): void
+    /**
+     * @return mixed[][]
+     */
+    public function getFromData(): iterable
     {
-        $payload = file_get_contents(__DIR__ . '/../payloads/Valid/location.json');
+        foreach (scandir(__DIR__ . '/../payloads/Valid/') as $file) {
+            if ($file !== '.' && $file !== '..') {
+                yield $file => [
+                    'payload' => file_get_contents(__DIR__ . '/../payloads/Valid/' . $file),
+                ];
+            }
+        }
+    }
 
+    /**
+     * @param string $payload
+     * @throws OcpiUnauthorizedException
+     * @throws \JsonException
+     * @dataProvider getFromData()
+     */
+    public function testWithDocumentationExamplePayload(string $payload): void
+    {
         $json = json_decode( $payload, false, 512, JSON_THROW_ON_ERROR);
 
         $serverResponse = Psr17FactoryDiscovery::findResponseFactory()->createResponse(200)

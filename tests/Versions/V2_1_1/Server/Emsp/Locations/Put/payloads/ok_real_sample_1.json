@@ -1,0 +1,68 @@
+{
+  "id": "FR*NIS*PFR*13100*N1SSAN*A1X",
+  "type": "PARKING_LOT",
+  "name": "NISSAN DEALER AIX - AIX EN PROVENCE - FRANCE",
+  "address": "Route de Galice",
+  "city": "Aix-en-Provence",
+  "postal_code": "13100",
+  "country": "FRA",
+  "coordinates": {
+    "latitude": "43.5287152",
+    "longitude": "5.43188260"
+  },
+  "evses": [
+    {
+      "uid": "FRNIS*EFR13100*22RGAL1CE*0",
+      "evse_id": "FRNIS*EFR13100*22RGAL1CE*0",
+      "status": "AVAILABLE",
+      "capabilities": [
+        "REMOTE_START_STOP_CAPABLE",
+        "RFID_READER",
+        "UNLOCK_CAPABLE"
+      ],
+      "connectors": [
+        {
+          "id": "FRNIS*CFR13100*22RGAL1CE*0",
+          "standard": "CHADEMO",
+          "format": "CABLE",
+          "power_type": "DC",
+          "voltage": 400,
+          "amperage": 125,
+          "last_updated": "2020-12-03T15:05:16"
+        }
+      ],
+      "last_updated": "2020-12-03T14:51:14"
+    }
+  ],
+  "opening_times": {
+    "regular_hours": [
+      {
+        "weekday": 1,
+        "period_begin": "08:00",
+        "period_end": "20:00"
+      },
+      {
+        "weekday": 2,
+        "period_begin": "08:00",
+        "period_end": "20:00"
+      },
+      {
+        "weekday": 3,
+        "period_begin": "08:00",
+        "period_end": "20:00"
+      },
+      {
+        "weekday": 4,
+        "period_begin": "08:00",
+        "period_end": "20:00"
+      },
+      {
+        "weekday": 5,
+        "period_begin": "08:00",
+        "period_end": "20:00"
+      }
+    ],
+    "twentyfourseven": false
+  },
+  "last_updated": "2020-12-08T14:22:03"
+}
