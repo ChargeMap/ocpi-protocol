@@ -24,20 +24,20 @@ class HoursFactory
         // But most CPOs set the flag to false when regular hours is present (a defect in the protocol leads to this misunderstanding)
         // Let's handle gracefully and compare only that there is no incoherency between the flag and the presence of regular hours
         $twentyFourSeven = property_exists($json, 'twentyfourseven') && $json->twentyfourseven !== null ? $json->twentyfourseven : false;
-        $regularHours = property_exists($json, 'regular_hours') && $json->regular_hours !== null ? $json->regular_hours : null;
+        $regularHours = property_exists($json, 'regular_hours') && $json->regular_hours !== null ? $json->regular_hours : [];
 
-        if ($twentyFourSeven === true && $regularHours !== null) {
+        if ($twentyFourSeven === true && count($regularHours ) > 0) {
             throw new OcpiInvalidPayloadClientError('Location cannot be always open and have regular hours in the same time');
         }
 
-        if( $twentyFourSeven === false && $regularHours === null) {
+        if( $twentyFourSeven === false && count($regularHours) === 0) {
             throw new OcpiInvalidPayloadClientError('Location must be always open or have regular hours');
         }
 
         $hours = new Hours($twentyFourSeven);
 
         if ($regularHours !== null) {
-            foreach ($json->regular_hours as $jsonRegularHours) {
+            foreach ($regularHours as $jsonRegularHours) {
                 $hours->addHours(RegularHoursFactory::fromJson($jsonRegularHours));
             }
         }

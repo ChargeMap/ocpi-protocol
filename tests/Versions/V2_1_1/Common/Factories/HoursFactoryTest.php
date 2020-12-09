@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories;
 
+use Chargemap\OCPI\Common\Server\Errors\OcpiError;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\HoursFactory;
-use Chargemap\OCPI\Versions\V2_1_1\Common\Models\BusinessDetails;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Hours;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
@@ -14,10 +15,10 @@ class HoursFactoryTest extends TestCase
 {
     public function getFromJsonData(): iterable
     {
-        foreach (scandir(__DIR__ . '/Payloads/Hours/') as $filename) {
+        foreach (scandir(__DIR__ . '/Payloads/Hours/Valid/') as $filename) {
             if ($filename !== '.' && $filename !== '..') {
                 yield $filename => [
-                    'payload' => file_get_contents(__DIR__ . '/Payloads/Hours/' . $filename),
+                    'payload' => file_get_contents(__DIR__ . '/Payloads/Hours/Valid/' . $filename),
                 ];
             }
         }
@@ -42,7 +43,7 @@ class HoursFactoryTest extends TestCase
         if($json === null) {
             Assert::assertNull($hours);
         } else {
-            Assert::assertSame($json->twentyfourseven, $hours->isTwentyFourSeven());
+            Assert::assertSame($json->twentyfourseven ?? false, $hours->isTwentyFourSeven());
 
             if(!property_exists($json, 'regular_hours') || $json->regular_hours === null ) {
                 Assert::assertCount(0, $hours->getRegularHours());
@@ -69,4 +70,31 @@ class HoursFactoryTest extends TestCase
             }
         }
     }
+
+    public function getFromJsonExceptionsData()
+    {
+        foreach (scandir(__DIR__ . '/Payloads/Hours/Invalid/') as $filename) {
+            if ($filename !== '.' && $filename !== '..') {
+                yield $filename => [
+                    'payload' => file_get_contents(__DIR__ . '/Payloads/Hours/Invalid/' . $filename),
+                ];
+            }
+        }
+    }
+
+    /**
+     * @param string $exceptionClass
+     * @param string $payload
+     * @dataProvider getFromJsonExceptionsData()
+     */
+    public function testFromJsonExceptions(string $payload): void
+    {
+        $this->expectException(OcpiError::class);
+
+        $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
+
+        $hours = HoursFactory::fromJson($json);
+    }
+
+
 }
