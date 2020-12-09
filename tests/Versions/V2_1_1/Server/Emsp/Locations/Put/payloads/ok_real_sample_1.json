@@ -7,8 +7,8 @@
   "postal_code": "13100",
   "country": "FRA",
   "coordinates": {
-    "latitude": "43.5287152",
-    "longitude": "5.43188260"
+    "latitude": "43.528715",
+    "longitude": "5.431882"
   },
   "evses": [
     {
@@ -61,8 +61,7 @@
         "period_begin": "08:00",
         "period_end": "20:00"
       }
-    ],
-    "twentyfourseven": false
+    ]
   },
   "last_updated": "2020-12-08T14:22:03"
 }
