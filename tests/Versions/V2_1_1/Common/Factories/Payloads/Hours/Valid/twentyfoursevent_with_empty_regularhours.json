@@ -1,0 +1,17 @@
+{
+  "twentyfourseven": true,
+  "regular_hours": [
+  ],
+  "exceptional_openings": [
+    {
+      "period_begin": "2015-06-29T22:39:09Z",
+      "period_end": "2015-06-29T22:39:09Z"
+    }
+  ],
+  "exceptional_closings": [
+    {
+      "period_begin": "2015-06-29T22:39:09Z",
+      "period_end": "2015-06-29T22:39:09Z"
+    }
+  ]
+}
