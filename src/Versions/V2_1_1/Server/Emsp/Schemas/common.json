@@ -1,0 +1,67 @@
+{
+  "title": "V2.1.1\\Emsp\\Common",
+  "definitions": {
+    "latitude": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 10,
+      "pattern": "^-?[0-9]{1,2}\\.[0-9]{6}$"
+    },
+    "longitude": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 11,
+      "pattern": "^-?[0-9]{1,3}\\.[0-9]{6}$"
+    },
+    "geo_location": {
+      "type": "object",
+      "properties": {
+        "latitude": {
+          "$ref": "#/definitions/latitude"
+        },
+        "longitude": {
+          "$ref": "#/definitions/longitude"
+        }
+      },
+      "additionalProperties": false
+    },
+    "display_text": {
+      "type": "object",
+      "properties": {
+        "language": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 2,
+          "pattern": "^[A-Za-z]{2}$"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        }
+      },
+      "required": [
+        "language",
+        "text"
+      ],
+      "additionalProperties": false
+    },
+    "related_locations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "$ref": "#/definitions/latitude"
+          },
+          "longitude": {
+            "$ref": "#/definitions/longitude"
+          },
+          "name": {
+            "$ref": "#/definitions/display_text"
+          }
+        }
+      }
+    }
+  }
+}

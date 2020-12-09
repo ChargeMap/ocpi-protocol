@@ -87,24 +87,10 @@
           "maxLength": 3
         },
         "coordinates": {
-          "$ref": "#/definitions/geo_location"
+          "$ref": "common.json#/definitions/geo_location"
         },
         "related_locations": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "latitude": {
-                "$ref": "#/definitions/latitude"
-              },
-              "longitude": {
-                "$ref": "#/definitions/longitude"
-              },
-              "name": {
-                "$ref": "#/definitions/display_text"
-              }
-            }
-          }
+          "$ref": "common.json#/definitions/related_locations"
         },
         "evses": {
           "type": "array",
@@ -115,7 +101,7 @@
         "directions": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/display_text"
+            "$ref": "common.json#/definitions/display_text"
           }
         },
         "operator": {
@@ -253,7 +239,7 @@
               "maxLength": 4
             },
             "coordinates": {
-              "$ref": "#/definitions/geo_location"
+              "$ref": "common.json#/definitions/geo_location"
             },
             "physical_reference": {
               "type": "string",
@@ -263,7 +249,7 @@
             "directions": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/display_text"
+                "$ref": "common.json#/definitions/display_text"
               }
             },
             "parking_restrictions": {
@@ -612,51 +598,6 @@
           "additionalProperties": false
         }
       }
-    },
-    "latitude": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 10,
-      "pattern": "[0-9]{1,2}\\.[0-9]{6}$"
-    },
-    "longitude": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 11,
-      "pattern": "[0-9]{1,2}\\.[0-9]{6}$"
-    },
-    "geo_location": {
-      "type": "object",
-      "properties": {
-        "latitude": {
-          "$ref": "#/definitions/latitude"
-        },
-        "longitude": {
-          "$ref": "#/definitions/longitude"
-        }
-      },
-      "additionalProperties": false
-    },
-    "display_text": {
-      "type": "object",
-      "properties": {
-        "language": {
-          "type": "string",
-          "minLength": 2,
-          "maxLength": 2,
-          "pattern": "^[A-Za-z]{2}$"
-        },
-        "text": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 512
-        }
-      },
-      "required": [
-        "language",
-        "text"
-      ],
-      "additionalProperties": false
     }
   },
   "type": "object",
