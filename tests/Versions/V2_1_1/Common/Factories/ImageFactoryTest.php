@@ -10,7 +10,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class ImageFactoryTest extends TestCase
+class ImageFactoryTest extends FactoryTestCase
 {
     public function getFromJsonData(): iterable
     {
@@ -32,9 +32,11 @@ class ImageFactoryTest extends TestCase
     {
         $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
 
-        $businessDetails = ImageFactory::fromJson($json);
+        $this->coerce( realpath( __DIR__.'/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/common.json' ). '#/definitions/image', $json );
 
-        self::assertImage($json, $businessDetails);
+        $image = ImageFactory::fromJson($json);
+
+        self::assertImage($json, $image);
     }
 
     public static function assertImage(?stdClass $json, ?Image $image): void

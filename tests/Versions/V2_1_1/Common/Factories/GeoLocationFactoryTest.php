@@ -1,18 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories;
 
-use Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError;
-use Chargemap\OCPI\Common\Utils\PayloadValidation;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\GeoLocationFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\GeoLocation;
-use JsonSchema\Validator;
 use PHPUnit\Framework\Assert;
-use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class GeoLocationFactoryTest extends TestCase
+class GeoLocationFactoryTest extends FactoryTestCase
 {
     public function getFromJsonData(): iterable
     {
@@ -65,20 +62,7 @@ class GeoLocationFactoryTest extends TestCase
         $this->coerce( realpath( __DIR__.'/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/common.json' ). '#/definitions/geo_location', $json );
     }
 
-    public function coerce(string $schemaPath, stdClass $object): void
-    {
-        $jsonSchemaValidation = new Validator();
 
-        $definition = (object)[
-            '$ref' => 'file://' . $schemaPath
-        ];
-
-        $jsonSchemaValidation->coerce($object, $definition);
-
-        if (!$jsonSchemaValidation->isValid()) {
-            throw new InvalidPayloadException('Payload does not validate');
-        }
-    }
 
     public static function assertGeolocation(?stdClass $json, ?GeoLocation $geolocation): void
     {

@@ -13,7 +13,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class StatusScheduleFactoryTest extends TestCase
+class StatusScheduleFactoryTest extends FactoryTestCase
 {
     public function getFromJsonData(): iterable
     {

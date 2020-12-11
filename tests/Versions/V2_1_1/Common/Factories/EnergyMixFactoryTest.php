@@ -10,7 +10,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class EnergyMixFactoryTest extends TestCase
+class EnergyMixFactoryTest extends FactoryTestCase
 {
     public function getFromJsonData(): iterable
     {

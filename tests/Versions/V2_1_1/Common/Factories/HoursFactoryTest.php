@@ -11,7 +11,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class HoursFactoryTest extends TestCase
+class HoursFactoryTest extends FactoryTestCase
 {
     public function getFromJsonData(): iterable
     {
@@ -32,6 +32,8 @@ class HoursFactoryTest extends TestCase
     public function testFromJson(string $payload): void
     {
         $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
+
+        $this->coerce( realpath( __DIR__.'/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/common.json' ). '#/definitions/hours', $json );
 
         $hours = HoursFactory::fromJson($json);
 
@@ -95,6 +97,4 @@ class HoursFactoryTest extends TestCase
 
         $hours = HoursFactory::fromJson($json);
     }
-
-
 }
