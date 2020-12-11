@@ -1,0 +1,64 @@
+{
+  "id": "2dafe2cf-cbd7-4430-9a1a-c9b01abac372",
+  "start_date_time": "2019-11-03T11:55:59Z",
+  "stop_date_time": "2019-11-04T06:03:33Z",
+  "auth_id": "FR-CMP-C10316270",
+  "auth_method": "AUTH_REQUEST",
+  "location": {
+    "id": "FR*55C*P78000*VER*CHANTIERS",
+    "type": "ON_STREET",
+    "name": "RUE DES CHANTIERS VERSAILLES",
+    "address": "Rue Des Chantiers",
+    "city": "Versailles",
+    "postal_code": "78000",
+    "country": "FRA",
+    "coordinates": {
+      "latitude": "48.796610",
+      "longitude": "2.136693"
+    },
+    "evses": [
+      {
+        "uid": "FR*55C*E78000*48*796610*2*136693*1",
+        "evse_id": "FR*55C*E78000*48*796610*2*136693*1",
+        "status": "CHARGING",
+        "capabilities": [
+          "REMOTE_START_STOP_CAPABLE",
+          "RFID_READER",
+          "UNLOCK_CAPABLE"
+        ],
+        "connectors": [
+          {
+            "id": "FR*55C*C78000*48*796610*2*136693*1",
+            "standard": "IEC_62196_T2",
+            "format": "SOCKET",
+            "power_type": "AC_1_PHASE",
+            "voltage": 230,
+            "amperage": 32,
+            "last_updated": "2019-10-29T11:03:39Z"
+          }
+        ],
+        "last_updated": "2019-10-28T14:42:06Z"
+      }
+    ],
+    "opening_times": {
+      "twentyfourseven": true
+    },
+    "last_updated": "2019-10-29T14:05:56Z"
+  },
+  "currency": "EUR",
+  "charging_periods": [
+    {
+      "start_date_time": "2019-11-03T11:55:59Z",
+      "dimensions": [
+        {
+          "type": "TIME",
+          "volume": 18.1261
+        }
+      ]
+    }
+  ],
+  "total_cost": 0,
+  "total_energy": 54.3330,
+  "total_time": 18.1261,
+  "last_updated": "2019-11-04T06:03:35Z"
+}

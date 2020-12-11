@@ -47,10 +47,10 @@ class LocationFactoryTest extends TestCase
         } else {
             Assert::assertSame($json->id, $location->getId());
             Assert::assertSame($json->name, $location->getName());
-            BusinessDetailsFactoryTest::assertBusinessDetails($json->operator, $location->getOperator());
-            BusinessDetailsFactoryTest::assertBusinessDetails($json->owner, $location->getOwner());
+            BusinessDetailsFactoryTest::assertBusinessDetails($json->operator ?? null, $location->getOperator());
+            BusinessDetailsFactoryTest::assertBusinessDetails($json->owner ?? null, $location->getOwner());
             Assert::assertSame($json->address, $location->getAddress());
-            Assert::assertSame($json->charging_when_closed, $location->getChargingWhenClosed());
+            Assert::assertSame($json->charging_when_closed ?? null, $location->getChargingWhenClosed());
             Assert::assertSame($json->city, $location->getCity());
             GeoLocationFactoryTest::assertGeolocation($json->coordinates, $location->getCoordinates());
             Assert::assertSame($json->country, $location->getCountry());
@@ -63,7 +63,7 @@ class LocationFactoryTest extends TestCase
                 }
             }
 
-            EnergyMixFactoryTest::assertEnergyMix($json->energy_mix, $location->getEnergyMix());
+            EnergyMixFactoryTest::assertEnergyMix($json->energy_mix ?? null, $location->getEnergyMix());
 
             foreach($json->evses as $index => $evse) {
                 EvseFactoryTest::assertEvse($evse, $location->getEvses()[$index]);
@@ -87,7 +87,7 @@ class LocationFactoryTest extends TestCase
 
             Assert::assertEquals(new DateTime($json->last_updated), $location->getLastUpdated());
             Assert::assertEquals(new LocationType($json->type), $location->getLocationType());
-            HoursFactoryTest::assertHours($json->opening_times, $location->getOpeningTimes());
+            HoursFactoryTest::assertHours($json->opening_times ?? null, $location->getOpeningTimes());
             Assert::assertSame($json->postal_code, $location->getPostalCode());
 
             if(!property_exists($json, 'related_locations') || $json->related_locations === null) {
@@ -98,8 +98,8 @@ class LocationFactoryTest extends TestCase
                 }
             }
 
-            BusinessDetailsFactoryTest::assertBusinessDetails($json->suboperator, $location->getSuboperator());
-            Assert::assertSame($json->time_zone, $location->getTimeZone());
+            BusinessDetailsFactoryTest::assertBusinessDetails($json->suboperator ?? null, $location->getSuboperator());
+            Assert::assertSame($json->time_zone ?? null, $location->getTimeZone());
         }
     }
 

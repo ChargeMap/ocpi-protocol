@@ -38,11 +38,9 @@ class ChargingPeriodFactory
         }
 
         $chargingPeriod = new ChargingPeriod(new DateTime($json->start_date_time));
+
         foreach ($json->dimensions as $jsonCdrDimension) {
-            $chargingPeriod->addDimension(new CdrDimension(
-                new CdrDimensionType($jsonCdrDimension->type),
-                $jsonCdrDimension->volume
-            ));
+            $chargingPeriod->addDimension(CdrDimensionFactory::fromJson($jsonCdrDimension));
         }
 
         return $chargingPeriod;

@@ -86,7 +86,7 @@ class EvseFactoryTest extends TestCase
                 }
             }
 
-            Assert::assertSame($json->floor_level, $evse->getFloorLevel());
+            Assert::assertSame($json->floor_level ?? null, $evse->getFloorLevel());
 
             if(!property_exists($json, 'parking_restrictions' ) || $json->parking_restrictions === null ) {
                 Assert::assertCount(0, $evse->getParkingRestrictions());
@@ -96,7 +96,7 @@ class EvseFactoryTest extends TestCase
                 }
             }
 
-            Assert::assertSame($json->physical_reference, $evse->getPhysicalReference());
+            Assert::assertSame($json->physical_reference ?? null, $evse->getPhysicalReference());
             Assert::assertEquals(new EVSEStatus($json->status), $evse->getStatus());
 
             if(!property_exists($json, 'status_schedule' ) || $json->status_schedule === null ) {
