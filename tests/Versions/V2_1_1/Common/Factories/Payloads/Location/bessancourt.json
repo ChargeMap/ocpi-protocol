@@ -7,8 +7,8 @@
   "postal_code": "95550",
   "country": "FRA",
   "coordinates": {
-    "latitude": "49.0381",
-    "longitude": "2.21181"
+    "latitude": "49.038100",
+    "longitude": "2.211810"
   },
   "related_locations": null,
   "evses": [
@@ -48,8 +48,8 @@
       ],
       "floor_level": null,
       "coordinates": {
-        "latitude": "49.0381",
-        "longitude": "2.21181"
+        "latitude": "49.038100",
+        "longitude": "2.211810"
       },
       "physical_reference": null,
       "directions": [],
@@ -93,8 +93,8 @@
       ],
       "floor_level": null,
       "coordinates": {
-        "latitude": "49.0381",
-        "longitude": "2.21181"
+        "latitude": "49.038100",
+        "longitude": "2.211810"
       },
       "physical_reference": null,
       "directions": [],

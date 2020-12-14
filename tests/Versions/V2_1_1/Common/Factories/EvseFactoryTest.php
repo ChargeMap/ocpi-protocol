@@ -16,7 +16,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class EvseFactoryTest extends TestCase
+class EvseFactoryTest extends FactoryTestCase
 {
     public function getFromJsonData(): iterable
     {

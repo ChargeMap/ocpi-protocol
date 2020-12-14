@@ -12,7 +12,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class EnergySourceFactoryTest extends TestCase
+class EnergySourceFactoryTest extends FactoryTestCase
 {
     public function getFromJsonData(): iterable
     {

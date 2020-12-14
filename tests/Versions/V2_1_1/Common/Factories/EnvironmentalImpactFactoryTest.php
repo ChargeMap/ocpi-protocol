@@ -12,7 +12,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class EnvironmentalImpactFactoryTest extends TestCase
+class EnvironmentalImpactFactoryTest extends FactoryTestCase
 {
     public function getFromJsonData(): iterable
     {

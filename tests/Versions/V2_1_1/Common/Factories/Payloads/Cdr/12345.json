@@ -11,10 +11,10 @@
     "address": "F.Rooseveltlaan 3A",
     "city": "Gent",
     "postal_code": "9000",
-    "country": "BE",
+    "country": "BEL",
     "coordinates": {
-      "latitude": "3.72994",
-      "longitude": "51.04759"
+      "latitude": "3.729940",
+      "longitude": "51.047590"
     },
     "evses": [
       {

@@ -13,7 +13,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class LocationFactoryTest extends TestCase
+class LocationFactoryTest extends FactoryTestCase
 {
     public function getFromJsonData(): iterable
     {
@@ -34,6 +34,8 @@ class LocationFactoryTest extends TestCase
     public function testFromJson(string $payload): void
     {
         $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
+
+        $this->coerce( realpath( __DIR__.'/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/locationPut.schema.json' ), $json );
 
         $location = LocationFactory::fromJson($json);
 

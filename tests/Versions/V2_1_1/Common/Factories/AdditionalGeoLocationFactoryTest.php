@@ -9,7 +9,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class AdditionalGeoLocationFactoryTest extends TestCase
+class AdditionalGeoLocationFactoryTest extends FactoryTestCase
 {
     public function getFromJsonData(): iterable
     {
