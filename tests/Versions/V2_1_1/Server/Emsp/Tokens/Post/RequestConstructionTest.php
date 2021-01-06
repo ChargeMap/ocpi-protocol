@@ -11,6 +11,7 @@ use Http\Discovery\Psr17FactoryDiscovery;
 use PHPUnit\Framework\Assert;
 use stdClass;
 use Tests\Chargemap\OCPI\OcpiTestCase;
+use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\LocationReferencesFactoryTest;
 
 class RequestConstructionTest extends OcpiTestCase
 {
@@ -59,7 +60,7 @@ class RequestConstructionTest extends OcpiTestCase
         $this->assertEquals('4050933D', $request->getTokenId());
         $this->assertEquals(TokenType::RFID, $request->getTokenType()->getValue());
 
-        self::assertLocationReferences($json, $request);
+        LocationReferencesFactoryTest::assertLocationReferences($json, $request->getLocationReferences());
     }
 
     /**
@@ -85,7 +86,7 @@ class RequestConstructionTest extends OcpiTestCase
         $this->assertEquals('12345', $request->getTokenId());
         $this->assertEquals(TokenType::OTHER, $request->getTokenType()->getValue());
 
-        self::assertLocationReferences($json, $request);
+        LocationReferencesFactoryTest::assertLocationReferences($json, $request->getLocationReferences());
     }
 
     /**
@@ -110,7 +111,7 @@ class RequestConstructionTest extends OcpiTestCase
         $this->assertEquals('12345', $request->getTokenId());
         $this->assertEquals(TokenType::RFID, $request->getTokenType()->getValue());
 
-        self::assertLocationReferences($json, $request);
+        LocationReferencesFactoryTest::assertLocationReferences($json, $request->getLocationReferences());
     }
 
     /**
@@ -134,32 +135,5 @@ class RequestConstructionTest extends OcpiTestCase
         }
 
         new OcpiEmspTokenPostRequest($serverRequestInterface, '4050933D');
-    }
-
-    public static function assertLocationReferences(?stdClass $json, OcpiEmspTokenPostRequest $request)
-    {
-        if($json !== null) {
-
-            Assert::assertSame($json->location_id, $request->getLocationReferences()->getLocationId());
-
-            if(isset($json->evse_uids)) {
-                foreach($json->evse_uids as $index => $evseUid ) {
-                    Assert::assertSame($json->evse_uids[$index], $request->getLocationReferences()->getEvseUids()[$index]);
-                }
-            } else {
-                Assert::assertSame(0, count($request->getLocationReferences()->getEvseUids()));
-            }
-
-            if(isset($json->connector_ids)) {
-                foreach($json->connector_ids as $index => $connectorId ) {
-                    Assert::assertSame($json->connector_ids[$index], $request->getLocationReferences()->getConnectorIds()[$index]);
-                }
-            } else {
-                Assert::assertSame(0, count($request->getLocationReferences()->getConnectorIds()));
-            }
-
-        } else {
-            Assert::assertNull($request->getLocationReferences());
-        }
     }
 }

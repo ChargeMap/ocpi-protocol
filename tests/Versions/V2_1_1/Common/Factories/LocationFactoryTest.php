@@ -104,5 +104,4 @@ class LocationFactoryTest extends FactoryTestCase
             Assert::assertSame($json->time_zone ?? null, $location->getTimeZone());
         }
     }
-
 }

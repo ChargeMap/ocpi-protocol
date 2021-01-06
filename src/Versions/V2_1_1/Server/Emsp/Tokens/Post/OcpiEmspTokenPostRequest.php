@@ -6,6 +6,7 @@ namespace Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Tokens\Post;
 
 use Chargemap\OCPI\Common\Server\OcpiBaseRequest;
 use Chargemap\OCPI\Common\Utils\PayloadValidation;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\LocationReferencesFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\LocationReferences;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\TokenType;
 use Psr\Http\Message\ServerRequestInterface;
@@ -29,19 +30,8 @@ class OcpiEmspTokenPostRequest extends OcpiBaseRequest
         if (!empty($request->getBody()->__toString())) {
             $json = json_decode($request->getBody()->__toString());
             PayloadValidation::coerce('Versions/V2_1_1/Server/Emsp/Schemas/tokenPost.schema.json', $json);
-            $locationReferences = new LocationReferences($json->location_id);
 
-            if (property_exists($json, 'evse_uids') && is_array($json->evse_uids)) {
-                foreach ($json->evse_uids as $evseUid) {
-                    $locationReferences->addEvseUid($evseUid);
-                }
-            }
-
-            if (property_exists($json, 'connector_ids') && is_array($json->connector_ids)) {
-                foreach ($json->connector_ids as $connectorId) {
-                    $locationReferences->addConnectorId($connectorId);
-                }
-            }
+            $locationReferences = LocationReferencesFactory::fromJson($json);
         } else {
             $locationReferences = null;
         }
