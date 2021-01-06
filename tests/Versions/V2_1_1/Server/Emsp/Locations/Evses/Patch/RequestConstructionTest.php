@@ -9,8 +9,10 @@ use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
 use DateTime;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\ConnectorFactoryTest;
+use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\DisplayTextFactoryTest;
 use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\GeoLocationFactoryTest;
 use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\ImageFactoryTest;
+use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\StatusScheduleFactoryTest;
 
 class RequestConstructionTest extends OcpiTestCase
 {
@@ -48,16 +50,13 @@ class RequestConstructionTest extends OcpiTestCase
         if (isset($json->status_schedule)) {
             $this->assertCount(count($json->status_schedule ?? []), $evse->getStatusSchedule());
             foreach ($evse->getStatusSchedule() as $index => $statusSchedule) {
-                $this->assertEquals(new DateTime($json->status_schedule[$index]->period_begin), $statusSchedule->getPeriodBegin());
-                $this->assertEquals(new DateTime($json->status_schedule[$index]->period_end), $statusSchedule->getPeriodEnd());
-                $this->assertSame($json->status_schedule[$index]->status, $statusSchedule->getStatus()->getValue());
+                StatusScheduleFactoryTest::assertStatusSchedule($json->status_schedule[$index],$statusSchedule);
             }
         }
         if (isset($json->directions)) {
             $this->assertCount(count($json->directions ?? []), $evse->getDirections());
             foreach ($evse->getDirections() as $index => $direction) {
-                $this->assertSame($json->directions[$index]->language, $direction->getLanguage());
-                $this->assertSame($json->directions[$index]->text, $direction->getText());
+                DisplayTextFactoryTest::assertDisplayText($json->directions[$index],$direction);
             }
         }
         if (isset($json->parking_restrictions)) {
