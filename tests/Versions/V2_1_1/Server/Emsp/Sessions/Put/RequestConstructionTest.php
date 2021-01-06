@@ -9,43 +9,66 @@ use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Put\OcpiEmspSessionPutRe
 use DateTime;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Tests\Chargemap\OCPI\OcpiTestCase;
+use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\SessionFactoryTest;
 
 class RequestConstructionTest extends OcpiTestCase
 {
-    public function testShouldConstructRequestWithPayload(): void
+    public function validParametersProvider(): iterable
     {
-        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/SessionPutFullPayload.json');
+        foreach (scandir(__DIR__ . '/payloads/valid/') as $filename) {
+            if( $filename !== '.' && $filename !== '..') {
+                yield basename($filename, '.json') => [
+                    'payload' => file_get_contents( __DIR__ . '/payloads/valid/' . $filename ),
+                ];
+            }
+        }
+    }
+
+    public function invalidParametersProvider(): iterable
+    {
+        foreach (scandir(__DIR__ . '/payloads/invalid/') as $filename) {
+            if( $filename !== '.' && $filename !== '..') {
+                yield basename($filename, '.json') => [
+                    'payload' => file_get_contents(__DIR__ . '/payloads/invalid/' . $filename),
+                ];
+            }
+        }
+    }
+
+    /**
+     * @param string $payload
+     * @dataProvider validParametersProvider()
+     */
+    public function testShouldConstructRequestWithPayload(string $payload): void
+    {
+        $json = json_decode($payload);
+
+        $serverRequestInterface = Psr17FactoryDiscovery::findServerRequestFactory()
+            ->createServerRequest('GET', 'randomUrl')
+            ->withQueryParams(['type' => 'rfid'])
+            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
+            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream($payload));
 
         $request = new OcpiEmspSessionPutRequest($serverRequestInterface, 'FR', 'TNM', '101');
+
         $this->assertEquals('FR', $request->getCountryCode());
         $this->assertEquals('TNM', $request->getPartyId());
         $this->assertEquals('101', $request->getSessionId());
 
-        $session = $request->getSession();
-        $this->assertEquals('101', $session->getId());
-        $this->assertEquals(new DateTime('2015-06-29T22:39:09Z'), $session->getStartDate());
-        $this->assertEquals('DE8ACC12E46L89', $session->getAuthId());
-        $this->assertEquals('AUTH_REQUEST', $session->getAuthMethod()->getValue());
-        $location = $session->getLocation();
-        $this->assertEquals('LOC1', $location->getId());
-        $this->assertEquals('ON_STREET', $location->getLocationType()->getValue());
-        $this->assertCount(2, $location->getEvses());
+        SessionFactoryTest::assertSession($json, $request->getSession());
     }
 
-    public function testShouldConstructWithUnusualLocation(): void
+    /**
+     * @param string $payload
+     * @dataProvider invalidParametersProvider()
+     */
+    public function testWithoutBody(string $payload): void
     {
-        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/SessionPutPayloadLocationNotAlwaysOpen.json');
-
-        $request = new OcpiEmspSessionPutRequest($serverRequestInterface, 'FR', 'TNM', '101');
-        $session = $request->getSession();
-        $location = $session->getLocation();
-        $this->assertCount(2, $location->getOpeningTimes()->getRegularHours());
-    }
-
-    public function testWithoutBody(): void
-    {
-        $serverRequestInterface = $this->createServerRequestInterface();
-        $serverRequestInterface = $serverRequestInterface->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream(""));
+        $serverRequestInterface = Psr17FactoryDiscovery::findServerRequestFactory()
+            ->createServerRequest('GET', 'randomUrl')
+            ->withQueryParams(['type' => 'rfid'])
+            ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=')
+            ->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream($payload));
 
         $this->expectException(OcpiNotEnoughInformationClientError::class);
         new OcpiEmspSessionPutRequest($serverRequestInterface, 'FR', 'TNM', '101');
