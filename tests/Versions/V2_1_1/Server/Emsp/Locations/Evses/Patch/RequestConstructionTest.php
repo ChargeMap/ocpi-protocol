@@ -8,13 +8,33 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Models\GeoLocation;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Patch\OcpiEmspEvsePatchRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
 use DateTime;
+use stdClass;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 
 class RequestConstructionTest extends OcpiTestCase
 {
-    public function testShouldConstructRequestWithFullPayload(): void
+    /**
+     * @return mixed[][]
+     */
+    public function getJsonFilename(): iterable
     {
-        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/EvsePatchFullPayload.json');
+        foreach (scandir(__DIR__ . '/payloads') as $file) {
+            if ($file !== '.' && $file !== '..') {
+                yield $file => [
+                    'payload' => __DIR__ . '/payloads/' . $file
+                ];
+            }
+        }
+    }
+
+    /**
+     * @param string $filename
+     * @dataProvider getJsonFilename
+     */
+    public function testShouldConstructRequest(string $filename): void
+    {
+        $serverRequestInterface = $this->createServerRequestInterface($filename);
+        $json = json_decode(file_get_contents($filename));
 
         $request = new OcpiEmspEvsePatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256'));
         $this->assertEquals('FR', $request->getCountryCode());
@@ -23,52 +43,69 @@ class RequestConstructionTest extends OcpiTestCase
         $this->assertEquals('3256', $request->getEvseUid());
 
         $evse = $request->getPartialEvse();
-        $this->assertEquals('3256', $evse->getUid());
-        $this->assertEquals('BE-BEC-E041503001', $evse->getEvseId());
-        $this->assertEquals('AVAILABLE', $evse->getStatus()->getValue());
-        $this->assertCount(2, $evse->getStatusSchedule());
-        $statusSchedule = $evse->getStatusSchedule()[0];
-        $this->assertEquals(new DateTime('2014-06-24T00:00:00Z'), $statusSchedule->getPeriodBegin());
-        $this->assertEquals(new DateTime('2014-06-25T00:00:00Z'), $statusSchedule->getPeriodEnd());
-        $this->assertEquals('INOPERATIVE', $statusSchedule->getStatus()->getValue());
-        $this->assertCount(2, $evse->getDirections());
-        $direction = $evse->getDirections()[0];
-        $this->assertEquals('en', $direction->getLanguage());
-        $this->assertEquals('Turn left', $direction->getText());
-        $this->assertEquals('PLUGGED', $evse->getParkingRestrictions()[0]->getValue());
-        $this->assertEquals(new GeoLocation("3.729944", "51.047599"), $evse->getCoordinates());
-        $this->assertEquals('RESERVABLE', $evse->getCapabilities()[0]);
-        $this->assertCount(2, $evse->getConnectors());
-        $this->assertEquals('1', $evse->getPhysicalReference());
-        $this->assertEquals('-1', $evse->getFloorLevel());
-        $this->assertCount(2, $evse->getImages());
-        $this->assertEquals(new DateTime("2015-06-28T08:12:01Z"), $evse->getLastUpdated());
+        if ($evse->getUid() !== null) {
+            $this->assertEquals($json->uid, $evse->getUid());
+        }
+        if ($evse->getEvseId() !== null) {
+            $this->assertEquals($json->evse_id, $evse->getEvseId());
+        }
+        if ($evse->getStatus() !== null) {
+            $this->assertEquals($json->status, $evse->getStatus()->getValue());
+        }
+        if ($evse->getStatusSchedule() !== null) {
+            $this->assertCount(count($json->status_schedule), $evse->getStatusSchedule());
+            foreach ($evse->getStatusSchedule() as $index => $statusSchedule) {
+                $this->assertEquals(new DateTime($json->status_schedule[$index]->period_begin), $statusSchedule->getPeriodBegin());
+                $this->assertEquals(new DateTime($json->status_schedule[$index]->period_end), $statusSchedule->getPeriodEnd());
+                $this->assertEquals($json->status_schedule[$index]->status, $statusSchedule->getStatus()->getValue());
+            }
+        }
+        if ($evse->getDirections() !== null) {
+            $this->assertCount(count($json->directions), $evse->getDirections());
+            foreach ($evse->getDirections() as $index => $direction) {
+                $this->assertEquals($json->directions[$index]->language, $direction->getLanguage());
+                $this->assertEquals($json->directions[$index]->text, $direction->getText());
+            }
+        }
+        if ($evse->getParkingRestrictions() !== null) {
+            $this->assertCount(count($json->parking_restrictions), $evse->getParkingRestrictions());
+            foreach ($evse->getParkingRestrictions() as $index => $parkingRestriction) {
+                $this->assertEquals($json->parking_restrictions[$index], $parkingRestriction->getValue());
+            }
+        }
+        if ($evse->getCoordinates() !== null) {
+            $this->assertEquals(new GeoLocation($json->coordinates->latitude, $json->coordinates->longitude), $evse->getCoordinates());
+        }
+        if ($evse->getCapabilities() !== null) {
+            $this->assertCount(count($json->capabilities), $evse->getCapabilities());
+            foreach ($evse->getCapabilities() as $index => $capability) {
+                $this->assertEquals($json->capabilities[$index], $capability);
+            }
+        }
+        if ($evse->getConnectors() !== null) {
+            self::assertConnectors($json, $request);
+        }
+        if ($evse->getPhysicalReference() !== null) {
+            $this->assertEquals($json->physical_reference, $evse->getPhysicalReference());
+        }
+        if ($evse->getFloorLevel() !== null) {
+            $this->assertEquals($json->floor_level, $evse->getFloorLevel());
+        }
+        if ($evse->getImages() !== null) {
+            $this->assertCount(count($json->images), $evse->getImages());
+        }
+        if ($evse->getLastUpdated() !== null) {
+            $this->assertEquals(new DateTime($json->last_updated), $evse->getLastUpdated());
+        }
     }
 
-    public function testShouldConstructWithConnectors()
+    public static function assertConnectors(stdClass $json, OcpiEmspEvsePatchRequest $request)
     {
-        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/EvsePatchConnectorsPayload.json');
-
-        $request = new OcpiEmspEvsePatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256'));
         $partialEvse = $request->getPartialEvse();
-        $this->assertNull($partialEvse->getUid());
-        $this->assertNull($partialEvse->getEvseId());
-        $this->assertNotEmpty($partialEvse->getConnectors());
-        $this->assertCount(2, $partialEvse->getConnectors());
-        $connector1 = $partialEvse->getConnectors()[0];
-        $this->assertEquals('1', $connector1->getId());
-        $connector2 = $partialEvse->getConnectors()[1];
-        $this->assertEquals('2', $connector2->getId());
-    }
+        self::assertCount(count($json->connectors), $partialEvse->getConnectors());
 
-    public function testShouldConstructWithStatus()
-    {
-        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/EvsePatchStatusPayload.json');
-
-        $request = new OcpiEmspEvsePatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256'));
-        $partialEvse = $request->getPartialEvse();
-        $this->assertNull($partialEvse->getUid());
-        $this->assertNull($partialEvse->getEvseId());
-        $this->assertEquals('AVAILABLE', $partialEvse->getStatus()->getValue());
+        foreach ($partialEvse->getConnectors() as $index => $value) {
+            self::assertEquals($json->connectors[$index]->id, $value->getId());
+        }
     }
 }
