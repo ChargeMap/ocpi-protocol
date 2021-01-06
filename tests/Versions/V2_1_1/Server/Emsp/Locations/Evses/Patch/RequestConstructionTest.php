@@ -13,9 +13,7 @@ use Tests\Chargemap\OCPI\OcpiTestCase;
 
 class RequestConstructionTest extends OcpiTestCase
 {
-    /**
-     * @return mixed[][]
-     */
+
     public function getJsonFilename(): iterable
     {
         foreach (scandir(__DIR__ . '/payloads') as $file) {
