@@ -43,7 +43,7 @@ class CdrDimensionFactoryTest extends FactoryTestCase
             Assert::assertNull($cdrDimension);
         } else {
             Assert::assertEquals(new CdrDimensionType($json->type), $cdrDimension->getType());
-            Assert::assertSame($json->volume, $cdrDimension->getVolume());
+            Assert::assertSame(floatval($json->volume), $cdrDimension->getVolume());
         }
     }
 }
