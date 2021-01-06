@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Tokens\Post;
 
-use Chargemap\OCPI\Common\Server\OcpiUpdateRequest;
+use Chargemap\OCPI\Common\Server\OcpiBaseRequest;
 use Chargemap\OCPI\Common\Utils\PayloadValidation;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\LocationReferences;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\TokenType;
 use Psr\Http\Message\ServerRequestInterface;
 
-class OcpiEmspTokenPostRequest extends OcpiUpdateRequest
+class OcpiEmspTokenPostRequest extends OcpiBaseRequest
 {
     private string $tokenId;
 

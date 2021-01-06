@@ -12,7 +12,6 @@ class ResponseConstructionTest extends TestCase
 {
     public function testDataIsCorrect(): void
     {
-
         $response = new OcpiEmspTokenPostResponse(AllowedType::ALLOWED(), null, null);
         $responseInterface = $response->getResponseInterface();
 
