@@ -65,19 +65,23 @@ class RequestConstructionTest extends OcpiTestCase
                 $this->assertSame($json->parking_restrictions[$index], $parkingRestriction->getValue());
             }
         }
-        GeoLocationFactoryTest::assertGeolocation($json->coordinates, $evse->getCoordinates());
+
+        GeoLocationFactoryTest::assertGeolocation($json->coordinates ?? null, $evse->getCoordinates());
+
         if (isset($json->capabilities)) {
             $this->assertCount(count($json->capabilities), $evse->getCapabilities());
             foreach ($evse->getCapabilities() as $index => $capability) {
                 $this->assertEquals($json->capabilities[$index], $capability);
             }
         }
+
         if (isset($json->connectors)) {
             self::assertCount(count($json->connectors), $evse->getConnectors());
             foreach ($evse->getConnectors() as $index => $connector) {
                 ConnectorFactoryTest::assertConnector($json->connectors[$index],$connector);
             }
         }
+
         $this->assertSame($json->physical_reference ?? null, $evse->getPhysicalReference());
         $this->assertSame($json->floor_level ?? null, $evse->getFloorLevel());
 
