@@ -42,7 +42,7 @@ class RequestConstructionTest extends OcpiTestCase
 
         $request = new OcpiEmspConnectorPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
         $partialConnector = $request->getPartialConnector();
-        $this->assertNull($partialConnector->getId());
+        $this->assertSame('1',$partialConnector->getId());
         $this->assertNull($partialConnector->getVoltage());
         $this->assertNull($partialConnector->getPowerType());
         $this->assertEquals(new DateTime('2015-03-16T10:10:02Z'), $partialConnector->getLastUpdated());
@@ -54,7 +54,7 @@ class RequestConstructionTest extends OcpiTestCase
 
         $request = new OcpiEmspConnectorPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
         $partialConnector = $request->getPartialConnector();
-        $this->assertNull($partialConnector->getId());
+        $this->assertSame('1',$partialConnector->getId());
         $this->assertNull($partialConnector->getVoltage());
         $this->assertNull($partialConnector->getPowerType());
         $this->assertEquals(null, $partialConnector->getTermsAndConditions());
