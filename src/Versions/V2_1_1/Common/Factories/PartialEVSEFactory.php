@@ -11,6 +11,7 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Models\ParkingRestriction;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\PartialEVSE;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\StatusSchedule;
 use DateTime;
+use Exception;
 use stdClass;
 
 class PartialEVSEFactory
@@ -19,6 +20,12 @@ class PartialEVSEFactory
     {
         if ($json === null) {
             return null;
+        }
+
+        if(property_exists($json,'uid')) {
+            if($uid !== $json->uid){
+                throw new Exception("Unsupported patching of property uid");
+            }
         }
 
         $evse = new PartialEVSE($uid);
