@@ -43,7 +43,7 @@ class RequestConstructionTest extends OcpiTestCase
 
         $request = new OcpiEmspLocationPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1'));
         $location = $request->getPartialLocation();
-        $this->assertNull($location->getId());
+        $this->assertSame('LOC1',$location->getId());
         $this->assertNotNull($location->getEvses());
     }
 
@@ -53,7 +53,7 @@ class RequestConstructionTest extends OcpiTestCase
 
         $request = new OcpiEmspLocationPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1'));
         $location = $request->getPartialLocation();
-        $this->assertNull($location->getId());
+        $this->assertSame('LOC1',$location->getId());
         $this->assertNotEmpty($location->getOpeningTimes()->getExceptionalOpenings());
         $this->assertNotEmpty($location->getOpeningTimes()->getExceptionalClosings());
         $this->assertTrue($location->getOpeningTimes()->isTwentyFourSeven());
