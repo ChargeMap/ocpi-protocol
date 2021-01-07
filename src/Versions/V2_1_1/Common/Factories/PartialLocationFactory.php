@@ -75,6 +75,7 @@ class PartialLocationFactory
             $location->setLastUpdated(new DateTime($json->last_updated));
         }
         if (property_exists($json, 'related_locations')) {
+            $location->setEmptyRelatedLocation();
             foreach ($json->related_locations as $jsonRelatedLocation) {
                 $location->addRelatedLocation(new AdditionalGeoLocation(
                     new GeoLocation(
@@ -87,24 +88,28 @@ class PartialLocationFactory
         }
 
         if (property_exists($json, 'evses')) {
+            $location->setEmptyEvse();
             foreach ($json->evses as $jsonEvse) {
                 $location->addEVSE(EVSEFactory::fromJson($jsonEvse));
             }
         }
 
         if (property_exists($json, 'directions')) {
+            $location->setEmptyDirection();
             foreach ($json->directions as $jsonDirection) {
                 $location->addDirection(DisplayTextFactory::fromJson($jsonDirection));
             }
         }
 
         if (property_exists($json, 'facilities')) {
+            $location->setEmptyFacility();
             foreach ($json->facilities as $jsonFacility) {
                 $location->addFacility(new Facility($jsonFacility));
             }
         }
 
         if (property_exists($json, 'images')) {
+            $location->setEmptyImage();
             foreach ($json->images as $jsonImage) {
                 $location->addImage(ImageFactory::fromJson($jsonImage));
             }

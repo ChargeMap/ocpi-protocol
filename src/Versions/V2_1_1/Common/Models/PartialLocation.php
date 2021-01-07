@@ -83,7 +83,7 @@ class PartialLocation implements JsonSerializable
         $this->hasLastUpdated = false;
     }
 
-    public function setLocationType(?LocationType $locationType): void
+    public function setLocationType(LocationType $locationType): void
     {
         $this->hasLocationType = true;
         $this->locationType = $locationType;
@@ -95,53 +95,65 @@ class PartialLocation implements JsonSerializable
         $this->name = $name;
     }
 
-    public function setAddress(?string $address): void
+    public function setAddress(string $address): void
     {
         $this->hasAddress = true;
         $this->address = $address;
     }
 
-    public function setCity(?string $city): void
+    public function setCity(string $city): void
     {
         $this->hasCity = true;
         $this->city = $city;
     }
 
-    public function setPostalCode(?string $postalCode): void
+    public function setPostalCode(string $postalCode): void
     {
         $this->hasPostalCode = true;
         $this->postalCode = $postalCode;
     }
 
-    public function setCountry(?string $country): void
+    public function setCountry(string $country): void
     {
         $this->hasCountry = true;
         $this->country = $country;
     }
 
-    public function setCoordinates(?GeoLocation $coordinates): void
+    public function setCoordinates(GeoLocation $coordinates): void
     {
         $this->hasCoordinates = true;
         $this->coordinates = $coordinates;
     }
 
-    public function addRelatedLocation(AdditionalGeoLocation $relatedLocation): self
+    public function setEmptyRelatedLocation(): void
     {
         $this->hasRelatedLocations = true;
+    }
+
+    public function addRelatedLocation(AdditionalGeoLocation $relatedLocation): self
+    {
         $this->relatedLocations[] = $relatedLocation;
         return $this;
     }
 
-    public function addEVSE(EVSE $evse): self
+    public function setEmptyEvse(): void
     {
         $this->hasEvses = true;
+    }
+
+    public function addEVSE(EVSE $evse): self
+    {
         $this->evses[] = $evse;
         return $this;
     }
 
-    public function addDirection(DisplayText $direction): self
+    public function setEmptyDirection() : void
     {
         $this->hasDirections = true;
+    }
+
+    public function addDirection(DisplayText $direction): self
+    {
         $this->directions[] = $direction;
         return $this;
     }
@@ -164,9 +176,13 @@ class PartialLocation implements JsonSerializable
         $this->owner = $owner;
     }
 
-    public function addFacility(Facility $facility): self
+    public function setEmptyFacility(): void
     {
         $this->hasFacilities = true;
+    }
+
+    public function addFacility(Facility $facility): self
+    {
         $this->facilities[] = $facility;
         return $this;
     }
@@ -189,9 +205,13 @@ class PartialLocation implements JsonSerializable
         $this->chargingWhenClosed = $chargingWhenClosed;
     }
 
-    public function addImage(Image $image): self
+    public function setEmptyImage(): void
     {
         $this->hasImages = true;
+    }
+
+    public function addImage(Image $image): self
+    {
         $this->images[] = $image;
         return $this;
     }
@@ -207,7 +227,6 @@ class PartialLocation implements JsonSerializable
         $this->hasLastUpdated = true;
         $this->lastUpdated = $lastUpdated;
     }
-
 
     public function hasLocationType(bool $hasLocationType): void
     {

@@ -72,23 +72,35 @@ class PartialEVSE implements JsonSerializable
         $this->status = $status;
     }
 
-    public function addStatusSchedule(StatusSchedule $schedule): self
+    public function setEmptyStatusSchedule(): void
     {
         $this->hasStatusSchedule = true;
+    }
+
+    public function addStatusSchedule(StatusSchedule $schedule): self
+    {
         $this->statusSchedule[] = $schedule;
         return $this;
     }
 
-    public function addCapability(Capability $capability): self
+    public function setEmptyCapability(): void
     {
         $this->hasCapabilities = true;
+    }
+
+    public function addCapability(Capability $capability): self
+    {
         $this->capabilities[] = $capability;
         return $this;
     }
 
-    public function addConnector(Connector $connector): self
+    public function setEmptyConnector(): void
     {
         $this->hasConnectors = true;
+    }
+
+    public function addConnector(Connector $connector): self
+    {
         $this->connectors[] = $connector;
         return $this;
     }
@@ -111,23 +123,35 @@ class PartialEVSE implements JsonSerializable
         $this->physicalReference = $physicalReference;
     }
 
-    public function addDirection(DisplayText $direction): self
+    public function setEmptyDirection(): void
     {
         $this->hasDirections = true;
+    }
+
+    public function addDirection(DisplayText $direction): self
+    {
         $this->directions[] = $direction;
         return $this;
     }
 
-    public function addParkingRestriction(ParkingRestriction $parkingRestriction): self
+    public function setEmptyParkingRestriction(): void
     {
         $this->hasParkingRestrictions = true;
+    }
+
+    public function addParkingRestriction(ParkingRestriction $parkingRestriction): self
+    {
         $this->parkingRestrictions[] = $parkingRestriction;
         return $this;
     }
 
-    public function addImage(Image $image): self
+    public function setEmptyImage(): void
     {
         $this->hasImages = true;
+    }
+
+    public function addImage(Image $image): self
+    {
         $this->images[] = $image;
         return $this;
     }

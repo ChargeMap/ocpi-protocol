@@ -16,30 +16,30 @@ use stdClass;
 
 class PartialEVSEFactory
 {
-    public static function fromJson(string $uid,?stdClass $json): ?PartialEVSE
+    public static function fromJson(string $uid, ?stdClass $json): ?PartialEVSE
     {
         if ($json === null) {
             return null;
         }
 
-        if(property_exists($json,'uid')) {
-            if($uid !== $json->uid){
+        if (property_exists($json, 'uid')) {
+            if ($uid !== $json->uid) {
                 throw new Exception("Unsupported patching of property uid");
             }
         }
 
         $evse = new PartialEVSE($uid);
 
-        if(property_exists($json,'evse_id')){
+        if (property_exists($json, 'evse_id')) {
             $evse->setEvseId($json->evse_id);
         }
-        if(property_exists($json, 'status')){
+        if (property_exists($json, 'status')) {
             $evse->setStatus(new EVSEStatus($json->status));
         }
-        if(property_exists($json, 'floor_level')){
+        if (property_exists($json, 'floor_level')) {
             $evse->setFloorLevel($json->floor_level);
         }
-        if(property_exists($json, 'coordinates')){
+        if (property_exists($json, 'coordinates')) {
             $evse->setCoordinates(
                 new GeoLocation(
                     $json->coordinates->latitude,
@@ -48,15 +48,16 @@ class PartialEVSEFactory
             );
         }
 
-        if(property_exists($json,"physical_reference")){
+        if (property_exists($json, "physical_reference")) {
             $evse->setPhysicalReference($json->physical_reference);
         }
 
-        if(property_exists($json, 'last_updated')){
+        if (property_exists($json, 'last_updated')) {
             $evse->setLastUpdated(new DateTime($json->last_updated));
         }
 
         if (property_exists($json, 'status_schedule')) {
+            $evse->setEmptyStatusSchedule();
             foreach ($json->status_schedule as $jsonStatusSchedule) {
                 $evse->addStatusSchedule(new StatusSchedule(
                     new DateTime($jsonStatusSchedule->period_begin),
@@ -67,30 +68,35 @@ class PartialEVSEFactory
         }
 
         if (property_exists($json, 'capabilities')) {
+            $evse->setEmptyCapability();
             foreach ($json->capabilities as $capability) {
                 $evse->addCapability(new Capability($capability));
             }
         }
 
         if (property_exists($json, 'connectors')) {
+            $evse->setEmptyConnector();
             foreach ($json->connectors as $connector) {
                 $evse->addConnector(ConnectorFactory::fromJson($connector));
             }
         }
 
         if (property_exists($json, 'directions')) {
+            $evse->setEmptyDirection();
             foreach ($json->directions as $direction) {
                 $evse->addDirection(DisplayTextFactory::fromJson($direction));
             }
         }
 
         if (property_exists($json, 'parking_restrictions')) {
+            $evse->setEmptyParkingRestriction();
             foreach ($json->parking_restrictions as $restriction) {
                 $evse->addParkingRestriction(new ParkingRestriction($restriction));
             }
         }
 
         if (property_exists($json, 'images')) {
+            $evse->setEmptyImage();
             foreach ($json->images as $image) {
                 $evse->addImage(ImageFactory::fromJson($image));
             }
