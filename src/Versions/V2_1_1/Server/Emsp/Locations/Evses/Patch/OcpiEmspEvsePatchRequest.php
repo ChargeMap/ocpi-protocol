@@ -20,7 +20,7 @@ class OcpiEmspEvsePatchRequest extends BaseEvseUpdateRequest
     {
         parent::__construct($request, $params);
         PayloadValidation::coerce('Versions/V2_1_1/Server/Emsp/Schemas/evsePatch.schema.json', $this->jsonBody);
-        $partialEvse = PartialEVSEFactory::fromJson($this->jsonBody);
+        $partialEvse = PartialEVSEFactory::fromJson($params->getEvseUid(),$this->jsonBody);
         if ($partialEvse === null) {
             throw new UnexpectedValueException('PartialConnector cannot be null');
         }

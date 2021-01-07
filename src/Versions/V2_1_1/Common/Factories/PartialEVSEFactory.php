@@ -15,25 +15,39 @@ use stdClass;
 
 class PartialEVSEFactory
 {
-    public static function fromJson(?stdClass $json): ?PartialEVSE
+    public static function fromJson(string $uid,?stdClass $json): ?PartialEVSE
     {
         if ($json === null) {
             return null;
         }
 
-        $evse = new PartialEVSE(
-            $json->uid ?? null,
-            $json->evse_id ?? null,
-            property_exists($json, 'status') ? new EVSEStatus($json->status) : null,
-            $json->floor_level ?? null,
-            property_exists($json, 'coordinates') ?
+        $evse = new PartialEVSE($uid);
+
+        if(property_exists($json,'evse_id')){
+            $evse->setEvseId($json->evse_id);
+        }
+        if(property_exists($json, 'status')){
+            $evse->setStatus(new EVSEStatus($json->status));
+        }
+        if(property_exists($json, 'floor_level')){
+            $evse->setFloorLevel($json->floor_level);
+        }
+        if(property_exists($json, 'coordinates')){
+            $evse->setCoordinates(
                 new GeoLocation(
                     $json->coordinates->latitude,
                     $json->coordinates->longitude
-                ) : null,
-            $json->physical_reference ?? null,
-            property_exists($json, 'last_updated') ? new DateTime($json->last_updated) : null
-        );
+                )
+            );
+        }
+
+        if(property_exists($json,"physical_reference")){
+            $evse->setPhysicalReference($json->physical_reference);
+        }
+
+        if(property_exists($json, 'last_updated')){
+            $evse->setLastUpdated(new DateTime($json->last_updated));
+        }
 
         if (property_exists($json, 'status_schedule')) {
             foreach ($json->status_schedule as $jsonStatusSchedule) {
