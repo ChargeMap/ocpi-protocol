@@ -102,7 +102,7 @@ class RequestConstructionTest extends OcpiTestCase
         }
     }
 
-    public function testShouldFailWithPatchId(): void
+    public function testShouldFailWithPatchUid(): void
     {
         $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/EvsePatchFullPayload.json');
 
