@@ -20,7 +20,7 @@ class OcpiEmspSessionPatchRequest extends OcpiSessionUpdateRequest
         parent::__construct($request, $countryCode, $partyId, $sessionId);
         PayloadValidation::coerce('Versions/V2_1_1/Server/Emsp/Schemas/sessionPatch.schema.json', $this->jsonBody);
 
-        $partialSession = PartialSessionFactory::fromJson($this->jsonBody);
+        $partialSession = PartialSessionFactory::fromJson($sessionId,$this->jsonBody);
         if ($partialSession === null) {
             throw new UnexpectedValueException('PartialSession cannot be null');
         }
