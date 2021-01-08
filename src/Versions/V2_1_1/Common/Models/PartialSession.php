@@ -10,6 +10,7 @@ use JsonSerializable;
 
 class PartialSession implements JsonSerializable
 {
+    private bool $hasId;
     private bool $hasStartDate;
     private bool $hasEndDate;
     private bool $hasKwh;
@@ -23,7 +24,7 @@ class PartialSession implements JsonSerializable
     private bool $hasStatus;
     private bool $hasLastUpdated;
 
-    private string $id;
+    private ?string $id = null;
     private ?DateTime $startDate = null;
     private ?DateTime $endDate = null;
     private ?float $kwh = null;
@@ -33,14 +34,14 @@ class PartialSession implements JsonSerializable
     private ?string $meterId = null;
     private ?string $currency = null;
     /** @var ChargingPeriod[]|null */
-    private ?array $chargingPeriods = null;
+    private ?array $chargingPeriods = [];
     private ?float $totalCost = null;
     private ?SessionStatus $status = null;
     private ?DateTime $lastUpdated = null;
 
-    public function __construct(string $id)
+    public function __construct()
     {
-        $this->id = $id;
+        $this->hasId = false;
         $this->hasStartDate = false;
         $this->hasEndDate = false;
         $this->hasKwh = false;
@@ -55,78 +56,84 @@ class PartialSession implements JsonSerializable
         $this->hasLastUpdated = false;
     }
 
-    public function setStartDate(DateTime $startDate): void
+    public function withId(string $id): void
+    {
+        $this->hasId = true;
+        $this->id = $id;
+    }
+
+    public function withStartDate(DateTime $startDate): void
     {
         $this->hasStartDate = true;
         $this->startDate = $startDate;
     }
 
-    public function setEndDate(?DateTime $endDate): void
+    public function withEndDate(?DateTime $endDate): void
     {
         $this->hasEndDate = true;
         $this->endDate = $endDate;
     }
 
-    public function setKwh(float $kwh): void
+    public function withKwh(float $kwh): void
     {
         $this->hasKwh = true;
         $this->kwh = $kwh;
     }
 
-    public function setAuthId(string $authId): void
+    public function withAuthId(string $authId): void
     {
         $this->hasAuthId = true;
         $this->authId = $authId;
     }
 
-    public function setAuthMethod(AuthenticationMethod $authMethod): void
+    public function withAuthMethod(AuthenticationMethod $authMethod): void
     {
         $this->hasAuthMethod = true;
         $this->authMethod = $authMethod;
     }
 
-    public function setLocation(Location $location): void
+    public function withLocation(Location $location): void
     {
         $this->hasLocation = true;
         $this->location = $location;
     }
 
-    public function setMeterId(?string $meterId): void
+    public function withMeterId(?string $meterId): void
     {
         $this->hasMeterId = true;
         $this->meterId = $meterId;
     }
 
-    public function setCurrency(string $currency): void
+    public function withCurrency(string $currency): void
     {
         $this->hasCurrency = true;
         $this->currency = $currency;
     }
 
-    public function setEmptyChargingPeriod(): void
+    public function withEmptyChargingPeriod(): void
     {
         $this->hasChargingPeriods = true;
     }
 
-    public function addChargingPeriod(ChargingPeriod $period): self
+    public function withChargingPeriod(ChargingPeriod $period): self
     {
         $this->chargingPeriods[] = $period;
         return $this;
     }
 
-    public function setTotalCost(?float $totalCost): void
+    public function withTotalCost(?float $totalCost): void
     {
         $this->hasTotalCost = true;
         $this->totalCost = $totalCost;
     }
 
-    public function setStatus(SessionStatus $status): void
+    public function withStatus(SessionStatus $status): void
     {
         $this->hasStatus = true;
         $this->status = $status;
     }
 
-    public function setLastUpdated(DateTime $lastUpdated): void
+    public function withLastUpdated(DateTime $lastUpdated): void
     {
         $this->hasLastUpdated = true;
         $this->lastUpdated = $lastUpdated;
@@ -195,6 +202,11 @@ class PartialSession implements JsonSerializable
     public function getLastUpdated(): ?DateTime
     {
         return $this->lastUpdated;
+    }
+
+    public function hasId(): bool
+    {
+        return $this->hasId;
     }
 
     public function hasStartDate(): bool
