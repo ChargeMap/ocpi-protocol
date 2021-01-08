@@ -6,6 +6,7 @@ namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Patch
 
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Patch\OcpiEmspEvsePatchRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
+use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch\UnsupportedPatchException;
 use DateTime;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\ConnectorFactoryTest;
@@ -99,5 +100,13 @@ class RequestConstructionTest extends OcpiTestCase
                 $this->assertEquals(new DateTime($json->last_updated), $evse->getLastUpdated());
             }
         }
+    }
+
+    public function testShouldFailWithPatchId(): void
+    {
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/EvsePatchFullPayload.json');
+
+        $this->expectException(UnsupportedPatchException::class);
+        new OcpiEmspEvsePatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '1'));
     }
 }

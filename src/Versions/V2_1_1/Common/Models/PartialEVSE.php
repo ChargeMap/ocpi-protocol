@@ -10,6 +10,7 @@ use JsonSerializable;
 
 class PartialEVSE implements JsonSerializable
 {
+    private bool $hasUid;
     private bool $hasEvseId;
     private bool $hasStatus;
     private bool $hasStatusSchedule;
@@ -23,29 +24,29 @@ class PartialEVSE implements JsonSerializable
     private bool $hasImages;
     private bool $hasLastUpdated;
 
-    private string $uid;
+    private ?string $uid = null;
     private ?string $evseId = null;
     private ?EVSEStatus $status = null;
     /** @var StatusSchedule[]|null */
-    private ?array $statusSchedule = null;
+    private ?array $statusSchedule = [];
     /** @var Capability[]|null */
-    private ?array $capabilities = null;
+    private ?array $capabilities = [];
     /** @var Connector[]|null */
-    private ?array $connectors = null;
+    private ?array $connectors = [];
     private ?string $floorLevel = null;
     private ?GeoLocation $coordinates = null;
     private ?string $physicalReference = null;
     /** @var DisplayText[]|null */
-    private ?array $directions = null;
+    private ?array $directions = [];
     /** @var ParkingRestriction[]|null */
-    private ?array $parkingRestrictions = null;
+    private ?array $parkingRestrictions = [];
     /** @var Image[]|null */
-    private ?array $images = null;
+    private ?array $images = [];
     private ?DateTime $lastUpdated = null;
 
-    public function __construct(string $uid)
+    public function __construct()
     {
-        $this->uid = $uid;
+        $this->hasUid = false;
         $this->hasEvseId = false;
         $this->hasStatus = false;
         $this->hasStatusSchedule = false;
@@ -60,103 +61,109 @@ class PartialEVSE implements JsonSerializable
         $this->hasLastUpdated = false;
     }
 
-    public function setEvseId(?string $evseId): void
+    public function withUid(string $uid): void
+    {
+        $this->hasUid = true;
+        $this->uid = $uid;
+    }
+
+    public function withEvseId(?string $evseId): void
     {
         $this->hasEvseId = true;
         $this->evseId = $evseId;
     }
 
-    public function setStatus(EVSEStatus $status): void
+    public function withStatus(EVSEStatus $status): void
     {
         $this->hasStatus = true;
         $this->status = $status;
     }
 
-    public function setEmptyStatusSchedule(): void
+    public function withEmptyStatusSchedule(): void
     {
         $this->hasStatusSchedule = true;
     }
 
-    public function addStatusSchedule(StatusSchedule $schedule): self
+    public function withStatusSchedule(StatusSchedule $schedule): self
     {
         $this->statusSchedule[] = $schedule;
         return $this;
     }
 
-    public function setEmptyCapability(): void
+    public function withEmptyCapability(): void
     {
         $this->hasCapabilities = true;
     }
 
-    public function addCapability(Capability $capability): self
+    public function withCapability(Capability $capability): self
     {
         $this->capabilities[] = $capability;
         return $this;
     }
 
-    public function setEmptyConnector(): void
+    public function withEmptyConnector(): void
     {
         $this->hasConnectors = true;
     }
 
-    public function addConnector(Connector $connector): self
+    public function withConnector(Connector $connector): self
     {
         $this->connectors[] = $connector;
         return $this;
     }
 
-    public function setFloorLevel(?string $floorLevel): void
+    public function withFloorLevel(?string $floorLevel): void
     {
         $this->hasFloorLevel = true;
         $this->floorLevel = $floorLevel;
     }
 
-    public function setCoordinates(?GeoLocation $coordinates): void
+    public function withCoordinates(?GeoLocation $coordinates): void
     {
         $this->hasCoordinates = true;
         $this->coordinates = $coordinates;
     }
 
-    public function setPhysicalReference(?string $physicalReference): void
+    public function withPhysicalReference(?string $physicalReference): void
     {
         $this->hasPhysicalReference = true;
         $this->physicalReference = $physicalReference;
     }
 
-    public function setEmptyDirection(): void
+    public function withEmptyDirection(): void
     {
         $this->hasDirections = true;
     }
 
-    public function addDirection(DisplayText $direction): self
+    public function withDirection(DisplayText $direction): self
     {
         $this->directions[] = $direction;
         return $this;
     }
 
-    public function setEmptyParkingRestriction(): void
+    public function withEmptyParkingRestriction(): void
     {
         $this->hasParkingRestrictions = true;
     }
 
-    public function addParkingRestriction(ParkingRestriction $parkingRestriction): self
+    public function withParkingRestriction(ParkingRestriction $parkingRestriction): self
     {
         $this->parkingRestrictions[] = $parkingRestriction;
         return $this;
     }
 
-    public function setEmptyImage(): void
+    public function withEmptyImage(): void
     {
         $this->hasImages = true;
     }
 
-    public function addImage(Image $image): self
+    public function withImage(Image $image): self
     {
         $this->images[] = $image;
         return $this;
     }
 
-    public function setLastUpdated(DateTime $lastUpdated): void
+    public function withLastUpdated(DateTime $lastUpdated): void
     {
         $this->hasLastUpdated = true;
         $this->lastUpdated = $lastUpdated;
@@ -245,64 +252,69 @@ class PartialEVSE implements JsonSerializable
         return $this->lastUpdated;
     }
 
-    public function hasEvseId(bool $hasEvseId): void
+    public function hasUid(): bool
     {
-        $this->hasEvseId = $hasEvseId;
+        return $this->hasUid;
     }
 
-    public function hasStatus(bool $hasStatus): void
+    public function hasEvseId(): bool
     {
-        $this->hasStatus = $hasStatus;
+        return $this->hasEvseId;
     }
 
-    public function hasStatusSchedule(bool $hasStatusSchedule): void
+    public function hasStatus(): bool
     {
-        $this->hasStatusSchedule = $hasStatusSchedule;
+        return $this->hasStatus;
     }
 
-    public function hasCapabilities(bool $hasCapabilities): void
+    public function hasStatusSchedule(): bool
     {
-        $this->hasCapabilities = $hasCapabilities;
+        return $this->hasStatusSchedule;
     }
 
-    public function hasConnectors(bool $hasConnectors): void
+    public function hasCapabilities(): bool
     {
-        $this->hasConnectors = $hasConnectors;
+        return $this->hasCapabilities;
     }
 
-    public function hasFloorLevel(bool $hasFloorLevel): void
+    public function hasConnectors(): bool
     {
-        $this->hasFloorLevel = $hasFloorLevel;
+        return $this->hasConnectors;
     }
 
-    public function hasCoordinates(bool $hasCoordinates): void
+    public function hasFloorLevel(): bool
     {
-        $this->hasCoordinates = $hasCoordinates;
+        return $this->hasFloorLevel;
     }
 
-    public function hasPhysicalReference(bool $hasPhysicalReference): void
+    public function hasCoordinates(): bool
     {
-        $this->hasPhysicalReference = $hasPhysicalReference;
+        return $this->hasCoordinates;
     }
 
-    public function hasDirections(bool $hasDirections): void
+    public function hasPhysicalReference(): bool
     {
-        $this->hasDirections = $hasDirections;
+        return $this->hasPhysicalReference;
     }
 
-    public function hasParkingRestrictions(bool $hasParkingRestrictions): void
+    public function hasDirections(): bool
     {
-        $this->hasParkingRestrictions = $hasParkingRestrictions;
+        return $this->hasDirections;
     }
 
-    public function hasImages(bool $hasImages): void
+    public function hasParkingRestrictions(): bool
     {
-        $this->hasImages = $hasImages;
+        return $this->hasParkingRestrictions;
     }
 
-    public function hasLastUpdated(bool $hasLastUpdated): void
+    public function hasImages(): bool
     {
-        $this->hasLastUpdated = $hasLastUpdated;
+        return $this->hasImages;
+    }
+
+    public function hasLastUpdated(): bool
+    {
+        return $this->hasLastUpdated;
     }
 
     public function jsonSerialize(): array
