@@ -35,7 +35,7 @@ class RequestConstructionTest extends OcpiTestCase
 
         $request = new OcpiEmspSessionPatchRequest($serverRequestInterface, 'FR', 'TNM', '101');
         $session = $request->getPartialSession();
-        $this->assertSame('101',$session->getId());
+        $this->assertNull($session->getId());
         $this->assertNotNull($session->getLocation());
     }
 
@@ -45,7 +45,7 @@ class RequestConstructionTest extends OcpiTestCase
 
         $request = new OcpiEmspSessionPatchRequest($serverRequestInterface, 'FR', 'TNM', '101');
         $session = $request->getPartialSession();
-        $this->assertSame('101',$session->getId());
+        $this->assertNull($session->getId());
         $this->assertNotEmpty($session->getChargingPeriods());
         $this->assertCount(2, $session->getChargingPeriods());
     }
