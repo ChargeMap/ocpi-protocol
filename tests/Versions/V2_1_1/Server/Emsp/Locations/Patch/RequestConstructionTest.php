@@ -7,6 +7,7 @@ namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\GeoLocation;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch\OcpiEmspLocationPatchRequest;
+use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch\UnsupportedPatchException;
 use DateTime;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 
@@ -43,7 +44,7 @@ class RequestConstructionTest extends OcpiTestCase
 
         $request = new OcpiEmspLocationPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1'));
         $location = $request->getPartialLocation();
-        $this->assertSame('LOC1',$location->getId());
+        $this->assertNull($location->getId());
         $this->assertNotNull($location->getEvses());
     }
 
@@ -53,11 +54,19 @@ class RequestConstructionTest extends OcpiTestCase
 
         $request = new OcpiEmspLocationPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1'));
         $location = $request->getPartialLocation();
-        $this->assertSame('LOC1',$location->getId());
+        $this->assertNull($location->getId());
         $this->assertNotEmpty($location->getOpeningTimes()->getExceptionalOpenings());
         $this->assertNotEmpty($location->getOpeningTimes()->getExceptionalClosings());
         $this->assertTrue($location->getOpeningTimes()->isTwentyFourSeven());
         $this->assertNotNull($location->getChargingWhenClosed());
         $this->assertFalse($location->getChargingWhenClosed());
+    }
+
+    public function testShouldFailWithPatchId(): void
+    {
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/LocationPatchFullPayload.json');
+
+        $this->expectException(UnsupportedPatchException::class);
+        new OcpiEmspLocationPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC2'));
     }
 }
