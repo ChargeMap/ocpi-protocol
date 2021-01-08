@@ -24,19 +24,19 @@ class PartialSession implements JsonSerializable
     private bool $hasLastUpdated;
 
     private string $id;
-    private ?DateTime $startDate;
-    private ?DateTime $endDate;
-    private ?float $kwh;
-    private ?string $authId;
-    private ?AuthenticationMethod $authMethod;
-    private ?Location $location;
-    private ?string $meterId;
-    private ?string $currency;
+    private ?DateTime $startDate = null;
+    private ?DateTime $endDate = null;
+    private ?float $kwh = null;
+    private ?string $authId = null;
+    private ?AuthenticationMethod $authMethod = null;
+    private ?Location $location = null;
+    private ?string $meterId = null;
+    private ?string $currency = null;
     /** @var ChargingPeriod[]|null */
     private ?array $chargingPeriods = null;
-    private ?float $totalCost;
-    private ?SessionStatus $status;
-    private ?DateTime $lastUpdated;
+    private ?float $totalCost = null;
+    private ?SessionStatus $status = null;
+    private ?DateTime $lastUpdated = null;
 
     public function __construct(string $id)
     {
