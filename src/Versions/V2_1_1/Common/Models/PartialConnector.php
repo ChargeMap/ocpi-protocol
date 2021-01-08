@@ -10,6 +10,7 @@ use JsonSerializable;
 
 class PartialConnector implements JsonSerializable
 {
+    private bool $hasId;
     private bool $hasStandard;
     private bool $hasFormat;
     private bool $hasPowerType;
@@ -19,7 +20,7 @@ class PartialConnector implements JsonSerializable
     private bool $hasTermsAndConditions;
     private bool $hasLastUpdated;
 
-    private string $id;
+    private ?string $id = null;
     private ?ConnectorType $standard = null;
     private ?ConnectorFormat $format = null;
     private ?PowerType $powerType = null;
@@ -29,9 +30,9 @@ class PartialConnector implements JsonSerializable
     private ?string $termsAndConditions = null;
     private ?DateTime $lastUpdated = null;
 
-    public function __construct(string $id)
+    public function __construct()
     {
-        $this->id = $id;
+        $this->hasId = false;
         $this->hasStandard = false;
         $this->hasFormat = false;
         $this->hasPowerType = false;
@@ -42,92 +43,103 @@ class PartialConnector implements JsonSerializable
         $this->hasLastUpdated = false;
     }
 
-    public function setStandard(ConnectorType $standard): void
+    public function withId(string $id): void
+    {
+        $this->hasId = true;
+        $this->id = $id;
+    }
+
+    public function withStandard(ConnectorType $standard): void
     {
         $this->hasStandard = true;
         $this->standard = $standard;
     }
 
-    public function setFormat(ConnectorFormat $format): void
+    public function withFormat(ConnectorFormat $format): void
     {
         $this->hasFormat = true;
         $this->format = $format;
     }
 
-    public function setPowerType(PowerType $powerType): void
+    public function withPowerType(PowerType $powerType): void
     {
         $this->hasPowerType = true;
         $this->powerType = $powerType;
     }
 
-    public function setVoltage(int $voltage): void
+    public function withVoltage(int $voltage): void
     {
         $this->hasVoltage = true;
         $this->voltage = $voltage;
     }
 
-    public function setAmperage(int $amperage): void
+    public function withAmperage(int $amperage): void
     {
         $this->hasAmperage = true;
         $this->amperage = $amperage;
     }
 
-    public function setTariffId(?string $tariffId): void
+    public function withTariffId(?string $tariffId): void
     {
         $this->hasTariffId = true;
         $this->tariffId = $tariffId;
     }
 
-    public function setTermsAndConditions(?string $termsAndConditions): void
+    public function withTermsAndConditions(?string $termsAndConditions): void
     {
         $this->hasTermsAndConditions = true;
         $this->termsAndConditions = $termsAndConditions;
     }
 
-    public function setLastUpdated(DateTime $lastUpdated): void
+    public function withLastUpdated(DateTime $lastUpdated): void
     {
         $this->hasLastUpdated = true;
         $this->lastUpdated = $lastUpdated;
     }
 
-    public function hasStandard(bool $hasStandard): void
+    public function hasId(): bool
     {
-        $this->hasStandard = $hasStandard;
+        return $this->hasId;
     }
 
-    public function hasFormat(bool $hasFormat): void
+    public function hasStandard(): bool
     {
-        $this->hasFormat = $hasFormat;
+        return $this->hasStandard;
     }
 
-    public function hasPowerType(bool $hasPowerType): void
+    public function hasFormat(): bool
     {
-        $this->hasPowerType = $hasPowerType;
+        return $this->hasFormat;
     }
 
-    public function hasVoltage(bool $hasVoltage): void
+    public function hasPowerType(): bool
     {
-        $this->hasVoltage = $hasVoltage;
+        return $this->hasPowerType;
     }
 
-    public function hasAmperage(bool $hasAmperage): void
+    public function hasVoltage(): bool
     {
-        $this->hasAmperage = $hasAmperage;
+        return $this->hasVoltage;
     }
 
-    public function hasTariffId(bool $hasTariffId): void
+    public function hasAmperage(): bool
     {
-        $this->hasTariffId = $hasTariffId;
+        return $this->hasAmperage;
     }
 
-    public function hasTermsAndConditions(bool $hasTermsAndConditions): void
+    public function hasTariffId(): bool
     {
-        $this->hasTermsAndConditions = $hasTermsAndConditions;
+        return $this->hasTariffId;
     }
 
-    public function hasLastUpdated(bool $hasLastUpdated): void
+    public function hasTermsAndConditions(): bool
     {
-        $this->hasLastUpdated = $hasLastUpdated;
+        return $this->hasTermsAndConditions;
+    }
+
+    public function hasLastUpdated(): bool
+    {
+        return $this->hasLastUpdated;
     }
 
     public function getId(): ?string
