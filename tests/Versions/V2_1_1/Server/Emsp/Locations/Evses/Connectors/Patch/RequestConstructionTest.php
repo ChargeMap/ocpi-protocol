@@ -7,6 +7,7 @@ namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Conne
 use Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Connectors\Patch\OcpiEmspConnectorPatchRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
+use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch\UnsupportedPatchException;
 use DateTime;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Tests\Chargemap\OCPI\OcpiTestCase;
@@ -42,7 +43,7 @@ class RequestConstructionTest extends OcpiTestCase
 
         $request = new OcpiEmspConnectorPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
         $partialConnector = $request->getPartialConnector();
-        $this->assertSame('1',$partialConnector->getId());
+        $this->assertSame('1', $partialConnector->getId());
         $this->assertNull($partialConnector->getVoltage());
         $this->assertNull($partialConnector->getPowerType());
         $this->assertEquals(new DateTime('2015-03-16T10:10:02Z'), $partialConnector->getLastUpdated());
@@ -54,7 +55,7 @@ class RequestConstructionTest extends OcpiTestCase
 
         $request = new OcpiEmspConnectorPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
         $partialConnector = $request->getPartialConnector();
-        $this->assertSame('1',$partialConnector->getId());
+        $this->assertSame('1', $partialConnector->getId());
         $this->assertNull($partialConnector->getVoltage());
         $this->assertNull($partialConnector->getPowerType());
         $this->assertEquals(null, $partialConnector->getTermsAndConditions());
@@ -84,4 +85,11 @@ class RequestConstructionTest extends OcpiTestCase
         new OcpiEmspConnectorPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
     }
 
+    public function testShouldFailWithPatchId(): void
+    {
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/ConnectorPatchFullPayload.json');
+
+        $this->expectException(UnsupportedPatchException::class);
+        new OcpiEmspConnectorPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '2'));
+    }
 }
