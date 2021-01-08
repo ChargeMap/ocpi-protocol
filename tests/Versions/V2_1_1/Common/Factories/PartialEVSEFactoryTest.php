@@ -31,9 +31,9 @@ class PartialEVSEFactoryTest extends FactoryTestCase
 
         $this->coerce(realpath(__DIR__ . '/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/evsePatch.schema.json'), $json);
 
-        $connector = PartialEVSEFactory::fromJson($json);
+        $evse = PartialEVSEFactory::fromJson($json);
 
-        self::assertPartialEVSE($json, $connector);
+        self::assertPartialEVSE($json, $evse);
     }
 
     public function assertPartialEVSE($json, ?PartialEVSE $evse): void

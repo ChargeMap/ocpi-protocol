@@ -45,7 +45,7 @@ class RequestConstructionTest extends OcpiTestCase
         $this->assertSame('3256', $request->getEvseUid());
 
         $evse = $request->getPartialEvse();
-        $this->assertSame('3256', $evse->getUid());
+        $this->assertSame($json->uid ?? null,$evse->getUid());
         $this->assertSame($json->evse_id ?? null, $evse->getEvseId());
         $this->assertEquals($json->status ?? null, $evse->getStatus());
         if (isset($json->status_schedule)) {
