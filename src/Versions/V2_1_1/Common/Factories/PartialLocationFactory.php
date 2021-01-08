@@ -10,74 +10,70 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Models\GeoLocation;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\LocationType;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\PartialLocation;
 use DateTime;
-use Exception;
 use stdClass;
 
 class PartialLocationFactory
 {
-    public static function fromJson(string $id, ?stdClass $json): ?PartialLocation
+    public static function fromJson(?stdClass $json): ?PartialLocation
     {
         if ($json === null) {
             return null;
         }
 
+        $location = new PartialLocation();
+
         if (property_exists($json, 'id')) {
-            if ($id !== $json->id) {
-                throw new Exception("Unsupported patching of property id");
-            }
+            $location->withId($json->id);
         }
-
-        $location = new PartialLocation($id);
-
         if (property_exists($json, 'type')) {
-            $location->setLocationType(new LocationType($json->type));
+            $location->withLocationType(new LocationType($json->type));
         }
         if (property_exists($json, 'name')) {
-            $location->setName($json->name);
+            $location->withName($json->name);
         }
         if (property_exists($json, 'address')) {
-            $location->setAddress($json->address);
+            $location->withAddress($json->address);
         }
         if (property_exists($json, 'city')) {
-            $location->setCity($json->city);
+            $location->withCity($json->city);
         }
         if (property_exists($json, 'postal_code')) {
-            $location->setPostalCode($json->postal_code);
+            $location->withPostalCode($json->postal_code);
         }
         if (property_exists($json, 'country')) {
-            $location->setCountry($json->country);
+            $location->withCountry($json->country);
         }
         if (property_exists($json, 'coordinates')) {
-            $location->setCoordinates(new GeoLocation($json->coordinates->latitude, $json->coordinates->longitude));
+            $location->withCoordinates(new GeoLocation($json->coordinates->latitude, $json->coordinates->longitude));
         }
         if (property_exists($json, 'operator')) {
-            $location->setOperator(BusinessDetailsFactory::fromJson($json->operator));
+            $location->withOperator(BusinessDetailsFactory::fromJson($json->operator));
         }
         if (property_exists($json, 'suboperator')) {
-            $location->setSuboperator(BusinessDetailsFactory::fromJson($json->suboperator));
+            $location->withSuboperator(BusinessDetailsFactory::fromJson($json->suboperator));
         }
         if (property_exists($json, 'owner')) {
-            $location->setOwner(BusinessDetailsFactory::fromJson($json->owner));
+            $location->withOwner(BusinessDetailsFactory::fromJson($json->owner));
         }
         if (property_exists($json, 'time_zone')) {
-            $location->setTimeZone($json->time_zone);
+            $location->withTimeZone($json->time_zone);
         }
         if (property_exists($json, 'opening_times')) {
-            $location->setOpeningTimes(HoursFactory::fromJson($json->opening_times));
+            $location->withOpeningTimes(HoursFactory::fromJson($json->opening_times));
         }
         if (property_exists($json, 'charging_when_closed')) {
-            $location->setChargingWhenClosed($json->charging_when_closed);
+            $location->withChargingWhenClosed($json->charging_when_closed);
         }
         if (property_exists($json, 'energy_mix')) {
-            $location->setEnergyMix(EnergyMixFactory::fromJson($json->energy_mix));
+            $location->withEnergyMix(EnergyMixFactory::fromJson($json->energy_mix));
         }
         if (property_exists($json, 'last_updated')) {
-            $location->setLastUpdated(new DateTime($json->last_updated));
+            $location->withLastUpdated(new DateTime($json->last_updated));
         }
         if (property_exists($json, 'related_locations')) {
-            $location->setEmptyRelatedLocation();
-            foreach ($json->related_locations as $jsonRelatedLocation) {
-                $location->addRelatedLocation(new AdditionalGeoLocation(
+            $location->withEmptyRelatedLocation();
+            foreach ($json->related_locations  ?? [] as $jsonRelatedLocation) {
+                $location->withRelatedLocation(new AdditionalGeoLocation(
                     new GeoLocation(
                         $jsonRelatedLocation->latitude,
                         $jsonRelatedLocation->longitude
@@ -88,30 +84,30 @@ class PartialLocationFactory
         }
 
         if (property_exists($json, 'evses')) {
-            $location->setEmptyEvse();
-            foreach ($json->evses as $jsonEvse) {
-                $location->addEVSE(EVSEFactory::fromJson($jsonEvse));
+            $location->withEmptyEvse();
+            foreach ($json->evses ?? [] as $jsonEvse) {
+                $location->withEVSE(EVSEFactory::fromJson($jsonEvse));
             }
         }
 
         if (property_exists($json, 'directions')) {
-            $location->setEmptyDirection();
-            foreach ($json->directions as $jsonDirection) {
-                $location->addDirection(DisplayTextFactory::fromJson($jsonDirection));
+            $location->withEmptyDirection();
+            foreach ($json->directions ?? [] as $jsonDirection) {
+                $location->withDirection(DisplayTextFactory::fromJson($jsonDirection));
             }
         }
 
         if (property_exists($json, 'facilities')) {
-            $location->setEmptyFacility();
-            foreach ($json->facilities as $jsonFacility) {
-                $location->addFacility(new Facility($jsonFacility));
+            $location->withEmptyFacility();
+            foreach ($json->facilities ?? [] as $jsonFacility) {
+                $location->withFacility(new Facility($jsonFacility));
             }
         }
 
         if (property_exists($json, 'images')) {
-            $location->setEmptyImage();
-            foreach ($json->images as $jsonImage) {
-                $location->addImage(ImageFactory::fromJson($jsonImage));
+            $location->withEmptyImage();
+            foreach ($json->images ?? [] as $jsonImage) {
+                $location->withImage(ImageFactory::fromJson($jsonImage));
             }
         }
 

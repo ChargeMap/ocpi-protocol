@@ -10,6 +10,7 @@ use JsonSerializable;
 
 class PartialLocation implements JsonSerializable
 {
+    private bool $hasId;
     private bool $hasLocationType;
     private bool $hasName;
     private bool $hasAddress;
@@ -31,7 +32,7 @@ class PartialLocation implements JsonSerializable
     private bool $hasEnergyMix;
     private bool $hasLastUpdated;
 
-    private string $id;
+    private ?string $id = null;
     private ?LocationType $locationType = null;
     private ?string $name = null;
     private ?string $address = null;
@@ -40,27 +41,27 @@ class PartialLocation implements JsonSerializable
     private ?string $country = null;
     private ?GeoLocation $coordinates = null;
     /** @var AdditionalGeoLocation[]|null */
-    private ?array $relatedLocations = null;
+    private ?array $relatedLocations = [];
     /** @var EVSE[]|null */
-    private ?array $evses = null;
+    private ?array $evses = [];
     /** @var DisplayText[]|null */
-    private ?array $directions = null;
+    private ?array $directions = [];
     private ?BusinessDetails $operator = null;
     private ?BusinessDetails $suboperator = null;
     private ?BusinessDetails $owner = null;
     /** @var Facility[]|null */
-    private ?array $facilities = null;
+    private ?array $facilities = [];
     private ?string $timeZone = null;
     private ?Hours $openingTimes = null;
     private ?bool $chargingWhenClosed = null;
     /** @var Image[]|null */
-    private ?array $images = null;
+    private ?array $images = [];
     private ?EnergyMix $energyMix = null;
     private ?DateTime $lastUpdated = null;
 
-    public function __construct(string $id)
+    public function __construct()
     {
-        $this->id = $id;
+        $this->hasId = false;
         $this->hasLocationType = false;
         $this->hasName = false;
         $this->hasAddress = false;
@@ -83,249 +84,154 @@ class PartialLocation implements JsonSerializable
         $this->hasLastUpdated = false;
     }
 
-    public function setLocationType(LocationType $locationType): void
+    public function withId(string $id){
+        $this->hasId = true;
+        $this->id = $id;
+    }
+
+    public function withLocationType(LocationType $locationType): void
     {
         $this->hasLocationType = true;
         $this->locationType = $locationType;
     }
 
-    public function setName(?string $name): void
+    public function withName(?string $name): void
     {
         $this->hasName = true;
         $this->name = $name;
     }
 
-    public function setAddress(string $address): void
+    public function withAddress(string $address): void
     {
         $this->hasAddress = true;
         $this->address = $address;
     }
 
-    public function setCity(string $city): void
+    public function withCity(string $city): void
     {
         $this->hasCity = true;
         $this->city = $city;
     }
 
-    public function setPostalCode(string $postalCode): void
+    public function withPostalCode(string $postalCode): void
     {
         $this->hasPostalCode = true;
         $this->postalCode = $postalCode;
     }
 
-    public function setCountry(string $country): void
+    public function withCountry(string $country): void
     {
         $this->hasCountry = true;
         $this->country = $country;
     }
 
-    public function setCoordinates(GeoLocation $coordinates): void
+    public function withCoordinates(GeoLocation $coordinates): void
     {
         $this->hasCoordinates = true;
         $this->coordinates = $coordinates;
     }
 
-    public function setEmptyRelatedLocation(): void
+    public function withEmptyRelatedLocation(): void
     {
         $this->hasRelatedLocations = true;
     }
 
-    public function addRelatedLocation(AdditionalGeoLocation $relatedLocation): self
+    public function withRelatedLocation(AdditionalGeoLocation $relatedLocation): self
     {
         $this->relatedLocations[] = $relatedLocation;
         return $this;
     }
 
-    public function setEmptyEvse(): void
+    public function withEmptyEvse(): void
     {
         $this->hasEvses = true;
     }
 
-    public function addEVSE(EVSE $evse): self
+    public function withEVSE(EVSE $evse): self
     {
         $this->evses[] = $evse;
         return $this;
     }
 
-    public function setEmptyDirection() : void
+    public function withEmptyDirection() : void
     {
         $this->hasDirections = true;
     }
 
-    public function addDirection(DisplayText $direction): self
+    public function withDirection(DisplayText $direction): self
     {
         $this->directions[] = $direction;
         return $this;
     }
 
-    public function setOperator(?BusinessDetails $operator): void
+    public function withOperator(?BusinessDetails $operator): void
     {
         $this->hasOperator = true;
         $this->operator = $operator;
     }
 
-    public function setSuboperator(?BusinessDetails $suboperator): void
+    public function withSuboperator(?BusinessDetails $suboperator): void
     {
         $this->hasSuboperator = true;
         $this->suboperator = $suboperator;
     }
 
-    public function setOwner(?BusinessDetails $owner): void
+    public function withOwner(?BusinessDetails $owner): void
     {
         $this->hasOwner = true;
         $this->owner = $owner;
     }
 
-    public function setEmptyFacility(): void
+    public function withEmptyFacility(): void
     {
         $this->hasFacilities = true;
     }
 
-    public function addFacility(Facility $facility): self
+    public function withFacility(Facility $facility): self
     {
         $this->facilities[] = $facility;
         return $this;
     }
 
-    public function setTimeZone(?string $timeZone): void
+    public function withTimeZone(?string $timeZone): void
     {
         $this->hasTimeZone = true;
         $this->timeZone = $timeZone;
     }
 
-    public function setOpeningTimes(?Hours $openingTimes): void
+    public function withOpeningTimes(?Hours $openingTimes): void
     {
         $this->hasOpeningTimes = true;
         $this->openingTimes = $openingTimes;
     }
 
-    public function setChargingWhenClosed(?bool $chargingWhenClosed): void
+    public function withChargingWhenClosed(?bool $chargingWhenClosed): void
     {
         $this->hasChargingWhenClosing = true;
         $this->chargingWhenClosed = $chargingWhenClosed;
     }
 
-    public function setEmptyImage(): void
+    public function withEmptyImage(): void
     {
         $this->hasImages = true;
     }
 
-    public function addImage(Image $image): self
+    public function withImage(Image $image): self
     {
         $this->images[] = $image;
         return $this;
     }
 
-    public function setEnergyMix(?EnergyMix $energyMix): void
+    public function withEnergyMix(?EnergyMix $energyMix): void
     {
         $this->hasEnergyMix = true;
         $this->energyMix = $energyMix;
     }
 
-    public function setLastUpdated(?DateTime $lastUpdated): void
+    public function withLastUpdated(?DateTime $lastUpdated): void
     {
         $this->hasLastUpdated = true;
         $this->lastUpdated = $lastUpdated;
-    }
-
-    public function hasLocationType(bool $hasLocationType): void
-    {
-        $this->hasLocationType = $hasLocationType;
-    }
-
-    public function hasName(bool $hasName): void
-    {
-        $this->hasName = $hasName;
-    }
-
-    public function hasAddress(bool $hasAddress): void
-    {
-        $this->hasAddress = $hasAddress;
-    }
-
-    public function hasCity(bool $hasCity): void
-    {
-        $this->hasCity = $hasCity;
-    }
-
-    public function hasPostalCode(bool $hasPostalCode): void
-    {
-        $this->hasPostalCode = $hasPostalCode;
-    }
-
-    public function hasCountry(bool $hasCountry): void
-    {
-        $this->hasCountry = $hasCountry;
-    }
-
-    public function hasCoordinates(bool $hasCoordinates): void
-    {
-        $this->hasCoordinates = $hasCoordinates;
-    }
-
-    public function hasRelatedLocations(bool $hasRelatedLocations): void
-    {
-        $this->hasRelatedLocations = $hasRelatedLocations;
-    }
-
-    public function hasEvses(bool $hasEvses): void
-    {
-        $this->hasEvses = $hasEvses;
-    }
-
-    public function hasDirections(bool $hasDirections): void
-    {
-        $this->hasDirections = $hasDirections;
-    }
-
-    public function hasOperator(bool $hasOperator): void
-    {
-        $this->hasOperator = $hasOperator;
-    }
-
-    public function hasSuboperator(bool $hasSuboperator): void
-    {
-        $this->hasSuboperator = $hasSuboperator;
-    }
-
-    public function hasOwner(bool $hasOwner): void
-    {
-        $this->hasOwner = $hasOwner;
-    }
-
-    public function hasFacilities(bool $hasFacilities): void
-    {
-        $this->hasFacilities = $hasFacilities;
-    }
-
-    public function hasTimeZone(bool $hasTimeZone): void
-    {
-        $this->hasTimeZone = $hasTimeZone;
-    }
-
-    public function hasOpeningTimes(bool $hasOpeningTimes): void
-    {
-        $this->hasOpeningTimes = $hasOpeningTimes;
-    }
-
-    public function hasChargingWhenClosing(bool $hasChargingWhenClosing): void
-    {
-        $this->hasChargingWhenClosing = $hasChargingWhenClosing;
-    }
-
-    public function hasImages(bool $hasImages): void
-    {
-        $this->hasImages = $hasImages;
-    }
-
-    public function hasEnergyMix(bool $hasEnergyMix): void
-    {
-        $this->hasEnergyMix = $hasEnergyMix;
-    }
-
-    public function hasLastUpdated(bool $hasLastUpdated): void
-    {
-        $this->hasLastUpdated = $hasLastUpdated;
     }
 
     public function getId(): ?string
@@ -446,6 +352,111 @@ class PartialLocation implements JsonSerializable
     public function getLastUpdated(): ?DateTime
     {
         return $this->lastUpdated;
+    }
+
+    public function hasId(): bool
+    {
+        return $this->hasId;
+    }
+
+    public function hasLocationType(): bool
+    {
+        return $this->hasLocationType;
+    }
+
+    public function hasName(): bool
+    {
+        return $this->hasName;
+    }
+
+    public function hasAddress(): bool
+    {
+        return $this->hasAddress;
+    }
+
+    public function hasCity(): bool
+    {
+        return $this->hasCity;
+    }
+
+    public function hasPostalCode(): bool
+    {
+        return $this->hasPostalCode;
+    }
+
+    public function hasCountry(): bool
+    {
+        return $this->hasCountry;
+    }
+
+    public function hasCoordinates(): bool
+    {
+        return $this->hasCoordinates;
+    }
+
+    public function hasRelatedLocations(): bool
+    {
+        return $this->hasRelatedLocations;
+    }
+
+    public function hasEvses(): bool
+    {
+        return $this->hasEvses;
+    }
+
+    public function hasDirections(): bool
+    {
+        return $this->hasDirections;
+    }
+
+    public function hasOperator(): bool
+    {
+        return $this->hasOperator;
+    }
+
+    public function hasSuboperator(): bool
+    {
+        return $this->hasSuboperator;
+    }
+
+    public function hasOwner(): bool
+    {
+        return $this->hasOwner;
+    }
+
+    public function hasFacilities(): bool
+    {
+        return $this->hasFacilities;
+    }
+
+    public function hasTimeZone(): bool
+    {
+        return $this->hasTimeZone;
+    }
+
+    public function hasOpeningTimes(): bool
+    {
+        return $this->hasOpeningTimes;
+    }
+
+    public function hasChargingWhenClosing(): bool
+    {
+        return $this->hasChargingWhenClosing;
+    }
+
+    public function hasImages(): bool
+    {
+        return $this->hasImages;
+    }
+
+    public function hasEnergyMix(): bool
+    {
+        return $this->hasEnergyMix;
+    }
+
+    public function hasLastUpdated(): bool
+    {
+        return $this->hasLastUpdated;
     }
 
     public function jsonSerialize(): array

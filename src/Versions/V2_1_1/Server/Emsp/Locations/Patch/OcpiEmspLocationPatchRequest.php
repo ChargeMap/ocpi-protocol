@@ -20,10 +20,15 @@ class OcpiEmspLocationPatchRequest extends OcpiLocationUpdateRequest
     {
         parent::__construct($request, $params);
         PayloadValidation::coerce('Versions/V2_1_1/Server/Emsp/Schemas/locationPatch.schema.json', $this->jsonBody);
-        $partialLocation = PartialLocationFactory::fromJson($params->getLocationId(),$this->jsonBody);
+        $partialLocation = PartialLocationFactory::fromJson($this->jsonBody);
         if ($partialLocation === null) {
             throw new UnexpectedValueException('PartialLocation cannot be null');
         }
+
+        if($partialLocation->hasId() && $partialLocation->getId() !== $params->getLocationId()) {
+            throw new UnsupportedPatchException( 'Property id can not be patched at the moment' );
+        }
+
         $this->partialLocation = $partialLocation;
     }
 

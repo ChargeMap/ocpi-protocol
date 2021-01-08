@@ -71,7 +71,7 @@
       "$ref": "common.json#/definitions/business_details"
     },
     "facilities": {
-      "type": "array",
+      "type": ["array","null"],
       "items": {
         "type": "string",
         "enum": [
@@ -106,7 +106,7 @@
       "type": "boolean"
     },
     "images": {
-      "type": "array",
+      "type": ["array","null"],
       "items": {
         "$ref": "common.json#/definitions/image"
       }
@@ -121,7 +121,7 @@
   },
   "definitions": {
     "energy_mix": {
-      "type": "object",
+      "type": ["object","null"],
       "properties": {
         "is_green_energy": {
           "type": "boolean"
