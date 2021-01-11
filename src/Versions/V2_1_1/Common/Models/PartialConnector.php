@@ -144,31 +144,31 @@ class PartialConnector extends PartialModel implements JsonSerializable
     {
         $return = [];
 
-        if ($this->id !== null) {
+        if ($this->hasId()) {
             $return['id'] = $this->id;
         }
-        if ($this->standard !== null) {
+        if ($this->hasStandard()) {
             $return['standard'] = $this->standard;
         }
-        if ($this->format !== null) {
+        if ($this->hasFormat()) {
             $return['format'] = $this->format;
         }
-        if ($this->powerType !== null) {
+        if ($this->hasPowerType()) {
             $return['power_type'] = $this->powerType;
         }
-        if ($this->voltage !== null) {
+        if ($this->hasVoltage()) {
             $return['voltage'] = $this->voltage;
         }
-        if ($this->amperage !== null) {
+        if ($this->hasAmperage()) {
             $return['amperage'] = $this->amperage;
         }
-        if ($this->tariffId !== null) {
+        if ($this->hasTariffId()) {
             $return['tariff_id'] = $this->tariffId;
         }
-        if ($this->termsAndConditions !== null) {
+        if ($this->hasTermsAndConditions()) {
             $return['terms_and_conditions'] = $this->termsAndConditions;
         }
-        if ($this->lastUpdated !== null) {
+        if ($this->hasLastUpdated()) {
             $return['last_updated'] = DateTimeFormatter::format($this->lastUpdated);
         }
 
