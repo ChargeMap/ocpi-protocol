@@ -15,6 +15,9 @@ use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\GeoLocationFactoryTest
 use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\ImageFactoryTest;
 use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\StatusScheduleFactoryTest;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Patch\OcpiEmspEvsePatchRequest
+ */
 class RequestConstructionTest extends OcpiTestCase
 {
 

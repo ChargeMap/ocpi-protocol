@@ -9,6 +9,9 @@ use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Patch\OcpiEmspSessionPat
 use DateTime;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Patch\OcpiEmspSessionPatchRequest
+ */
 class RequestConstructionTest extends OcpiTestCase
 {
     public function testShouldConstructRequestWithFullPayload(): void

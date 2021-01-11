@@ -1,6 +1,7 @@
 {
   "id": "101",
   "start_datetime": "2015-06-29T22:39:09Z",
+  "end_datetime": "2015-06-29T22:51:09Z",
   "kwh": 0.00,
   "auth_id": "DE8ACC12E46L89",
   "auth_method": "AUTH_REQUEST",

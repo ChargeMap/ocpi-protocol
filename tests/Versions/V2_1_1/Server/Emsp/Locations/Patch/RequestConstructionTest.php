@@ -11,6 +11,9 @@ use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch\UnsupportedPatchE
 use DateTime;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch\OcpiEmspLocationPatchRequest
+ */
 class RequestConstructionTest extends OcpiTestCase
 {
     public function testShouldConstructRequestWithFullPayload(): void

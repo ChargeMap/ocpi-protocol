@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Put;
 
-use Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\GeoLocation;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Put\OcpiEmspLocationPutRequest;
@@ -81,25 +80,5 @@ class RequestConstructionTest extends OcpiTestCase
                 }
             }
         }
-    }
-
-    public function invalidPayloadProvider(): iterable
-    {
-        foreach (scandir(__DIR__ . '/payloads/') as $filename) {
-            if (substr($filename, 0, 3) === 'ko_') {
-                yield basename(substr($filename, 3), '.json') => [__DIR__ . '/payloads/' . $filename];
-            }
-        }
-    }
-
-    /**
-     * @dataProvider invalidPayloadProvider
-     * @param string $filename
-     */
-    public function testShouldThrowExceptionWithInvalidPayload(string $filename): void
-    {
-        $serverRequestInterface = $this->createServerRequestInterface($filename);
-        $this->expectException(OcpiInvalidPayloadClientError::class);
-        new OcpiEmspLocationPutRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1'));
     }
 }

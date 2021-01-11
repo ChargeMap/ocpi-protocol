@@ -12,6 +12,9 @@ use DateTime;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Connectors\Patch\OcpiEmspConnectorPatchRequest
+ */
 class RequestConstructionTest extends OcpiTestCase
 {
     public function testShouldConstructRequestWithFullPayload(): void
