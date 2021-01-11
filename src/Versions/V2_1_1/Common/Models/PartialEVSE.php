@@ -52,11 +52,11 @@ class PartialEVSE extends PartialModel implements JsonSerializable
     private ?GeoLocation $coordinates = null;
     private ?string $physicalReference = null;
     /** @var DisplayText[]|null */
-    private ?array $directions = [];
+    private ?array $directions = null;
     /** @var ParkingRestriction[]|null */
     private ?array $parkingRestrictions = null;
     /** @var Image[]|null */
-    private ?array $images = [];
+    private ?array $images = null;
     private ?DateTime $lastUpdated = null;
 
     protected function _withUid(string $uid): self
