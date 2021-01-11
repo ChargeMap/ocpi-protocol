@@ -24,6 +24,9 @@ abstract class PartialModel
 
     public function __call(string $name, array $arguments)
     {
+        if (method_exists($this, $name)) {
+            return call_user_func_array([$this, $name], $arguments);
+        }
         if (substr($name, 0, 4) === 'with') {
             $methodName = '_' . $name;
             if (!method_exists($this, $methodName)) {
@@ -36,9 +39,6 @@ abstract class PartialModel
         if (substr($name, 0, 3) === 'has') {
             return in_array(substr($name, 3), $this->setProperties);
         }
-        if (!method_exists($this, $name)) {
-            throw new BadMethodCallException("Method $name does not exist");
-        }
-        return call_user_func_array([$this, $name], $arguments);
+        throw new BadMethodCallException("Method $name does not exist");
     }
 }
