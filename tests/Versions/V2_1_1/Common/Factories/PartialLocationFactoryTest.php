@@ -139,10 +139,10 @@ class PartialLocationFactoryTest extends FactoryTestCase
             self::assertFalse($location->hasOpeningTimes());
         }
         if (property_exists($json, 'charging_when_closed')) {
-            self::assertTrue($location->hasChargingWhenClosing());
+            self::assertTrue($location->hasChargingWhenClosed());
             self::assertSame($json->charging_when_closed, $location->getChargingWhenClosed());
         } else {
-            self::assertFalse($location->hasChargingWhenClosing());
+            self::assertFalse($location->hasChargingWhenClosed());
         }
         if (property_exists($json, 'images')) {
             self::assertTrue($location->hasImages());

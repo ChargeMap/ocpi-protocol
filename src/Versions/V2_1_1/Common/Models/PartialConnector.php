@@ -5,21 +5,32 @@ declare(strict_types=1);
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
 use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
+use Chargemap\OCPI\Common\Utils\PartialModel;
 use DateTime;
 use JsonSerializable;
 
-class PartialConnector implements JsonSerializable
+/**
+ * @method bool hasId()
+ * @method bool hasStandard()
+ * @method bool hasFormat()
+ * @method bool hasPowerType()
+ * @method bool hasVoltage()
+ * @method bool hasAmperage()
+ * @method bool hasTariffId()
+ * @method bool hasTermsAndConditions()
+ * @method bool hasLastUpdated()
+ * @method self withId(string $id)
+ * @method self withStandard(ConnectorType $standard)
+ * @method self withFormat(ConnectorFormat $format)
+ * @method self withPowerType(PowerType $powerType)
+ * @method self withVoltage(int $voltage)
+ * @method self withAmperage(int $amperage)
+ * @method self withTariffId(?string $tariffId)
+ * @method self withTermsAndConditions(?string $termsAndConditions)
+ * @method self withLastUpdated(DateTime $lastUpdated)
+ */
+class PartialConnector extends PartialModel implements JsonSerializable
 {
-    private bool $hasId;
-    private bool $hasStandard;
-    private bool $hasFormat;
-    private bool $hasPowerType;
-    private bool $hasVoltage;
-    private bool $hasAmperage;
-    private bool $hasTariffId;
-    private bool $hasTermsAndConditions;
-    private bool $hasLastUpdated;
-
     private ?string $id = null;
     private ?ConnectorType $standard = null;
     private ?ConnectorFormat $format = null;
@@ -30,116 +41,58 @@ class PartialConnector implements JsonSerializable
     private ?string $termsAndConditions = null;
     private ?DateTime $lastUpdated = null;
 
-    public function __construct()
+    protected function _withId(string $id): self
     {
-        $this->hasId = false;
-        $this->hasStandard = false;
-        $this->hasFormat = false;
-        $this->hasPowerType = false;
-        $this->hasVoltage = false;
-        $this->hasAmperage = false;
-        $this->hasTariffId = false;
-        $this->hasTermsAndConditions = false;
-        $this->hasLastUpdated = false;
-    }
-
-    public function withId(string $id): void
-    {
-        $this->hasId = true;
         $this->id = $id;
+        return $this;
     }
 
-    public function withStandard(ConnectorType $standard): void
+    protected function _withStandard(ConnectorType $standard): self
     {
-        $this->hasStandard = true;
         $this->standard = $standard;
+        return $this;
     }
 
-    public function withFormat(ConnectorFormat $format): void
+    protected function _withFormat(ConnectorFormat $format): self
     {
-        $this->hasFormat = true;
         $this->format = $format;
+        return $this;
     }
 
-    public function withPowerType(PowerType $powerType): void
+    protected function _withPowerType(PowerType $powerType): self
     {
-        $this->hasPowerType = true;
         $this->powerType = $powerType;
+        return $this;
     }
 
-    public function withVoltage(int $voltage): void
+    protected function _withVoltage(int $voltage): self
     {
-        $this->hasVoltage = true;
         $this->voltage = $voltage;
+        return $this;
     }
 
-    public function withAmperage(int $amperage): void
+    protected function _withAmperage(int $amperage): self
     {
-        $this->hasAmperage = true;
         $this->amperage = $amperage;
+        return $this;
     }
 
-    public function withTariffId(?string $tariffId): void
+    protected function _withTariffId(?string $tariffId): self
     {
-        $this->hasTariffId = true;
         $this->tariffId = $tariffId;
+        return $this;
     }
 
-    public function withTermsAndConditions(?string $termsAndConditions): void
+    protected function _withTermsAndConditions(?string $termsAndConditions): self
     {
-        $this->hasTermsAndConditions = true;
         $this->termsAndConditions = $termsAndConditions;
+        return $this;
     }
 
-    public function withLastUpdated(DateTime $lastUpdated): void
+    protected function _withLastUpdated(DateTime $lastUpdated): self
     {
-        $this->hasLastUpdated = true;
         $this->lastUpdated = $lastUpdated;
-    }
-
-    public function hasId(): bool
-    {
-        return $this->hasId;
-    }
-
-    public function hasStandard(): bool
-    {
-        return $this->hasStandard;
-    }
-
-    public function hasFormat(): bool
-    {
-        return $this->hasFormat;
-    }
-
-    public function hasPowerType(): bool
-    {
-        return $this->hasPowerType;
-    }
-
-    public function hasVoltage(): bool
-    {
-        return $this->hasVoltage;
-    }
-
-    public function hasAmperage(): bool
-    {
-        return $this->hasAmperage;
-    }
-
-    public function hasTariffId(): bool
-    {
-        return $this->hasTariffId;
-    }
-
-    public function hasTermsAndConditions(): bool
-    {
-        return $this->hasTermsAndConditions;
-    }
-
-    public function hasLastUpdated(): bool
-    {
-        return $this->hasLastUpdated;
+        return $this;
     }
 
     public function getId(): ?string

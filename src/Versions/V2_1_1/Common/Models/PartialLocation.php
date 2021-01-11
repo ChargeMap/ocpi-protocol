@@ -5,33 +5,56 @@ declare(strict_types=1);
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
 use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
+use Chargemap\OCPI\Common\Utils\PartialModel;
 use DateTime;
 use JsonSerializable;
 
-class PartialLocation implements JsonSerializable
+/**
+ * @method bool hasId()
+ * @method bool hasLocationType()
+ * @method bool hasName()
+ * @method bool hasAddress()
+ * @method bool hasCity()
+ * @method bool hasPostalCode()
+ * @method bool hasCountry()
+ * @method bool hasCoordinates()
+ * @method bool hasRelatedLocations()
+ * @method bool hasEvses()
+ * @method bool hasDirections()
+ * @method bool hasOperator()
+ * @method bool hasSuboperator()
+ * @method bool hasOwner()
+ * @method bool hasFacilities()
+ * @method bool hasTimeZone()
+ * @method bool hasOpeningTimes()
+ * @method bool hasChargingWhenClosed()
+ * @method bool hasImages()
+ * @method bool hasEnergyMix()
+ * @method bool hasLastUpdated()
+ * @method self withId(?string $id)
+ * @method self withLocationType(?LocationType $locationType)
+ * @method self withName(?string $name)
+ * @method self withAddress(?string $address)
+ * @method self withCity(?string $city)
+ * @method self withPostalCode(?string $postalCode)
+ * @method self withCountry(?string $country)
+ * @method self withCoordinates(?GeoLocation $coordinates)
+ * @method self withRelatedLocations()
+ * @method self withEvses()
+ * @method self withDirections()
+ * @method self withOperator(?BusinessDetails $operator)
+ * @method self withSuboperator(?BusinessDetails $suboperator)
+ * @method self withOwner(?BusinessDetails $owner)
+ * @method self withFacilities()
+ * @method self withTimeZone(?string $timeZone)
+ * @method self withOpeningTimes(?Hours $openingTimes)
+ * @method self withChargingWhenClosed(?bool $chargingWhenClosed)
+ * @method self withImages()
+ * @method self withEnergyMix(?EnergyMix $energyMix)
+ * @method self withLastUpdated(?DateTime $lastUpdated)
+ */
+class PartialLocation extends PartialModel implements JsonSerializable
 {
-    private bool $hasId;
-    private bool $hasLocationType;
-    private bool $hasName;
-    private bool $hasAddress;
-    private bool $hasCity;
-    private bool $hasPostalCode;
-    private bool $hasCountry;
-    private bool $hasCoordinates;
-    private bool $hasRelatedLocations;
-    private bool $hasEvses;
-    private bool $hasDirections;
-    private bool $hasOperator;
-    private bool $hasSuboperator;
-    private bool $hasOwner;
-    private bool $hasFacilities;
-    private bool $hasTimeZone;
-    private bool $hasOpeningTimes;
-    private bool $hasChargingWhenClosing;
-    private bool $hasImages;
-    private bool $hasEnergyMix;
-    private bool $hasLastUpdated;
-
     private ?string $id = null;
     private ?LocationType $locationType = null;
     private ?string $name = null;
@@ -41,99 +64,76 @@ class PartialLocation implements JsonSerializable
     private ?string $country = null;
     private ?GeoLocation $coordinates = null;
     /** @var AdditionalGeoLocation[]|null */
-    private ?array $relatedLocations = [];
+    private ?array $relatedLocations = null;
     /** @var EVSE[]|null */
-    private ?array $evses = [];
+    private ?array $evses = null;
     /** @var DisplayText[]|null */
-    private ?array $directions = [];
+    private ?array $directions = null;
     private ?BusinessDetails $operator = null;
     private ?BusinessDetails $suboperator = null;
     private ?BusinessDetails $owner = null;
     /** @var Facility[]|null */
-    private ?array $facilities = [];
+    private ?array $facilities = null;
     private ?string $timeZone = null;
     private ?Hours $openingTimes = null;
     private ?bool $chargingWhenClosed = null;
     /** @var Image[]|null */
-    private ?array $images = [];
+    private ?array $images = null;
     private ?EnergyMix $energyMix = null;
     private ?DateTime $lastUpdated = null;
 
-    public function __construct()
+    protected function _withId(?string $id): self
     {
-        $this->hasId = false;
-        $this->hasLocationType = false;
-        $this->hasName = false;
-        $this->hasAddress = false;
-        $this->hasCity = false;
-        $this->hasPostalCode = false;
-        $this->hasCountry = false;
-        $this->hasCoordinates = false;
-        $this->hasRelatedLocations = false;
-        $this->hasEvses = false;
-        $this->hasDirections = false;
-        $this->hasOperator = false;
-        $this->hasSuboperator = false;
-        $this->hasOwner = false;
-        $this->hasFacilities = false;
-        $this->hasTimeZone = false;
-        $this->hasOpeningTimes = false;
-        $this->hasChargingWhenClosing = false;
-        $this->hasImages = false;
-        $this->hasEnergyMix = false;
-        $this->hasLastUpdated = false;
-    }
-
-    public function withId(string $id){
-        $this->hasId = true;
         $this->id = $id;
+        return $this;
     }
 
-    public function withLocationType(LocationType $locationType): void
+    protected function _withLocationType(?LocationType $locationType): self
     {
-        $this->hasLocationType = true;
         $this->locationType = $locationType;
+        return $this;
     }
 
-    public function withName(?string $name): void
+    protected function _withName(?string $name): self
     {
-        $this->hasName = true;
         $this->name = $name;
+        return $this;
     }
 
-    public function withAddress(string $address): void
+    protected function _withAddress(?string $address): self
     {
-        $this->hasAddress = true;
         $this->address = $address;
+        return $this;
     }
 
-    public function withCity(string $city): void
+    protected function _withCity(?string $city): self
     {
-        $this->hasCity = true;
         $this->city = $city;
+        return $this;
     }
 
-    public function withPostalCode(string $postalCode): void
+    protected function _withPostalCode(?string $postalCode): self
     {
-        $this->hasPostalCode = true;
         $this->postalCode = $postalCode;
+        return $this;
     }
 
-    public function withCountry(string $country): void
+    protected function _withCountry(?string $country): self
     {
-        $this->hasCountry = true;
         $this->country = $country;
+        return $this;
     }
 
-    public function withCoordinates(GeoLocation $coordinates): void
+    protected function _withCoordinates(?GeoLocation $coordinates): self
     {
-        $this->hasCoordinates = true;
         $this->coordinates = $coordinates;
+        return $this;
     }
 
-    public function withEmptyRelatedLocation(): void
+    protected function _withRelatedLocations(): self
     {
-        $this->hasRelatedLocations = true;
+        $this->relatedLocations = [];
+        return $this;
     }
 
     public function withRelatedLocation(AdditionalGeoLocation $relatedLocation): self
@@ -142,20 +142,22 @@ class PartialLocation implements JsonSerializable
         return $this;
     }
 
-    public function withEmptyEvse(): void
+    protected function _withEvses(): self
     {
-        $this->hasEvses = true;
+        $this->evses = [];
+        return $this;
     }
 
-    public function withEVSE(EVSE $evse): self
+    public function withEvse(EVSE $evse): self
     {
         $this->evses[] = $evse;
         return $this;
     }
 
-    public function withEmptyDirection() : void
+    protected function _withDirections(): self
     {
-        $this->hasDirections = true;
+        $this->directions = [];
+        return $this;
     }
 
     public function withDirection(DisplayText $direction): self
@@ -164,27 +166,28 @@ class PartialLocation implements JsonSerializable
         return $this;
     }
 
-    public function withOperator(?BusinessDetails $operator): void
+    protected function _withOperator(?BusinessDetails $operator): self
     {
-        $this->hasOperator = true;
         $this->operator = $operator;
+        return $this;
     }
 
-    public function withSuboperator(?BusinessDetails $suboperator): void
+    protected function _withSuboperator(?BusinessDetails $suboperator): self
     {
-        $this->hasSuboperator = true;
         $this->suboperator = $suboperator;
+        return $this;
     }
 
-    public function withOwner(?BusinessDetails $owner): void
+    protected function _withOwner(?BusinessDetails $owner): self
     {
-        $this->hasOwner = true;
         $this->owner = $owner;
+        return $this;
     }
 
-    public function withEmptyFacility(): void
+    protected function _withFacilities(): self
     {
-        $this->hasFacilities = true;
+        $this->facilities = [];
+        return $this;
     }
 
     public function withFacility(Facility $facility): self
@@ -193,27 +196,28 @@ class PartialLocation implements JsonSerializable
         return $this;
     }
 
-    public function withTimeZone(?string $timeZone): void
+    protected function _withTimeZone(?string $timeZone): self
     {
-        $this->hasTimeZone = true;
         $this->timeZone = $timeZone;
+        return $this;
     }
 
-    public function withOpeningTimes(?Hours $openingTimes): void
+    protected function _withOpeningTimes(?Hours $openingTimes): self
     {
-        $this->hasOpeningTimes = true;
         $this->openingTimes = $openingTimes;
+        return $this;
     }
 
-    public function withChargingWhenClosed(?bool $chargingWhenClosed): void
+    protected function _withChargingWhenClosed(?bool $chargingWhenClosed): self
     {
-        $this->hasChargingWhenClosing = true;
         $this->chargingWhenClosed = $chargingWhenClosed;
+        return $this;
     }
 
-    public function withEmptyImage(): void
+    protected function _withImages(): self
     {
-        $this->hasImages = true;
+        $this->images = [];
+        return $this;
     }
 
     public function withImage(Image $image): self
@@ -222,16 +226,16 @@ class PartialLocation implements JsonSerializable
         return $this;
     }
 
-    public function withEnergyMix(?EnergyMix $energyMix): void
+    protected function _withEnergyMix(?EnergyMix $energyMix): self
     {
-        $this->hasEnergyMix = true;
         $this->energyMix = $energyMix;
+        return $this;
     }
 
-    public function withLastUpdated(?DateTime $lastUpdated): void
+    protected function _withLastUpdated(?DateTime $lastUpdated): self
     {
-        $this->hasLastUpdated = true;
         $this->lastUpdated = $lastUpdated;
+        return $this;
     }
 
     public function getId(): ?string
@@ -354,176 +358,71 @@ class PartialLocation implements JsonSerializable
         return $this->lastUpdated;
     }
 
-    public function hasId(): bool
-    {
-        return $this->hasId;
-    }
-
-    public function hasLocationType(): bool
-    {
-        return $this->hasLocationType;
-    }
-
-    public function hasName(): bool
-    {
-        return $this->hasName;
-    }
-
-    public function hasAddress(): bool
-    {
-        return $this->hasAddress;
-    }
-
-    public function hasCity(): bool
-    {
-        return $this->hasCity;
-    }
-
-    public function hasPostalCode(): bool
-    {
-        return $this->hasPostalCode;
-    }
-
-    public function hasCountry(): bool
-    {
-        return $this->hasCountry;
-    }
-
-    public function hasCoordinates(): bool
-    {
-        return $this->hasCoordinates;
-    }
-
-    public function hasRelatedLocations(): bool
-    {
-        return $this->hasRelatedLocations;
-    }
-
-    public function hasEvses(): bool
-    {
-        return $this->hasEvses;
-    }
-
-    public function hasDirections(): bool
-    {
-        return $this->hasDirections;
-    }
-
-    public function hasOperator(): bool
-    {
-        return $this->hasOperator;
-    }
-
-    public function hasSuboperator(): bool
-    {
-        return $this->hasSuboperator;
-    }
-
-    public function hasOwner(): bool
-    {
-        return $this->hasOwner;
-    }
-
-    public function hasFacilities(): bool
-    {
-        return $this->hasFacilities;
-    }
-
-    public function hasTimeZone(): bool
-    {
-        return $this->hasTimeZone;
-    }
-
-    public function hasOpeningTimes(): bool
-    {
-        return $this->hasOpeningTimes;
-    }
-
-    public function hasChargingWhenClosing(): bool
-    {
-        return $this->hasChargingWhenClosing;
-    }
-
-    public function hasImages(): bool
-    {
-        return $this->hasImages;
-    }
-
-    public function hasEnergyMix(): bool
-    {
-        return $this->hasEnergyMix;
-    }
-
-    public function hasLastUpdated(): bool
-    {
-        return $this->hasLastUpdated;
-    }
-
     public function jsonSerialize(): array
     {
         $return = [];
 
-        if ($this->id !== null) {
+        if ($this->hasId()) {
             $return['id'] = $this->id;
         }
-        if ($this->locationType !== null) {
+        if ($this->hasLocationType()) {
             $return['type'] = $this->locationType;
         }
-        if ($this->address !== null) {
+        if ($this->hasAddress()) {
             $return['address'] = $this->address;
         }
-        if ($this->city !== null) {
+        if ($this->hasCity()) {
             $return['city'] = $this->city;
         }
-        if ($this->postalCode !== null) {
+        if ($this->hasPostalCode()) {
             $return['postal_code'] = $this->postalCode;
         }
-        if ($this->country !== null) {
+        if ($this->hasCountry()) {
             $return['country'] = $this->country;
         }
-        if ($this->coordinates !== null) {
+        if ($this->hasCoordinates()) {
             $return['coordinates'] = $this->coordinates;
         }
-        if ($this->relatedLocations !== null) {
+        if ($this->hasRelatedLocations()) {
             $return['related_locations'] = $this->relatedLocations;
         }
-        if ($this->evses !== null) {
+        if ($this->hasEvses()) {
             $return['evses'] = $this->evses;
         }
-        if ($this->directions !== null) {
+        if ($this->hasDirections()) {
             $return['directions'] = $this->directions;
         }
-        if ($this->facilities !== null) {
+        if ($this->hasFacilities()) {
             $return['facilities'] = $this->facilities;
         }
-        if ($this->images !== null) {
+        if ($this->hasImages()) {
             $return['images'] = $this->images;
         }
-        if ($this->lastUpdated !== null) {
+        if ($this->hasLastUpdated()) {
             $return['last_updated'] = DateTimeFormatter::format($this->lastUpdated);
         }
-        if ($this->name !== null) {
+        if ($this->hasName()) {
             $return['name'] = $this->name;
         }
-        if ($this->operator !== null) {
+        if ($this->hasOperator()) {
             $return['operator'] = $this->operator;
         }
-        if ($this->suboperator !== null) {
+        if ($this->hasSuboperator()) {
             $return['suboperator'] = $this->suboperator;
         }
-        if ($this->owner !== null) {
+        if ($this->hasOwner()) {
             $return['owner'] = $this->owner;
         }
-        if ($this->timeZone !== null) {
+        if ($this->hasTimeZone()) {
             $return['time_zone'] = $this->timeZone;
         }
-        if ($this->openingTimes !== null) {
+        if ($this->hasOpeningTimes()) {
             $return['opening_times'] = $this->openingTimes;
         }
-        if ($this->chargingWhenClosed !== null) {
+        if ($this->hasChargingWhenClosed()) {
             $return['charging_when_closed'] = $this->chargingWhenClosed;
         }
-        if ($this->energyMix !== null) {
+        if ($this->hasEnergyMix()) {
             $return['energy_mix'] = $this->energyMix;
         }
 

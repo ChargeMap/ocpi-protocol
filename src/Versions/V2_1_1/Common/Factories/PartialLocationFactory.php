@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Factories;
 
-use Chargemap\OCPI\Versions\V2_1_1\Common\Models\AdditionalGeoLocation;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Facility;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\GeoLocation;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\LocationType;
@@ -71,41 +70,31 @@ class PartialLocationFactory
             $location->withLastUpdated(new DateTime($json->last_updated));
         }
         if (property_exists($json, 'related_locations')) {
-            $location->withEmptyRelatedLocation();
+            $location->withRelatedLocations();
             foreach ($json->related_locations  ?? [] as $jsonRelatedLocation) {
-                $location->withRelatedLocation(new AdditionalGeoLocation(
-                    new GeoLocation(
-                        $jsonRelatedLocation->latitude,
-                        $jsonRelatedLocation->longitude
-                    ),
-                    DisplayTextFactory::fromJson($jsonRelatedLocation->name)
-                ));
+                $location->withRelatedLocation(AdditionalGeoLocationFactory::fromJson($jsonRelatedLocation));
             }
         }
-
         if (property_exists($json, 'evses')) {
-            $location->withEmptyEvse();
+            $location->withEvses();
             foreach ($json->evses ?? [] as $jsonEvse) {
-                $location->withEVSE(EVSEFactory::fromJson($jsonEvse));
+                $location->withEvse(EVSEFactory::fromJson($jsonEvse));
             }
         }
-
         if (property_exists($json, 'directions')) {
-            $location->withEmptyDirection();
+            $location->withDirections();
             foreach ($json->directions ?? [] as $jsonDirection) {
                 $location->withDirection(DisplayTextFactory::fromJson($jsonDirection));
             }
         }
-
         if (property_exists($json, 'facilities')) {
-            $location->withEmptyFacility();
+            $location->withFacilities();
             foreach ($json->facilities ?? [] as $jsonFacility) {
                 $location->withFacility(new Facility($jsonFacility));
             }
         }
-
         if (property_exists($json, 'images')) {
-            $location->withEmptyImage();
+            $location->withImages();
             foreach ($json->images ?? [] as $jsonImage) {
                 $location->withImage(ImageFactory::fromJson($jsonImage));
             }

@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Factories;
 
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\AuthenticationMethod;
-use Chargemap\OCPI\Versions\V2_1_1\Common\Models\CdrDimension;
-use Chargemap\OCPI\Versions\V2_1_1\Common\Models\CdrDimensionType;
-use Chargemap\OCPI\Versions\V2_1_1\Common\Models\ChargingPeriod;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\PartialSession;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\SessionStatus;
 use DateTime;
@@ -59,18 +56,9 @@ class PartialSessionFactory
         if (property_exists($json, 'last_updated')) {
             $session->withLastUpdated(new DateTime($json->last_updated));
         }
-
         if (property_exists($json, 'charging_periods')) {
-            $jsonChargingPeriods = $json->charging_periods;
-            $session->withEmptyChargingPeriod();
-            foreach ($jsonChargingPeriods ?? [] as $jsonChargingPeriod) {
-                $chargingPeriod = new ChargingPeriod(new DateTime($jsonChargingPeriod->start_date_time));
-                foreach ($jsonChargingPeriod->dimensions as $jsonCdrDimension) {
-                    $chargingPeriod->addDimension(new CdrDimension(
-                        new CdrDimensionType($jsonCdrDimension->type),
-                        $jsonCdrDimension->volume
-                    ));
-                }
+            $session->withChargingPeriods();
+            foreach (ChargingPeriodFactory::arrayFromJsonArray($json->charging_periods) ?? [] as $chargingPeriod) {
                 $session->withChargingPeriod($chargingPeriod);
             }
         }

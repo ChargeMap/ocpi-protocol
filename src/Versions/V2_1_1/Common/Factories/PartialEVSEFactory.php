@@ -46,42 +46,42 @@ class PartialEVSEFactory
         }
 
         if (property_exists($json, 'status_schedule')) {
-            $evse->withEmptyStatusSchedule();
+            $evse->withStatusSchedules();
             foreach ($json->status_schedule ?? [] as $jsonStatusSchedule) {
                 $evse->withStatusSchedule(StatusScheduleFactory::fromJson($jsonStatusSchedule));
             }
         }
 
         if (property_exists($json, 'capabilities')) {
-            $evse->withEmptyCapability();
+            $evse->withCapabilities();
             foreach ($json->capabilities ?? [] as $capability) {
                 $evse->withCapability(new Capability($capability));
             }
         }
 
         if (property_exists($json, 'connectors')) {
-            $evse->withEmptyConnector();
+            $evse->withConnectors();
             foreach ($json->connectors as $connector) {
                 $evse->withConnector(ConnectorFactory::fromJson($connector));
             }
         }
 
         if (property_exists($json, 'directions')) {
-            $evse->withEmptyDirection();
+            $evse->withDirections();
             foreach ($json->directions ?? [] as $direction) {
                 $evse->withDirection(DisplayTextFactory::fromJson($direction));
             }
         }
 
         if (property_exists($json, 'parking_restrictions')) {
-            $evse->withEmptyParkingRestriction();
+            $evse->withParkingRestrictions();
             foreach ($json->parking_restrictions ?? [] as $restriction) {
                 $evse->withParkingRestriction(new ParkingRestriction($restriction));
             }
         }
 
         if (property_exists($json, 'images')) {
-            $evse->withEmptyImage();
+            $evse->withImages();
             foreach ($json->images ?? [] as $image) {
                 $evse->withImage(ImageFactory::fromJson($image));
             }

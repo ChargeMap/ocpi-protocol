@@ -121,4 +121,3 @@ class PartialSessionFactoryTest extends FactoryTestCase
         }
     }
 }
-

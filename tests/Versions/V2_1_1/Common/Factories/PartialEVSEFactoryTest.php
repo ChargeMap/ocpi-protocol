@@ -61,10 +61,10 @@ class PartialEVSEFactoryTest extends FactoryTestCase
             self::assertFalse($evse->hasStatus());
         }
         if (property_exists($json, 'status_schedule')) {
-            self::assertTrue($evse->hasStatusSchedule());
+            self::assertTrue($evse->hasStatusSchedules());
             self::assertCount(count($json->status_schedule ?? []), $evse->getStatusSchedule());
         } else {
-            self::assertFalse($evse->hasStatusSchedule());
+            self::assertFalse($evse->hasStatusSchedules());
         }
         if (property_exists($json, 'capabilities')) {
             self::assertTrue($evse->hasCapabilities());

@@ -5,25 +5,40 @@ declare(strict_types=1);
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
 use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
+use Chargemap\OCPI\Common\Utils\PartialModel;
 use DateTime;
 use JsonSerializable;
 
-class PartialSession implements JsonSerializable
+/**
+ * @method bool hasId()
+ * @method bool hasStartDate()
+ * @method bool hasEndDate()
+ * @method bool hasKwh()
+ * @method bool hasAuthId()
+ * @method bool hasAuthMethod()
+ * @method bool hasLocation()
+ * @method bool hasMeterId()
+ * @method bool hasCurrency()
+ * @method bool hasChargingPeriods()
+ * @method bool hasTotalCost()
+ * @method bool hasStatus()
+ * @method bool hasLastUpdated()
+ * @method self withId(?string $id)
+ * @method self withStartDate(?DateTime $startDate)
+ * @method self withEndDate(?DateTime $endDate)
+ * @method self withKwh(?float $kwh)
+ * @method self withAuthId(?string $authId)
+ * @method self withAuthMethod(?AuthenticationMethod $authMethod)
+ * @method self withLocation(?Location $location)
+ * @method self withMeterId(?string $meterId)
+ * @method self withCurrency(?string $currency)
+ * @method self withChargingPeriods()
+ * @method self withTotalCost(?float $totalCost)
+ * @method self withStatus(?SessionStatus $status)
+ * @method self withLastUpdated(?DateTime $lastUpdated)
+ */
+class PartialSession extends PartialModel implements JsonSerializable
 {
-    private bool $hasId;
-    private bool $hasStartDate;
-    private bool $hasEndDate;
-    private bool $hasKwh;
-    private bool $hasAuthId;
-    private bool $hasAuthMethod;
-    private bool $hasLocation;
-    private bool $hasMeterId;
-    private bool $hasCurrency;
-    private bool $hasChargingPeriods;
-    private bool $hasTotalCost;
-    private bool $hasStatus;
-    private bool $hasLastUpdated;
-
     private ?string $id = null;
     private ?DateTime $startDate = null;
     private ?DateTime $endDate = null;
@@ -34,85 +49,69 @@ class PartialSession implements JsonSerializable
     private ?string $meterId = null;
     private ?string $currency = null;
     /** @var ChargingPeriod[]|null */
-    private ?array $chargingPeriods = [];
+    private ?array $chargingPeriods = null;
     private ?float $totalCost = null;
     private ?SessionStatus $status = null;
     private ?DateTime $lastUpdated = null;
 
-    public function __construct()
+    protected function _withId(?string $id): self
     {
-        $this->hasId = false;
-        $this->hasStartDate = false;
-        $this->hasEndDate = false;
-        $this->hasKwh = false;
-        $this->hasAuthId = false;
-        $this->hasAuthMethod = false;
-        $this->hasLocation = false;
-        $this->hasMeterId = false;
-        $this->hasCurrency = false;
-        $this->hasChargingPeriods = false;
-        $this->hasTotalCost = false;
-        $this->hasStatus = false;
-        $this->hasLastUpdated = false;
-    }
-
-    public function withId(string $id): void
-    {
-        $this->hasId = true;
         $this->id = $id;
+        return $this;
     }
 
-    public function withStartDate(DateTime $startDate): void
+    protected function _withStartDate(?DateTime $startDate): self
     {
-        $this->hasStartDate = true;
         $this->startDate = $startDate;
+        return $this;
     }
 
-    public function withEndDate(?DateTime $endDate): void
+    protected function _withEndDate(?DateTime $endDate): self
     {
-        $this->hasEndDate = true;
         $this->endDate = $endDate;
+        return $this;
     }
 
-    public function withKwh(float $kwh): void
+    protected function _withKwh(?float $kwh): self
     {
-        $this->hasKwh = true;
         $this->kwh = $kwh;
+        return $this;
     }
 
-    public function withAuthId(string $authId): void
+    protected function _withAuthId(?string $authId): self
     {
-        $this->hasAuthId = true;
         $this->authId = $authId;
+        return $this;
     }
 
-    public function withAuthMethod(AuthenticationMethod $authMethod): void
+    protected function _withAuthMethod(?AuthenticationMethod $authMethod): self
     {
-        $this->hasAuthMethod = true;
         $this->authMethod = $authMethod;
+        return $this;
     }
 
-    public function withLocation(Location $location): void
+    protected function _withLocation(?Location $location): self
     {
-        $this->hasLocation = true;
         $this->location = $location;
+        return $this;
     }
 
-    public function withMeterId(?string $meterId): void
+    protected function _withMeterId(?string $meterId): self
     {
-        $this->hasMeterId = true;
         $this->meterId = $meterId;
+        return $this;
     }
 
-    public function withCurrency(string $currency): void
+    protected function _withCurrency(?string $currency): self
     {
-        $this->hasCurrency = true;
         $this->currency = $currency;
+        return $this;
     }
 
-    public function withEmptyChargingPeriod(): void
+    protected function _withChargingPeriods(): self
     {
-        $this->hasChargingPeriods = true;
+        $this->chargingPeriods = [];
+        return $this;
     }
 
     public function withChargingPeriod(ChargingPeriod $period): self
@@ -121,22 +120,22 @@ class PartialSession implements JsonSerializable
         return $this;
     }
 
-    public function withTotalCost(?float $totalCost): void
+    protected function _withTotalCost(?float $totalCost): self
     {
-        $this->hasTotalCost = true;
         $this->totalCost = $totalCost;
+        return $this;
     }
 
-    public function withStatus(SessionStatus $status): void
+    protected function _withStatus(?SessionStatus $status): self
     {
-        $this->hasStatus = true;
         $this->status = $status;
+        return $this;
     }
 
-    public function withLastUpdated(DateTime $lastUpdated): void
+    protected function _withLastUpdated(?DateTime $lastUpdated): self
     {
-        $this->hasLastUpdated = true;
         $this->lastUpdated = $lastUpdated;
+        return $this;
     }
 
     public function getId(): ?string
@@ -204,112 +203,47 @@ class PartialSession implements JsonSerializable
         return $this->lastUpdated;
     }
 
-    public function hasId(): bool
-    {
-        return $this->hasId;
-    }
-
-    public function hasStartDate(): bool
-    {
-        return $this->hasStartDate;
-    }
-
-    public function hasEndDate(): bool
-    {
-        return $this->hasEndDate;
-    }
-
-    public function hasKwh(): bool
-    {
-        return $this->hasKwh;
-    }
-
-    public function hasAuthId(): bool
-    {
-        return $this->hasAuthId;
-    }
-
-    public function hasAuthMethod(): bool
-    {
-        return $this->hasAuthMethod;
-    }
-
-    public function hasLocation(): bool
-    {
-        return $this->hasLocation;
-    }
-
-    public function hasMeterId(): bool
-    {
-        return $this->hasMeterId;
-    }
-
-    public function hasCurrency(): bool
-    {
-        return $this->hasCurrency;
-    }
-
-    public function hasChargingPeriods(): bool
-    {
-        return $this->hasChargingPeriods;
-    }
-
-    public function hasTotalCost(): bool
-    {
-        return $this->hasTotalCost;
-    }
-
-    public function hasStatus(): bool
-    {
-        return $this->hasStatus;
-    }
-
-    public function hasLastUpdated(): bool
-    {
-        return $this->hasLastUpdated;
-    }
-
     public function jsonSerialize(): array
     {
         $return = [];
 
-        if ($this->id !== null) {
+        if ($this->hasId()) {
             $return['id'] = $this->id;
         }
-        if ($this->startDate !== null) {
+        if ($this->hasStartDate()) {
             $return['start_datetime'] = DateTimeFormatter::format($this->startDate);
         }
-        if ($this->kwh !== null) {
+        if ($this->hasKwh() !== null) {
             $return['kwh'] = $this->kwh;
         }
-        if ($this->authId !== null) {
+        if ($this->hasAuthId() !== null) {
             $return['auth_id'] = $this->authId;
         }
-        if ($this->authMethod !== null) {
+        if ($this->hasAuthMethod() !== null) {
             $return['auth_method'] = $this->authMethod;
         }
-        if ($this->location !== null) {
+        if ($this->hasLocation() !== null) {
             $return['location'] = $this->location;
         }
-        if ($this->currency !== null) {
+        if ($this->hasCurrency() !== null) {
             $return['currency'] = $this->currency;
         }
-        if ($this->chargingPeriods !== null) {
+        if ($this->hasChargingPeriods()) {
             $return['charging_periods'] = $this->chargingPeriods;
         }
-        if ($this->status !== null) {
+        if ($this->hasStatus() !== null) {
             $return['status'] = $this->status;
         }
-        if ($this->lastUpdated !== null) {
+        if ($this->hasLastUpdated() !== null) {
             $return['last_updated'] = DateTimeFormatter::format($this->lastUpdated);
         }
-        if ($this->meterId !== null) {
+        if ($this->hasMeterId() !== null) {
             $return['meter_id'] = $this->meterId;
         }
-        if ($this->totalCost !== null) {
+        if ($this->hasTotalCost() !== null) {
             $return['total_cost'] = $this->totalCost;
         }
-        if ($this->endDate !== null) {
+        if ($this->hasEndDate() !== null) {
             $return['end_datetime'] = DateTimeFormatter::format($this->endDate);
         }
         return $return;
