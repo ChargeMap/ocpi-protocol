@@ -19,7 +19,10 @@
       ]
     },
     "name": {
-      "type": "string",
+      "type": [
+        "string",
+        "null"
+      ],
       "minLength": 1,
       "maxLength": 255
     },
@@ -47,47 +50,68 @@
       "$ref": "common.json#/definitions/geo_location"
     },
     "related_locations": {
-      "type": [ "array", "null" ],
-      "items": {
-        "type": "object",
-        "properties": {
-          "latitude": {
-            "$ref": "common.json#/definitions/latitude"
-          },
-          "longitude": {
-            "$ref": "common.json#/definitions/longitude"
-          },
-          "name": {
-            "$ref": "common.json#/definitions/display_text"
-          }
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "common.json#/definitions/related_locations"
         }
-      }
+      ]
     },
     "evses": {
-      "type": "array",
+      "type": [
+        "array",
+        "null"
+      ],
       "items": {
-        "$ref": "common.json#/definitions/evse"
+        "$ref": "evsePut.schema.json"
       }
     },
     "directions": {
-      "type": "array",
+      "type": [
+        "array",
+        "null"
+      ],
       "items": {
         "$ref": "common.json#/definitions/display_text"
       }
     },
     "operator": {
-      "$ref": "common.json#/definitions/business_details"
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "common.json#/definitions/business_details"
+        }
+      ]
     },
     "suboperator": {
-      "type": [ "object", "null" ],
-      "$ref": "common.json#/definitions/business_details"
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "common.json#/definitions/business_details"
+        }
+      ]
     },
     "owner": {
-      "type": [ "object", "null" ],
-      "$ref": "common.json#/definitions/business_details"
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "common.json#/definitions/business_details"
+        }
+      ]
     },
     "facilities": {
-      "type": [ "array", "null" ],
+      "type": [
+        "array",
+        "null"
+      ],
       "items": {
         "type": "string",
         "enum": [
@@ -111,25 +135,47 @@
       }
     },
     "time_zone": {
-      "type": "string",
+      "type": [
+        "string",
+        "null"
+      ],
       "minLength": 1,
       "maxLength": 255
     },
     "opening_times": {
-      "$ref": "common.json#/definitions/hours"
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "common.json#/definitions/hours"
+        }
+      ]
     },
     "charging_when_closed": {
-      "type": "boolean"
+      "type": [
+        "boolean",
+        "null"
+      ]
     },
     "images": {
-      "type": [ "array", "null" ],
+      "type": [
+        "array",
+        "null"
+      ],
       "items": {
         "$ref": "common.json#/definitions/image"
       }
     },
     "energy_mix": {
-      "type": [ "object", "null" ],
-      "$ref": "#/definitions/energy_mix"
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "common.json#/definitions/energy_mix"
+        }
+      ]
     },
     "last_updated": {
       "type": "string",
@@ -146,83 +192,5 @@
     "coordinates",
     "last_updated"
   ],
-  "additionalProperties": false,
-  "definitions": {
-    "energy_mix": {
-      "type": "object",
-      "properties": {
-        "is_green_energy": {
-          "type": "boolean"
-        },
-        "energy_sources": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "source": {
-                "type": "string",
-                "enum": [
-                  "NUCLEAR",
-                  "GENERAL_FOSSIL",
-                  "COAL",
-                  "GAS",
-                  "GENERAL_GREEN",
-                  "SOLAR",
-                  "WIND",
-                  "WATER"
-                ]
-              },
-              "percentage": {
-                "type": "number",
-                "minimum": 0,
-                "maximum": 100
-              }
-            },
-            "required": [
-              "source",
-              "percentage"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "environ_impact": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "source": {
-                "type": "string",
-                "enum": [
-                  "NUCLEAR_WASTE",
-                  "CARBON_DIOXIDE"
-                ]
-              },
-              "amount": {
-                "type": "number"
-              }
-            },
-            "required": [
-              "source",
-              "amount"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "supplier_name": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 64
-        },
-        "energy_product_name": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 64
-        }
-      },
-      "required": [
-        "is_green_energy"
-      ],
-      "additionalProperties": false
-    }
-  }
+  "additionalProperties": false
 }

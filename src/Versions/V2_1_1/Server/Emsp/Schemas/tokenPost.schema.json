@@ -8,7 +8,10 @@
       "maxLength": 39
     },
     "evse_uids": {
-      "type": "array",
+      "type": [
+        "array",
+        "null"
+      ],
       "items": {
         "type": "string",
         "minLength": 1,
@@ -16,7 +19,10 @@
       }
     },
     "connector_ids": {
-      "type": "array",
+      "type": [
+        "array",
+        "null"
+      ],
       "items": {
         "type": "string",
         "minLength": 1,
