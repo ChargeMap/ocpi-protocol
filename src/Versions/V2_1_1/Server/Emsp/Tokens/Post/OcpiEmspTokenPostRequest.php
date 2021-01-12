@@ -39,7 +39,7 @@ class OcpiEmspTokenPostRequest extends OcpiBaseRequest
             $this->jsonBody = json_decode($request->getBody()->__toString());
             PayloadValidation::coerce('Versions/V2_1_1/Server/Emsp/Schemas/tokenPost.schema.json', $this->jsonBody);
 
-            $this->locationReferences = LocationReferencesFactory::fromJson($json);
+            $this->locationReferences = LocationReferencesFactory::fromJson($this->jsonBody);
         }
     }
 
