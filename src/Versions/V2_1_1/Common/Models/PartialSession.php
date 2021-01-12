@@ -213,37 +213,37 @@ class PartialSession extends PartialModel implements JsonSerializable
         if ($this->hasStartDate()) {
             $return['start_datetime'] = DateTimeFormatter::format($this->startDate);
         }
-        if ($this->hasKwh() !== null) {
+        if ($this->hasKwh()) {
             $return['kwh'] = $this->kwh;
         }
-        if ($this->hasAuthId() !== null) {
+        if ($this->hasAuthId()) {
             $return['auth_id'] = $this->authId;
         }
-        if ($this->hasAuthMethod() !== null) {
+        if ($this->hasAuthMethod()) {
             $return['auth_method'] = $this->authMethod;
         }
-        if ($this->hasLocation() !== null) {
+        if ($this->hasLocation()) {
             $return['location'] = $this->location;
         }
-        if ($this->hasCurrency() !== null) {
+        if ($this->hasCurrency()) {
             $return['currency'] = $this->currency;
         }
         if ($this->hasChargingPeriods()) {
             $return['charging_periods'] = $this->chargingPeriods;
         }
-        if ($this->hasStatus() !== null) {
+        if ($this->hasStatus()) {
             $return['status'] = $this->status;
         }
-        if ($this->hasLastUpdated() !== null) {
+        if ($this->hasLastUpdated()) {
             $return['last_updated'] = DateTimeFormatter::format($this->lastUpdated);
         }
-        if ($this->hasMeterId() !== null) {
+        if ($this->hasMeterId()) {
             $return['meter_id'] = $this->meterId;
         }
-        if ($this->hasTotalCost() !== null) {
+        if ($this->hasTotalCost()) {
             $return['total_cost'] = $this->totalCost;
         }
-        if ($this->hasEndDate() !== null) {
+        if ($this->hasEndDate()) {
             $return['end_datetime'] = DateTimeFormatter::format($this->endDate);
         }
         return $return;
