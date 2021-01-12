@@ -20,6 +20,7 @@ use BadMethodCallException;
  */
 abstract class PartialModel
 {
+    /**@var string[] */
     private array $setProperties = [];
 
     public function __call(string $name, array $arguments)
@@ -34,7 +35,7 @@ abstract class PartialModel
             return $return;
         }
         if (substr($name, 0, 3) === 'has') {
-            return in_array(substr($name, 3), $this->setProperties);
+            return in_array(substr($name, 3), $this->setProperties, true);
         }
         throw new BadMethodCallException("Method $name does not exist");
     }

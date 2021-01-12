@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Factories;
 
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Facility;
-use Chargemap\OCPI\Versions\V2_1_1\Common\Models\GeoLocation;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\LocationType;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\PartialLocation;
 use DateTime;
@@ -43,7 +42,7 @@ class PartialLocationFactory
             $location->withCountry($json->country);
         }
         if (property_exists($json, 'coordinates')) {
-            $location->withCoordinates(new GeoLocation($json->coordinates->latitude, $json->coordinates->longitude));
+            $location->withCoordinates(GeoLocationFactory::fromJson($json->coordinates));
         }
         if (property_exists($json, 'operator')) {
             $location->withOperator(BusinessDetailsFactory::fromJson($json->operator));
