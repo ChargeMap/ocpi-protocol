@@ -47,6 +47,26 @@ abstract class OcpiBaseResponse implements JsonSerializable
             ->withBody($streamFactory->createStream(json_encode($this)));
     }
 
+    public function getOcpiHttpCode(): OcpiHttpCode
+    {
+        return $this->ocpiHttpCode;
+    }
+
+    public function getOcpiStatusCode(): OcpiStatusCode
+    {
+        return $this->ocpiStatusCode;
+    }
+
+    public function getStatusMessage(): ?string
+    {
+        return $this->statusMessage;
+    }
+
+    public function getTimestamp(): DateTime
+    {
+        return $this->timestamp;
+    }
+
     public function jsonSerialize(): array
     {
         $return = [
