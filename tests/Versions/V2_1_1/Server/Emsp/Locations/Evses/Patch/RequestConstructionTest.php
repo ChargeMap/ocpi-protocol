@@ -6,6 +6,7 @@ namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Patch
 
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Patch\OcpiEmspEvsePatchRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
+use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch\UnsupportedPatchException;
 use DateTime;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\ConnectorFactoryTest;
@@ -14,6 +15,9 @@ use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\GeoLocationFactoryTest
 use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\ImageFactoryTest;
 use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\StatusScheduleFactoryTest;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Patch\OcpiEmspEvsePatchRequest
+ */
 class RequestConstructionTest extends OcpiTestCase
 {
 
@@ -44,7 +48,7 @@ class RequestConstructionTest extends OcpiTestCase
         $this->assertSame('3256', $request->getEvseUid());
 
         $evse = $request->getPartialEvse();
-        $this->assertSame($json->uid ?? null, $evse->getUid());
+        $this->assertSame($json->uid ?? null,$evse->getUid());
         $this->assertSame($json->evse_id ?? null, $evse->getEvseId());
         $this->assertEquals($json->status ?? null, $evse->getStatus());
         if (isset($json->status_schedule)) {
@@ -99,5 +103,13 @@ class RequestConstructionTest extends OcpiTestCase
                 $this->assertEquals(new DateTime($json->last_updated), $evse->getLastUpdated());
             }
         }
+    }
+
+    public function testShouldFailWithPatchUid(): void
+    {
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/EvsePatchFullPayload.json');
+
+        $this->expectException(UnsupportedPatchException::class);
+        new OcpiEmspEvsePatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '1'));
     }
 }

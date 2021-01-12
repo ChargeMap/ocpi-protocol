@@ -5,40 +5,94 @@ declare(strict_types=1);
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
 use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
+use Chargemap\OCPI\Common\Utils\PartialModel;
 use DateTime;
 use JsonSerializable;
 
-class PartialConnector implements JsonSerializable
+/**
+ * @method bool hasId()
+ * @method bool hasStandard()
+ * @method bool hasFormat()
+ * @method bool hasPowerType()
+ * @method bool hasVoltage()
+ * @method bool hasAmperage()
+ * @method bool hasTariffId()
+ * @method bool hasTermsAndConditions()
+ * @method bool hasLastUpdated()
+ * @method self withId(string $id)
+ * @method self withStandard(ConnectorType $standard)
+ * @method self withFormat(ConnectorFormat $format)
+ * @method self withPowerType(PowerType $powerType)
+ * @method self withVoltage(int $voltage)
+ * @method self withAmperage(int $amperage)
+ * @method self withTariffId(?string $tariffId)
+ * @method self withTermsAndConditions(?string $termsAndConditions)
+ * @method self withLastUpdated(DateTime $lastUpdated)
+ */
+class PartialConnector extends PartialModel implements JsonSerializable
 {
-    private ?string $id;
+    private ?string $id = null;
+    private ?ConnectorType $standard = null;
+    private ?ConnectorFormat $format = null;
+    private ?PowerType $powerType = null;
+    private ?int $voltage = null;
+    private ?int $amperage = null;
+    private ?string $tariffId = null;
+    private ?string $termsAndConditions = null;
+    private ?DateTime $lastUpdated = null;
 
-    private ?ConnectorType $standard;
-
-    private ?ConnectorFormat $format;
-
-    private ?PowerType $powerType;
-
-    private ?int $voltage;
-
-    private ?int $amperage;
-
-    private ?string $tariffId;
-
-    private ?string $termsAndConditions;
-
-    private ?DateTime $lastUpdated;
-
-    public function __construct(?string $id, ?ConnectorType $standard, ?ConnectorFormat $format, ?PowerType $powerType, ?int $voltage, ?int $amperage, ?string $tariffId, ?string $termsAndConditions, ?DateTime $lastUpdated)
+    protected function _withId(string $id): self
     {
         $this->id = $id;
+        return $this;
+    }
+
+    protected function _withStandard(ConnectorType $standard): self
+    {
         $this->standard = $standard;
+        return $this;
+    }
+
+    protected function _withFormat(ConnectorFormat $format): self
+    {
         $this->format = $format;
+        return $this;
+    }
+
+    protected function _withPowerType(PowerType $powerType): self
+    {
         $this->powerType = $powerType;
+        return $this;
+    }
+
+    protected function _withVoltage(int $voltage): self
+    {
         $this->voltage = $voltage;
+        return $this;
+    }
+
+    protected function _withAmperage(int $amperage): self
+    {
         $this->amperage = $amperage;
+        return $this;
+    }
+
+    protected function _withTariffId(?string $tariffId): self
+    {
         $this->tariffId = $tariffId;
+        return $this;
+    }
+
+    protected function _withTermsAndConditions(?string $termsAndConditions): self
+    {
         $this->termsAndConditions = $termsAndConditions;
+        return $this;
+    }
+
+    protected function _withLastUpdated(DateTime $lastUpdated): self
+    {
         $this->lastUpdated = $lastUpdated;
+        return $this;
     }
 
     public function getId(): ?string
@@ -90,31 +144,31 @@ class PartialConnector implements JsonSerializable
     {
         $return = [];
 
-        if ($this->id !== null) {
+        if ($this->hasId()) {
             $return['id'] = $this->id;
         }
-        if ($this->standard !== null) {
+        if ($this->hasStandard()) {
             $return['standard'] = $this->standard;
         }
-        if ($this->format !== null) {
+        if ($this->hasFormat()) {
             $return['format'] = $this->format;
         }
-        if ($this->powerType !== null) {
+        if ($this->hasPowerType()) {
             $return['power_type'] = $this->powerType;
         }
-        if ($this->voltage !== null) {
+        if ($this->hasVoltage()) {
             $return['voltage'] = $this->voltage;
         }
-        if ($this->amperage !== null) {
+        if ($this->hasAmperage()) {
             $return['amperage'] = $this->amperage;
         }
-        if ($this->tariffId !== null) {
+        if ($this->hasTariffId()) {
             $return['tariff_id'] = $this->tariffId;
         }
-        if ($this->termsAndConditions !== null) {
+        if ($this->hasTermsAndConditions()) {
             $return['terms_and_conditions'] = $this->termsAndConditions;
         }
-        if ($this->lastUpdated !== null) {
+        if ($this->hasLastUpdated()) {
             $return['last_updated'] = DateTimeFormatter::format($this->lastUpdated);
         }
 

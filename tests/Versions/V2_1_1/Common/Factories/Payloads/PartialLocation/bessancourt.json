@@ -1,0 +1,119 @@
+{
+  "id": "XNGKVE",
+  "type": "UNKNOWN",
+  "name": "Bessancourt, Verdun",
+  "address": "Rue de Verdun",
+  "city": "Bessancourt",
+  "postal_code": "95550",
+  "country": "FRA",
+  "coordinates": {
+    "latitude": "49.038100",
+    "longitude": "2.211810"
+  },
+  "evses": [
+    {
+      "uid": "ELCG1",
+      "evse_id": "FR*FR1*EELCG*1",
+      "status": "AVAILABLE",
+      "status_schedule": [],
+      "capabilities": [
+        "REMOTE_START_STOP_CAPABLE",
+        "RFID_READER",
+        "UNLOCK_CAPABLE"
+      ],
+      "connectors": [
+        {
+          "id": "5a311b4d3f033",
+          "standard": "IEC_62196_T2",
+          "format": "SOCKET",
+          "power_type": "AC_3_PHASE",
+          "voltage": 230,
+          "amperage": 32,
+          "tariff_id": "valparisis",
+          "terms_and_conditions": null,
+          "last_updated": "2020-06-16T17:31:23Z"
+        },
+        {
+          "id": "5a311b4d4967a",
+          "standard": "DOMESTIC_E",
+          "format": "SOCKET",
+          "power_type": "AC_1_PHASE",
+          "voltage": 230,
+          "amperage": 13,
+          "tariff_id": "valparisis",
+          "terms_and_conditions": null,
+          "last_updated": "2020-06-16T17:31:23Z"
+        }
+      ],
+      "floor_level": null,
+      "coordinates": {
+        "latitude": "49.038100",
+        "longitude": "2.211810"
+      },
+      "physical_reference": null,
+      "directions": [],
+      "parking_restrictions": [],
+      "images": null,
+      "last_updated": "2020-09-02T14:55:01Z"
+    },
+    {
+      "uid": "ELCG2",
+      "evse_id": "FR*FR1*EELCG*2",
+      "status": "AVAILABLE",
+      "status_schedule": [],
+      "capabilities": [
+        "REMOTE_START_STOP_CAPABLE",
+        "RFID_READER",
+        "UNLOCK_CAPABLE"
+      ],
+      "connectors": [
+        {
+          "id": "5a311b4d4d20b",
+          "standard": "IEC_62196_T2",
+          "format": "SOCKET",
+          "power_type": "AC_3_PHASE",
+          "voltage": 230,
+          "amperage": 32,
+          "tariff_id": "valparisis",
+          "terms_and_conditions": null,
+          "last_updated": "2020-06-16T17:31:23Z"
+        },
+        {
+          "id": "5a311b4d4e02d",
+          "standard": "DOMESTIC_E",
+          "format": "SOCKET",
+          "power_type": "AC_1_PHASE",
+          "voltage": 230,
+          "amperage": 13,
+          "tariff_id": "valparisis",
+          "terms_and_conditions": null,
+          "last_updated": "2020-06-16T17:31:23Z"
+        }
+      ],
+      "floor_level": null,
+      "coordinates": {
+        "latitude": "49.038100",
+        "longitude": "2.211810"
+      },
+      "physical_reference": null,
+      "directions": [],
+      "parking_restrictions": [],
+      "images": null,
+      "last_updated": "2020-09-05T16:41:47Z"
+    }
+  ],
+  "directions": [],
+  "operator": {
+    "name": "Val Parisis"
+  },
+  "owner": {
+    "name": "Val Parisis"
+  },
+  "facilities": null,
+  "time_zone": "Europe\/Paris",
+  "opening_times": null,
+  "charging_when_closed": true,
+  "images": null,
+  "energy_mix": null,
+  "last_updated": "2020-06-17T09:39:22Z"
+}

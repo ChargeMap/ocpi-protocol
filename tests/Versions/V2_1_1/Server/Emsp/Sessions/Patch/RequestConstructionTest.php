@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Patch;
 
+use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch\UnsupportedPatchException;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Patch\OcpiEmspSessionPatchRequest;
 use DateTime;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Patch\OcpiEmspSessionPatchRequest
+ */
 class RequestConstructionTest extends OcpiTestCase
 {
     public function testShouldConstructRequestWithFullPayload(): void
@@ -45,8 +49,15 @@ class RequestConstructionTest extends OcpiTestCase
         $request = new OcpiEmspSessionPatchRequest($serverRequestInterface, 'FR', 'TNM', '101');
         $session = $request->getPartialSession();
         $this->assertNull($session->getId());
-        $this->assertNull($session->getId());
         $this->assertNotEmpty($session->getChargingPeriods());
         $this->assertCount(2, $session->getChargingPeriods());
+    }
+
+    public function testShouldFailWithPatchId(): void
+    {
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/SessionPatchFullPayload.json');
+
+        $this->expectException(UnsupportedPatchException::class);
+        new OcpiEmspSessionPatchRequest($serverRequestInterface, 'FR', 'TNM', '102');
     }
 }

@@ -5,93 +5,171 @@ declare(strict_types=1);
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
 use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
+use Chargemap\OCPI\Common\Utils\PartialModel;
 use DateTime;
 use JsonSerializable;
 
-class PartialEVSE implements JsonSerializable
+/**
+ * @method bool hasUid()
+ * @method bool hasEvseId()
+ * @method bool hasStatus()
+ * @method bool hasStatusSchedules()
+ * @method bool hasCapabilities()
+ * @method bool hasConnectors()
+ * @method bool hasFloorLevel()
+ * @method bool hasCoordinates()
+ * @method bool hasPhysicalReference()
+ * @method bool hasDirections()
+ * @method bool hasParkingRestrictions()
+ * @method bool hasImages()
+ * @method bool hasLastUpdated()
+ * @method self withUid(string $uid)
+ * @method self withEvseId(?string $evseId)
+ * @method self withStatus(EVSEStatus $status)
+ * @method self withStatusSchedules()
+ * @method self withCapabilities()
+ * @method self withConnectors()
+ * @method self withFloorLevel(?string $floorLevel)
+ * @method self withCoordinates(?GeoLocation $coordinates)
+ * @method self withPhysicalReference(?string $physicalReference)
+ * @method self withDirections()
+ * @method self withParkingRestrictions()
+ * @method self withImages()
+ * @method self withLastUpdated(DateTime $lastUpdated)
+ */
+class PartialEVSE extends PartialModel implements JsonSerializable
 {
-    private ?string $uid;
-
-    private ?string $evseId;
-
-    private ?EVSEStatus $status;
-
+    private ?string $uid = null;
+    private ?string $evseId = null;
+    private ?EVSEStatus $status = null;
     /** @var StatusSchedule[]|null */
     private ?array $statusSchedule = null;
-
     /** @var Capability[]|null */
     private ?array $capabilities = null;
-
     /** @var Connector[]|null */
     private ?array $connectors = null;
-
-    private ?string $floorLevel;
-
-    private ?GeoLocation $coordinates;
-
-    private ?string $physicalReference;
-
+    private ?string $floorLevel = null;
+    private ?GeoLocation $coordinates = null;
+    private ?string $physicalReference = null;
     /** @var DisplayText[]|null */
     private ?array $directions = null;
-
     /** @var ParkingRestriction[]|null */
     private ?array $parkingRestrictions = null;
-
     /** @var Image[]|null */
     private ?array $images = null;
+    private ?DateTime $lastUpdated = null;
 
-    private ?DateTime $lastUpdated;
-
-    public function __construct(?string $uid, ?string $evseId, ?EVSEStatus $status, ?string $floorLevel, ?GeoLocation $coordinates, ?string $physicalReference, ?DateTime $lastUpdated)
+    protected function _withUid(string $uid): self
     {
         $this->uid = $uid;
-        $this->evseId = $evseId;
-        $this->status = $status;
-        $this->floorLevel = $floorLevel;
-        $this->coordinates = $coordinates;
-        $this->physicalReference = $physicalReference;
-        $this->lastUpdated = $lastUpdated;
+        return $this;
     }
 
-    public function addStatusSchedule(StatusSchedule $schedule): self
+    protected function _withEvseId(?string $evseId): self
+    {
+        $this->evseId = $evseId;
+        return $this;
+    }
+
+    protected function _withStatus(EVSEStatus $status): self
+    {
+        $this->status = $status;
+        return $this;
+    }
+
+    protected function _withStatusSchedules(): self
+    {
+        $this->statusSchedule = [];
+        return $this;
+    }
+
+    public function withStatusSchedule(StatusSchedule $schedule): self
     {
         $this->statusSchedule[] = $schedule;
-
         return $this;
     }
 
-    public function addCapability(Capability $capability): self
+    protected function _withCapabilities(): self
+    {
+        $this->capabilities = [];
+        return $this;
+    }
+
+    public function withCapability(Capability $capability): self
     {
         $this->capabilities[] = $capability;
-
         return $this;
     }
 
-    public function addConnector(Connector $connector): self
+    protected function _withConnectors(): self
+    {
+        $this->connectors = [];
+        return $this;
+    }
+
+    public function withConnector(Connector $connector): self
     {
         $this->connectors[] = $connector;
-
         return $this;
     }
 
-    public function addDirection(DisplayText $direction): self
+    protected function _withFloorLevel(?string $floorLevel): self
+    {
+        $this->floorLevel = $floorLevel;
+        return $this;
+    }
+
+    protected function _withCoordinates(?GeoLocation $coordinates): self
+    {
+        $this->coordinates = $coordinates;
+        return $this;
+    }
+
+    protected function _withPhysicalReference(?string $physicalReference): self
+    {
+        $this->physicalReference = $physicalReference;
+        return $this;
+    }
+
+    protected function _withDirections(): self
+    {
+        $this->directions = [];
+        return $this;
+    }
+
+    public function withDirection(DisplayText $direction): self
     {
         $this->directions[] = $direction;
-
         return $this;
     }
 
-    public function addParkingRestriction(ParkingRestriction $parkingRestriction): self
+    protected function _withParkingRestrictions(): self
+    {
+        $this->parkingRestrictions = [];
+        return $this;
+    }
+
+    public function withParkingRestriction(ParkingRestriction $parkingRestriction): self
     {
         $this->parkingRestrictions[] = $parkingRestriction;
-
         return $this;
     }
 
-    public function addImage(Image $image): self
+    protected function _withImages(): self
+    {
+        $this->images = [];
+        return $this;
+    }
+
+    public function withImage(Image $image): self
     {
         $this->images[] = $image;
+        return $this;
+    }
 
+    protected function _withLastUpdated(DateTime $lastUpdated): self
+    {
+        $this->lastUpdated = $lastUpdated;
         return $this;
     }
 
@@ -181,43 +259,43 @@ class PartialEVSE implements JsonSerializable
     public function jsonSerialize(): array
     {
         $return = [];
-        if ($this->uid !== null) {
+        if ($this->hasUid()) {
             $return['uid'] = $this->uid;
         }
-        if ($this->status !== null) {
+        if ($this->hasStatus()) {
             $return['status'] = $this->status;
         }
-        if ($this->statusSchedule !== null) {
+        if ($this->hasStatusSchedules()) {
             $return['status_schedule'] = $this->statusSchedule;
         }
-        if ($this->capabilities !== null) {
+        if ($this->hasCapabilities()) {
             $return['capabilities'] = $this->capabilities;
         }
-        if ($this->connectors !== null) {
+        if ($this->hasConnectors()) {
             $return['connectors'] = $this->connectors;
         }
-        if ($this->directions !== null) {
+        if ($this->hasDirections()) {
             $return['directions'] = $this->directions;
         }
-        if ($this->parkingRestrictions !== null) {
+        if ($this->hasParkingRestrictions()) {
             $return['parking_restrictions'] = $this->parkingRestrictions;
         }
-        if ($this->images !== null) {
+        if ($this->hasImages()) {
             $return['images'] = $this->images;
         }
-        if ($this->lastUpdated !== null) {
+        if ($this->hasLastUpdated()) {
             $return['last_updated'] = DateTimeFormatter::format($this->lastUpdated);
         }
-        if ($this->evseId !== null) {
+        if ($this->hasEvseId()) {
             $return['evse_id'] = $this->evseId;
         }
-        if ($this->floorLevel !== null) {
+        if ($this->hasFloorLevel()) {
             $return['floor_level'] = $this->floorLevel;
         }
-        if ($this->coordinates !== null) {
+        if ($this->hasCoordinates()) {
             $return['coordinates'] = $this->coordinates;
         }
-        if ($this->physicalReference !== null) {
+        if ($this->hasPhysicalReference()) {
             $return['physical_reference'] = $this->physicalReference;
         }
 
