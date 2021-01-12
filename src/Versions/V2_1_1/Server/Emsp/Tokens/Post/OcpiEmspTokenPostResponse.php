@@ -29,6 +29,21 @@ class OcpiEmspTokenPostResponse extends OcpiCreateResponse
         $this->info = $info;
     }
 
+    public function getAllowedType(): AllowedType
+    {
+        return $this->allowed;
+    }
+
+    public function getLocationReferences(): ?LocationReferences
+    {
+        return $this->location;
+    }
+
+    public function getInfo(): ?DisplayText
+    {
+        return $this->info;
+    }
+
     public function getData(): array
     {
         return [
