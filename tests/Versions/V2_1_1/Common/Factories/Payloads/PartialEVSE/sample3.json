@@ -1,0 +1,11 @@
+{
+  "status_schedule": null,
+  "capabilities": null,
+  "floor_level": "-1",
+  "directions": null,
+  "parking_restrictions": [
+    "PLUGGED",
+    "CUSTOMERS"
+  ],
+  "last_updated": "2015-06-28T08:12:01Z"
+}

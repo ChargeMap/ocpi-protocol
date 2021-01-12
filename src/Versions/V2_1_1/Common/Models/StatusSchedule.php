@@ -12,11 +12,11 @@ class StatusSchedule implements JsonSerializable
 {
     private DateTime $periodBegin;
 
-    private DateTime $periodEnd;
+    private ?DateTime $periodEnd;
 
     private EVSEStatus $status;
 
-    public function __construct(DateTime $periodBegin, DateTime $periodEnd, EVSEStatus $status)
+    public function __construct(DateTime $periodBegin, ?DateTime $periodEnd, EVSEStatus $status)
     {
         $this->periodBegin = $periodBegin;
         $this->periodEnd = $periodEnd;
@@ -28,7 +28,7 @@ class StatusSchedule implements JsonSerializable
         return $this->periodBegin;
     }
 
-    public function getPeriodEnd(): DateTime
+    public function getPeriodEnd(): ?DateTime
     {
         return $this->periodEnd;
     }

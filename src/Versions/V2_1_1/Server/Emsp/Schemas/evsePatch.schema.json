@@ -1,5 +1,5 @@
 {
-  "title": "V2.1.1\\Emsp\\Locations\\Evses\\Put",
+  "title": "V2.1.1\\Emsp\\Locations\\Evses\\Patch",
   "type": "object",
   "properties": {
     "uid": {
@@ -8,7 +8,7 @@
       "maxLength": 39
     },
     "evse_id": {
-      "type": "string",
+      "type": ["string","null"],
       "minLength": 1,
       "maxLength": 48
     },
@@ -16,7 +16,7 @@
       "$ref": "#/definitions/evse_status"
     },
     "status_schedule": {
-      "type": "array",
+      "type": ["array","null"],
       "items": {
         "type": "object",
         "properties": {
@@ -38,7 +38,7 @@
       }
     },
     "capabilities": {
-      "type": "array",
+      "type": ["array","null"],
       "items": {
         "type": "string",
         "enum": [
@@ -59,7 +59,7 @@
       }
     },
     "floor_level": {
-      "type": "string",
+      "type": [ "string", "null" ],
       "minLength": 1,
       "maxLength": 4
     },
@@ -67,18 +67,18 @@
       "$ref": "common.json#/definitions/geo_location"
     },
     "physical_reference": {
-      "type": "string",
+      "type": [ "string", "null" ],
       "minLength": 1,
       "maxLength": 16
     },
     "directions": {
-      "type": "array",
+      "type": ["array","null"],
       "items": {
         "$ref": "common.json#/definitions/display_text"
       }
     },
     "parking_restrictions": {
-      "type": "array",
+      "type": ["array","null"],
       "items": {
         "type": "string",
         "enum": [
@@ -91,7 +91,7 @@
       }
     },
     "images": {
-      "type": "array",
+      "type": [ "array", "null" ],
       "items": {
         "$ref": "common.json#/definitions/image"
       }
