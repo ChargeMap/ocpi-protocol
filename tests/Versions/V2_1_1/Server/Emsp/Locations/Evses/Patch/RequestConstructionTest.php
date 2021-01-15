@@ -41,13 +41,17 @@ class RequestConstructionTest extends OcpiTestCase
         $serverRequestInterface = $this->createServerRequestInterface($filename);
         $json = json_decode(file_get_contents($filename));
 
-        $request = new OcpiEmspEvsePatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256'));
+        $uid = $json->uid ?? '3256';
+
+        $request = new OcpiEmspEvsePatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', $uid));
+
         $this->assertSame('FR', $request->getCountryCode());
         $this->assertSame('TNM', $request->getPartyId());
         $this->assertSame('LOC1', $request->getLocationId());
-        $this->assertSame('3256', $request->getEvseUid());
+        $this->assertSame($uid, $request->getEvseUid());
 
         $evse = $request->getPartialEvse();
+
         $this->assertSame($json->uid ?? null,$evse->getUid());
         $this->assertSame($json->evse_id ?? null, $evse->getEvseId());
         $this->assertEquals($json->status ?? null, $evse->getStatus());

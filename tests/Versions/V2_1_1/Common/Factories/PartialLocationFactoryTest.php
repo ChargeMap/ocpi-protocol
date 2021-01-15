@@ -154,7 +154,7 @@ class PartialLocationFactoryTest extends FactoryTestCase
             self::assertTrue($location->hasEnergyMix());
             EnergyMixFactoryTest::assertEnergyMix($json->energy_mix, $location->getEnergyMix());
         } else {
-            self::assertFalse($location->hasLastUpdated());
+            self::assertFalse($location->hasEnergyMix());
         }
         if (property_exists($json, 'last_updated')) {
             self::assertTrue($location->hasLastUpdated());
