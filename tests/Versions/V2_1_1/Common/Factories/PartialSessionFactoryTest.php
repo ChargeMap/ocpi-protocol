@@ -39,7 +39,7 @@ class PartialSessionFactoryTest extends FactoryTestCase
         self::assertPartialSession($json, $session);
     }
 
-    public function assertPartialSession($json, PartialSession $session): void
+    public static function assertPartialSession($json, PartialSession $session): void
     {
         if (property_exists($json, 'id')) {
             self::assertTrue($session->hasId());
@@ -61,7 +61,7 @@ class PartialSessionFactoryTest extends FactoryTestCase
         }
         if (property_exists($json, 'kwh')) {
             self::assertTrue($session->hasKwh());
-            self::assertSame($json->kwh, $session->getKwh());
+            self::assertEquals($json->kwh, $session->getKwh());
         } else {
             self::assertFalse($session->hasKwh());
         }

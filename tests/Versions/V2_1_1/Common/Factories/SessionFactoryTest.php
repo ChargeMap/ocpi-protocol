@@ -65,7 +65,7 @@ class SessionFactoryTest extends FactoryTestCase
 
             Assert::assertEquals(new DateTime($json->last_updated), $session->getLastUpdated());
             Assert::assertEquals(new SessionStatus($json->status), $session->getStatus());
-            Assert::assertSame($json->kwh, $session->getKwh());
+            Assert::assertEquals($json->kwh, $session->getKwh());
 
             LocationFactoryTest::assertLocation($json->location, $session->getLocation());
         }
