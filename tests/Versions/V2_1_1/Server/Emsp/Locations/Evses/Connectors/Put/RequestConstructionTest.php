@@ -7,14 +7,30 @@ namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Conne
 use Chargemap\OCPI\Common\Server\Errors\OcpiNotEnoughInformationClientError;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Connectors\Put\OcpiEmspConnectorPutRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
-use DateTime;
 use Tests\Chargemap\OCPI\OcpiTestCase;
+use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\ConnectorFactoryTest;
 
 class RequestConstructionTest extends OcpiTestCase
 {
-    public function testShouldConstructRequestWithFullPayload(): void
+    public function validParametersProvider(): iterable
     {
-        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/ConnectorPutFullPayload.json');
+        foreach (scandir(__DIR__ . '/payloads/') as $filename) {
+            if( $filename !== '.' && $filename !== '..') {
+                yield basename($filename, '.json') => [
+                    'filename' =>  __DIR__ . '/payloads/' . $filename
+                ];
+            }
+        }
+    }
+
+    /**
+     * @param string $filename
+     * @dataProvider validParametersProvider()
+     */
+    public function testShouldConstructRequestWithPayload(string $filename): void
+    {
+        $json = json_decode(file_get_contents($filename));
+        $serverRequestInterface = $this->createServerRequestInterface($filename);
 
         $request = new OcpiEmspConnectorPutRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
         $this->assertEquals('FR', $request->getCountryCode());
@@ -23,26 +39,7 @@ class RequestConstructionTest extends OcpiTestCase
         $this->assertEquals('3256', $request->getEvseUid());
         $this->assertEquals('1', $request->getConnectorId());
 
-        $connector = $request->getConnector();
-        $this->assertEquals('1', $connector->getId());
-        $this->assertEquals('IEC_62196_T2', $connector->getStandard()->getValue());
-        $this->assertEquals('CABLE', $connector->getFormat());
-        $this->assertEquals('AC_3_PHASE', $connector->getPowerType()->getValue());
-        $this->assertEquals(220, $connector->getVoltage());
-        $this->assertEquals(16, $connector->getAmperage());
-        $this->assertEquals('11', $connector->getTariffId());
-        $this->assertEquals('https://google.com', $connector->getTermsAndConditions());
-        $this->assertEquals(new DateTime('2015-03-16T10:10:02Z'), $connector->getLastUpdated());
-    }
-
-    public function testShouldConstructWithMinPayload(): void
-    {
-        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/ConnectorPutMinPayload.json');
-
-        $request = new OcpiEmspConnectorPutRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
-        $connector = $request->getConnector();
-        $this->assertNull($connector->getTariffId());
-        $this->assertNull($connector->getTermsAndConditions());
+        ConnectorFactoryTest::assertConnector($json,$request->getConnector());
     }
 
     public function testShouldFailWithoutConnectorId(): void
@@ -51,13 +48,5 @@ class RequestConstructionTest extends OcpiTestCase
 
         $this->expectException(OcpiNotEnoughInformationClientError::class);
         new OcpiEmspConnectorPutRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256'));
-    }
-
-    public function testShouldConstructRequestWithFreshmilePayload(): void
-    {
-        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/ConnectorPutNullPayload.json');
-        $request = new OcpiEmspConnectorPutRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
-        $connector = $request->getConnector();
-        $this->assertEquals(null,$connector->getTermsAndConditions());
     }
 }
