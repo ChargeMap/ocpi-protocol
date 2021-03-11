@@ -3,15 +3,15 @@
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories;
 
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\TariffElement;
-use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Assert;
 use stdClass;
 
-class TariffElementFactoryTest extends TestCase
+class TariffElementFactoryTest
 {
     public static function assertTariffElement(?stdClass $json,?TariffElement $tariffElement):void
     {
         if($json === null){
-            self::assertNull($tariffElement);
+            Assert::assertNull($tariffElement);
         } else {
             TariffRestrictionsFactoryTest::assertTariffRestrictions($json->restrictions ?? null,$tariffElement->getRestrictions());
 

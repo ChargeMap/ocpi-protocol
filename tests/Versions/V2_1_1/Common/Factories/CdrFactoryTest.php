@@ -33,7 +33,7 @@ class CdrFactoryTest extends FactoryTestCase
     {
         $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
 
-        $this->coerce( realpath( __DIR__.'/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/cdrPost.schema.json' ), $json );
+        $this->coerce(realpath(__DIR__ . '/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/cdrPost.schema.json'), $json);
 
         $cdr = CdrFactory::fromJson($json);
 
@@ -42,7 +42,7 @@ class CdrFactoryTest extends FactoryTestCase
 
     public static function assertCdr(?stdClass $json, ?Cdr $cdr): void
     {
-        if($json === null) {
+        if ($json === null) {
             Assert::assertNull($cdr);
         } else {
             Assert::assertSame($json->id, $cdr->getId());
@@ -50,15 +50,15 @@ class CdrFactoryTest extends FactoryTestCase
             Assert::assertSame($json->auth_id, $cdr->getAuthId());
             Assert::assertEquals(new AuthenticationMethod($json->auth_method), $cdr->getAuthMethod());
 
-            Assert::assertSame(count($json->charging_periods),count($cdr->getChargingPeriods()));
+            Assert::assertSame(count($json->charging_periods), count($cdr->getChargingPeriods()));
 
-            foreach($cdr->getChargingPeriods() as $index => $chargingPeriod) {
+            foreach ($cdr->getChargingPeriods() as $index => $chargingPeriod) {
                 ChargingPeriodFactoryTest::assertChargingPeriod($json->charging_periods[$index], $chargingPeriod);
             }
 
-            Assert::assertCount(count($json->tariffs ?? []),$cdr->getTariffs());
-            foreach ($cdr->getTariffs() as $index => $tariff){
-                TariffFactoryTest::assertTariff($json->tariffs[$index],$tariff);
+            Assert::assertCount(count($json->tariffs ?? []), $cdr->getTariffs());
+            foreach ($cdr->getTariffs() as $index => $tariff) {
+                TariffFactoryTest::assertTariff($json->tariffs[$index], $tariff);
             }
 
             Assert::assertSame($json->currency, $cdr->getCurrency());
@@ -68,9 +68,13 @@ class CdrFactoryTest extends FactoryTestCase
             Assert::assertEquals(new DateTime($json->start_date_time), $cdr->getStartDateTime());
             Assert::assertEquals(new DateTime($json->stop_date_time), $cdr->getStopDateTime());
             Assert::assertSame((float)$json->total_cost, $cdr->getTotalCost());
-            Assert::assertSame($json->total_energy, $cdr->getTotalEnergy());
-            Assert::assertSame($json->total_parking_time ?? null, $cdr->getTotalParkingTime());
-            Assert::assertSame($json->total_time, $cdr->getTotalTime());
+            Assert::assertSame((float)$json->total_energy, $cdr->getTotalEnergy());
+            if (property_exists($json, 'total_parking_time')) {
+                Assert::assertSame((float)$json->total_parking_time, $cdr->getTotalParkingTime());
+            } else {
+                Assert::assertNull($cdr->getTotalParkingTime());
+            }
+            Assert::assertSame((float)$json->total_time, $cdr->getTotalTime());
         }
     }
 }
