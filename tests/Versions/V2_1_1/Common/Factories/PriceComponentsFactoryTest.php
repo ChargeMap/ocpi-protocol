@@ -8,7 +8,7 @@ use stdClass;
 
 class PriceComponentsFactoryTest
 {
-    public static function assertPriceComponents(StdClass $json, PriceComponent $priceComponent): void
+    public static function assertPriceComponents(stdClass $json, PriceComponent $priceComponent): void
     {
         Assert::assertSame($json->type, $priceComponent->getType()->getValue());
         Assert::assertSame((float)$json->price, $priceComponent->getPrice());
