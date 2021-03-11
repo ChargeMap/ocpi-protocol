@@ -29,8 +29,7 @@ class ResponseConstructionTest extends TestCase
      */
     public function testShouldSerializeCdrCorrectlyWithPayload(string $filename)
     {
-        $json = json_decode(file_get_contents($filename));
-        $cdr = CdrFactory::fromJson($json);
+        $cdr = CdrFactory::fromJson(json_decode(file_get_contents($filename)));
 
         $responseFactory = Psr17FactoryDiscovery::findResponseFactory();
         $streamFactory = Psr17FactoryDiscovery::findStreamFactory();
