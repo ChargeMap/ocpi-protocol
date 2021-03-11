@@ -56,6 +56,11 @@ class CdrFactoryTest extends FactoryTestCase
                 ChargingPeriodFactoryTest::assertChargingPeriod($json->charging_periods[$index], $chargingPeriod);
             }
 
+            Assert::assertCount(count($json->tariffs ?? []),$cdr->getTariffs());
+            foreach ($cdr->getTariffs() as $index => $tariff){
+                TariffFactoryTest::assertTariff($json->tariffs[$index],$tariff);
+            }
+
             Assert::assertSame($json->currency, $cdr->getCurrency());
             LocationFactoryTest::assertLocation($json->location, $cdr->getLocation());
             Assert::assertSame($json->meter_id ?? null, $cdr->getMeterId());
