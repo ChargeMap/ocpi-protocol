@@ -6,11 +6,14 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\PartialSessionFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\PartialSession;
 use DateTime;
 use JsonException;
+use PHPUnit\Framework\TestCase;
+use Tests\Chargemap\OCPI\InvalidPayloadException;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
 /**
  * @covers \Chargemap\OCPI\Versions\V2_1_1\Common\Factories\PartialSessionFactory
  */
-class PartialSessionFactoryTest extends FactoryTestCase
+class PartialSessionFactoryTest extends TestCase
 {
     public function getFromJsonData(): iterable
     {
@@ -32,7 +35,7 @@ class PartialSessionFactoryTest extends FactoryTestCase
     {
         $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
 
-        $this->coerce(realpath(__DIR__ . '/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/sessionPatch.schema.json'), $json);
+        OcpiTestCase::coerce(realpath(__DIR__ . '/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/sessionPatch.schema.json'), $json);
 
         $session = PartialSessionFactory::fromJson($json);
 

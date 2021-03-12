@@ -5,11 +5,12 @@ namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories;
 
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\AdditionalGeoLocationFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\AdditionalGeoLocation;
+use JsonException;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class AdditionalGeoLocationFactoryTest extends FactoryTestCase
+class AdditionalGeoLocationFactoryTest extends TestCase
 {
     public function getFromJsonData(): iterable
     {
@@ -24,7 +25,7 @@ class AdditionalGeoLocationFactoryTest extends FactoryTestCase
 
     /**
      * @param string $payload
-     * @throws \JsonException
+     * @throws JsonException
      * @dataProvider getFromJsonData()
      */
     public function testFromJson(string $payload): void

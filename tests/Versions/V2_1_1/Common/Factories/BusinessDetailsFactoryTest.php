@@ -5,11 +5,14 @@ namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories;
 
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\BusinessDetailsFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\BusinessDetails;
+use JsonException;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use Tests\Chargemap\OCPI\InvalidPayloadException;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
-class BusinessDetailsFactoryTest extends FactoryTestCase
+class BusinessDetailsFactoryTest extends TestCase
 {
     public function getFromJsonData(): iterable
     {
@@ -24,14 +27,14 @@ class BusinessDetailsFactoryTest extends FactoryTestCase
 
     /**
      * @param string $payload
-     * @throws \JsonException
+     * @throws JsonException|InvalidPayloadException
      * @dataProvider getFromJsonData()
      */
     public function testFromJson(string $payload): void
     {
         $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
 
-        $this->coerce( realpath( __DIR__.'/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/common.json' ). '#/definitions/business_details', $json );
+        OcpiTestCase::coerce( realpath( __DIR__.'/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/common.json' ). '#/definitions/business_details', $json );
 
         $businessDetails = BusinessDetailsFactory::fromJson($json);
 

@@ -6,11 +6,14 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\PartialLocationFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\PartialLocation;
 use DateTime;
 use JsonException;
+use PHPUnit\Framework\TestCase;
+use Tests\Chargemap\OCPI\InvalidPayloadException;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
 /**
  * @covers \Chargemap\OCPI\Versions\V2_1_1\Common\Factories\PartialLocationFactory
  */
-class PartialLocationFactoryTest extends FactoryTestCase
+class PartialLocationFactoryTest extends TestCase
 {
     public function getFromJsonData(): iterable
     {
@@ -33,7 +36,7 @@ class PartialLocationFactoryTest extends FactoryTestCase
     {
         $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
 
-        $this->coerce(realpath(__DIR__ . '/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/locationPatch.schema.json'), $json);
+        OcpiTestCase::coerce(realpath(__DIR__ . '/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/locationPatch.schema.json'), $json);
 
         $location = PartialLocationFactory::fromJson($json);
 

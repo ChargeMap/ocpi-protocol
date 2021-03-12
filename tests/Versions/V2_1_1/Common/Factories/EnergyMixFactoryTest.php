@@ -4,13 +4,12 @@ declare(strict_types=1);
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories;
 
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\EnergyMixFactory;
-use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\EnvironmentalImpactFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\EnergyMix;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class EnergyMixFactoryTest extends FactoryTestCase
+class EnergyMixFactoryTest extends TestCase
 {
     public function getFromJsonData(): iterable
     {

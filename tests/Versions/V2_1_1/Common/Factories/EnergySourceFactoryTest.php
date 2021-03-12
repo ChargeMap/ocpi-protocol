@@ -3,16 +3,14 @@ declare(strict_types=1);
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories;
 
-use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\BusinessDetailsFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\EnergySourceFactory;
-use Chargemap\OCPI\Versions\V2_1_1\Common\Models\BusinessDetails;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\EnergySource;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\EnergySourceCategory;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class EnergySourceFactoryTest extends FactoryTestCase
+class EnergySourceFactoryTest extends TestCase
 {
     public function getFromJsonData(): iterable
     {

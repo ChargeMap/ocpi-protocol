@@ -10,7 +10,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class ChargingPeriodFactoryTest extends FactoryTestCase
+class ChargingPeriodFactoryTest extends TestCase
 {
     public function getFromJsonData(): iterable
     {
