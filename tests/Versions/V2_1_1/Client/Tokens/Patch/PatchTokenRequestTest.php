@@ -9,6 +9,8 @@ use Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Patch\PatchTokenRequest;
 use Http\Discovery\Psr17FactoryDiscovery;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Tests\Chargemap\OCPI\InvalidPayloadException;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
 class PatchTokenRequestTest extends TestCase
 {
@@ -29,8 +31,8 @@ class PatchTokenRequestTest extends TestCase
      * @param string $partyId
      * @param string $tokenUid
      * @param string $filename
+     * @throws InvalidPayloadException
      */
-
     public function testShouldConstructCorrectQuery(
         string $countryCode,
         string $partyId,
@@ -47,7 +49,10 @@ class PatchTokenRequestTest extends TestCase
 
         $this->assertSame("/$countryCode/$partyId/$tokenUid", $requestInterface->getUri()->getPath());
         $this->assertSame('PATCH', $requestInterface->getMethod());
-        $this->assertEquals($payload, json_decode($requestInterface->getBody()->getContents()));
+        $requestBody = json_decode($requestInterface->getBody()->getContents());
+        $this->assertEquals($payload, $requestBody);
+        $schemaPath = __DIR__ . '/../../../../../../src/Versions/V2_1_1/Client/Tokens/Patch/tokenPatch.schema.json';
+        OcpiTestCase::coerce($schemaPath, $requestBody);
     }
 
 
@@ -71,7 +76,6 @@ class PatchTokenRequestTest extends TestCase
      * @param string $partyId
      * @param string $tokenUid
      */
-
     public function testShouldThrowExceptionWithInvalidParameters(
         string $countryCode,
         string $partyId,
