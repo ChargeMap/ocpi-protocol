@@ -51,7 +51,7 @@ class PatchTokenRequestTest extends TestCase
         $this->assertSame('PATCH', $requestInterface->getMethod());
         $requestBody = json_decode($requestInterface->getBody()->getContents());
         $this->assertEquals($payload, $requestBody);
-        $schemaPath = __DIR__ . '/../../../../../../src/Versions/V2_1_1/Client/Tokens/Patch/tokenPatch.schema.json';
+        $schemaPath = __DIR__ . '/../../../../../../src/Versions/V2_1_1/Client/Schemas/tokenPatch.schema.json';
         OcpiTestCase::coerce($schemaPath, $requestBody);
     }
 
