@@ -14,20 +14,37 @@ class PutTokenRequestTest extends TestCase
 {
     public function validParametersProvider(): iterable
     {
-        yield ['EN', 'CMP', '012345678'];
-        yield ['FR', 'CMP', '012345678'];
-        yield ['EN', 'CMP', '012345678012345678'];
+        $validParams = [
+            ['EN', 'CMP', '012345678'],
+            ['FR', 'CMP', '012345678'],
+            ['EN', 'CMP', '012345678012345678']
+        ];
+        foreach (scandir(__DIR__ . '/payloads/') as $filename) {
+            if (!is_dir(__DIR__ . '/payloads/' . $filename)) {
+                foreach ($validParams as $index => $validParam) {
+                    yield basename($filename, '.json') . "_$index" => [
+                        __DIR__ . '/payloads/' . $filename,
+                        ...$validParam
+                    ];
+                }
+            }
+        }
     }
 
     /**
      * @dataProvider validParametersProvider
+     * @param string $json
      * @param string $countryCode
      * @param string $partyId
      * @param string $tokenUid
      */
-    public function testShouldConstructCorrectQuery(string $countryCode, string $partyId, string $tokenUid): void
-    {
-        $payload = json_decode(file_get_contents(__DIR__ . '/payloads/token.json'));
+    public function testShouldConstructCorrectQuery(
+        string $json,
+        string $countryCode,
+        string $partyId,
+        string $tokenUid
+    ): void {
+        $payload = json_decode(file_get_contents($json), false, 512, JSON_THROW_ON_ERROR);
         $token = TokenFactory::fromJson($payload);
         $request = new PutTokenRequest($countryCode, $partyId, $tokenUid, $token);
         $requestInterface = $request->getServerRequestInterface(
