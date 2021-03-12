@@ -4,65 +4,57 @@ declare(strict_types=1);
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch;
 
-use Chargemap\OCPI\Versions\V2_1_1\Common\Models\GeoLocation;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch\OcpiEmspLocationPatchRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch\UnsupportedPatchException;
-use DateTime;
 use Tests\Chargemap\OCPI\OcpiTestCase;
+use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\PartialLocationFactoryTest;
 
 /**
  * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch\OcpiEmspLocationPatchRequest
  */
 class RequestConstructionTest extends OcpiTestCase
 {
-    public function testShouldConstructRequestWithFullPayload(): void
+    public function validParametersProvider(): iterable
     {
-        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/LocationPatchFullPayload.json');
+        $validParams = [
+            ['FR', 'TNM', 'LOC1'],
+            ['FR', 'TNM', 'LOC1'],
+            ['FR', 'TNM', 'LOC1']
+        ];
 
-        $request = new OcpiEmspLocationPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1'));
-
-        $this->assertEquals('FR', $request->getCountryCode());
-        $this->assertEquals('TNM', $request->getPartyId());
-        $this->assertEquals('LOC1', $request->getLocationId());
-
-        $location = $request->getPartialLocation();
-        $this->assertEquals('LOC1', $location->getId());
-        $this->assertEquals('ON_STREET', $location->getLocationType()->getValue());
-        $this->assertEquals('Gent Zuid', $location->getName());
-        $this->assertEquals('F.Rooseveltlaan 3A', $location->getAddress());
-        $this->assertEquals('Gent', $location->getCity());
-        $this->assertEquals('9000', $location->getPostalCode());
-        $this->assertEquals('BEL', $location->getCountry());
-        $this->assertEquals(new GeoLocation("3.729944", "51.047599"), $location->getCoordinates());
-        $this->assertCount(2, $location->getRelatedLocations());
-        $this->assertCount(2, $location->getDirections());
-        $this->assertCount(2, $location->getEvses());
-        $this->assertEquals(new DateTime('2015-06-29T20:39:09Z'), $location->getLastUpdated());
+        foreach (scandir(__DIR__ . '/payloads/') as $filename) {
+            if (!is_dir(__DIR__ . '/payloads/' . $filename)) {
+                foreach ($validParams as $index => $validParam) {
+                    yield basename($filename, '.json') . "_$index" => [
+                        __DIR__ . '/payloads/' . $filename,
+                        ...$validParam
+                    ];
+                }
+            }
+        }
     }
 
-    public function testShouldConstructWithEVSEs(): void
+    /**
+     * @dataProvider validParametersProvider
+     * @param string $filename
+     * @param string $countryCode
+     * @param string $partyId
+     * @param string $locationId
+     */
+    public function testShouldConstructRequestWithFullPayload(string $filename, string $countryCode, string $partyId, string $locationId): void
     {
-        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/LocationPatchEvsesPayload.json');
+        $serverRequestInterface = $this->createServerRequestInterface($filename);
 
-        $request = new OcpiEmspLocationPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1'));
+        $request = new OcpiEmspLocationPatchRequest($serverRequestInterface, new LocationRequestParams($countryCode, $partyId, $locationId));
+
+        $this->assertSame($countryCode, $request->getCountryCode());
+        $this->assertSame($partyId, $request->getPartyId());
+        $this->assertSame($locationId, $request->getLocationId());
+
         $location = $request->getPartialLocation();
-        $this->assertNull($location->getId());
-        $this->assertNotNull($location->getEvses());
-    }
 
-    public function testShouldConstructWithOpeningTimes(): void
-    {
-        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/LocationPatchOpeningTimesPayload.json');
-
-        $request = new OcpiEmspLocationPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1'));
-        $location = $request->getPartialLocation();
-        $this->assertNull($location->getId());
-        $this->assertNotEmpty($location->getOpeningTimes()->getExceptionalOpenings());
-        $this->assertNotEmpty($location->getOpeningTimes()->getExceptionalClosings());
-        $this->assertTrue($location->getOpeningTimes()->isTwentyFourSeven());
-        $this->assertNotNull($location->getChargingWhenClosed());
-        $this->assertFalse($location->getChargingWhenClosed());
+        PartialLocationFactoryTest::assertPartialLocation(json_decode(file_get_contents($filename)), $location);
     }
 
     public function testShouldFailWithPatchId(): void

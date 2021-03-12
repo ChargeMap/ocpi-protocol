@@ -40,7 +40,7 @@ class PartialLocationFactoryTest extends FactoryTestCase
         self::assertPartialLocation($json, $location);
     }
 
-    public function assertPartialLocation($json, PartialLocation $location): void
+    public static function assertPartialLocation($json, PartialLocation $location): void
     {
         if (property_exists($json, 'id')) {
             self::assertTrue($location->hasId());
