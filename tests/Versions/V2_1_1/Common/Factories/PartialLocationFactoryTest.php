@@ -6,6 +6,7 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\PartialLocationFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\PartialLocation;
 use DateTime;
 use JsonException;
+use stdClass;
 
 /**
  * @covers \Chargemap\OCPI\Versions\V2_1_1\Common\Factories\PartialLocationFactory
@@ -40,7 +41,7 @@ class PartialLocationFactoryTest extends FactoryTestCase
         self::assertPartialLocation($json, $location);
     }
 
-    public static function assertPartialLocation($json, PartialLocation $location): void
+    public static function assertPartialLocation(stdClass $json, PartialLocation $location): void
     {
         if (property_exists($json, 'id')) {
             self::assertTrue($location->hasId());
