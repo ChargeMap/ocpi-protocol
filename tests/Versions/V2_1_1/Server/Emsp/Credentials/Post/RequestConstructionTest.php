@@ -6,31 +6,30 @@ namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Credentials\Post;
 
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Credentials\Post\OcpiEmspCredentialsPostRequest;
 use Tests\Chargemap\OCPI\OcpiTestCase;
+use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\CredentialsFactoryTest;
 
 class RequestConstructionTest extends OcpiTestCase
 {
-    public function testShouldConstructWithPayload(): void
+    public function validPayloadsProvider(): iterable
     {
-        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/CredentialsPayload.json');
+        foreach (scandir(__DIR__ . '/payloads/valid/') as $filename) {
+            if (!is_dir(__DIR__ . '/payloads/valid/' . $filename)) {
+                yield basename($filename, '.json') => [__DIR__ . '/payloads/valid/' . $filename];
+            }
+        }
+    }
+
+    /**
+     * @dataProvider validPayloadsProvider
+     * @param string $filename
+     */
+    public function testShouldConstructWithPayload(string $filename): void
+    {
+        $serverRequestInterface = $this->createServerRequestInterface($filename);
 
         $request = new OcpiEmspCredentialsPostRequest($serverRequestInterface);
 
-        $credentials = $request->getCredentials();
-        $this->assertSame('https://example.com/ocpi/cpo/versions/', $credentials->getUrl());
-        $this->assertSame('ebf3b399-779f-4497-9b9d-ac6ad3cc44d2', $credentials->getToken());
-        $this->assertSame('EXA', $credentials->getPartyId());
-        $this->assertSame('NL', $credentials->getCountryCode());
-
-        $businessDetails = $credentials->getBusinessDetails();
-        $this->assertSame('Example Operator', $businessDetails->getName());
-        $this->assertSame('http://example.com', $businessDetails->getWebsite());
-
-        $logo = $businessDetails->getLogo();
-        $this->assertSame('https://example.com/img/logo.jpg', $logo->getUrl());
-        $this->assertSame('https://example.com/img/logo_thumb.jpg', $logo->getThumbnail());
-        $this->assertSame('OPERATOR', $logo->getCategory()->getValue());
-        $this->assertSame('jpeg', $logo->getType());
-        $this->assertSame(512, $logo->getWidth());
-        $this->assertSame(512, $logo->getHeight());
+        CredentialsFactoryTest::assertCredentials(json_decode(file_get_contents($filename)),
+            $request->getCredentials());
     }
 }
