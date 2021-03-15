@@ -8,17 +8,18 @@ use Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\TokenType;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Tokens\Post\OcpiEmspTokenPostRequest;
 use Http\Discovery\Psr17FactoryDiscovery;
-use PHPUnit\Framework\Assert;
-use stdClass;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\LocationReferencesFactoryTest;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Tokens\Post\OcpiEmspTokenPostRequest
+ */
 class RequestConstructionTest extends OcpiTestCase
 {
     public function validParametersProvider(): iterable
     {
         foreach (scandir(__DIR__ . '/payloads/valid/') as $filename) {
-            if( $filename !== '.' && $filename !== '..') {
+            if (!is_dir(__DIR__ . '/payloads/valid/'. $filename)) {
                 yield basename($filename, '.json') => [
                     'payload' => file_get_contents( __DIR__ . '/payloads/valid/' . $filename ),
                 ];
@@ -29,7 +30,7 @@ class RequestConstructionTest extends OcpiTestCase
     public function invalidParametersProvider(): iterable
     {
         foreach (scandir(__DIR__ . '/payloads/invalid/') as $filename) {
-            if( $filename !== '.' && $filename !== '..') {
+            if (!is_dir(__DIR__ . '/payloads/invalid/'. $filename)) {
                 yield basename($filename, '.json') => [
                     'payload' => file_get_contents(__DIR__ . '/payloads/invalid/' . $filename),
                 ];
@@ -130,7 +131,6 @@ class RequestConstructionTest extends OcpiTestCase
             ->withHeader('Authorization', 'Token IpbJOXxkxOAuKR92z0nEcmVF3Qw09VG7I7d/WCg0koM=');
 
         if (!empty($payload)) {
-            $json = json_decode($payload);
             $serverRequestInterface = $serverRequestInterface->withBody(Psr17FactoryDiscovery::findStreamFactory()->createStream($payload));
         }
 
