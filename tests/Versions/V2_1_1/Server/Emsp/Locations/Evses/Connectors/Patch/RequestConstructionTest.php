@@ -74,7 +74,7 @@ class RequestConstructionTest extends OcpiTestCase
 
     public function testShouldFailWithPatchId(): void
     {
-        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/ConnectorPatchFullPayload.json');
+        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/valid/ConnectorPatchFullPayload.json');
 
         $this->expectException(UnsupportedPatchException::class);
         new OcpiEmspConnectorPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '2'));
