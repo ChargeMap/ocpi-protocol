@@ -8,10 +8,14 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\CdrFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\AuthenticationMethod;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Cdr;
 use DateTime;
+use JsonException;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\TestCase;
 use stdClass;
+use Tests\Chargemap\OCPI\InvalidPayloadException;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
-class CdrFactoryTest extends FactoryTestCase
+class CdrFactoryTest extends TestCase
 {
     public function getFromJsonData(): iterable
     {
@@ -26,14 +30,14 @@ class CdrFactoryTest extends FactoryTestCase
 
     /**
      * @param string $payload
-     * @throws \JsonException
+     * @throws JsonException|InvalidPayloadException
      * @dataProvider getFromJsonData()
      */
     public function testFromJson(string $payload): void
     {
         $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
 
-        $this->coerce(realpath(__DIR__ . '/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/cdrPost.schema.json'), $json);
+        OcpiTestCase::coerce(realpath(__DIR__ . '/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/cdrPost.schema.json'), $json);
 
         $cdr = CdrFactory::fromJson($json);
 

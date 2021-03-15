@@ -6,12 +6,15 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\PartialEVSEFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\PartialEVSE;
 use DateTime;
 use JsonException;
+use PHPUnit\Framework\TestCase;
+use Tests\Chargemap\OCPI\InvalidPayloadException;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 use function PHPUnit\Framework\assertSame;
 
 /**
  * @covers \Chargemap\OCPI\Versions\V2_1_1\Common\Factories\PartialEVSEFactory
  */
-class PartialEVSEFactoryTest extends FactoryTestCase
+class PartialEVSEFactoryTest extends TestCase
 {
     public function getFromJsonData(): iterable
     {
@@ -33,7 +36,7 @@ class PartialEVSEFactoryTest extends FactoryTestCase
     {
         $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
 
-        $this->coerce(realpath(__DIR__ . '/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/evsePatch.schema.json'), $json);
+        OcpiTestCase::coerce(realpath(__DIR__ . '/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/evsePatch.schema.json'), $json);
 
         $evse = PartialEVSEFactory::fromJson($json);
 

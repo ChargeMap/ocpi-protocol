@@ -3,16 +3,14 @@ declare(strict_types=1);
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories;
 
-use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\BusinessDetailsFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\EnvironmentalImpactFactory;
-use Chargemap\OCPI\Versions\V2_1_1\Common\Models\BusinessDetails;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\EnvironmentalImpact;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\EnvironmentalImpactCategory;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class EnvironmentalImpactFactoryTest extends FactoryTestCase
+class EnvironmentalImpactFactoryTest extends TestCase
 {
     public function getFromJsonData(): iterable
     {

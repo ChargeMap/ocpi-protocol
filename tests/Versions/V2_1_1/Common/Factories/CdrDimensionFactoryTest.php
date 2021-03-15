@@ -10,7 +10,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class CdrDimensionFactoryTest extends FactoryTestCase
+class CdrDimensionFactoryTest extends TestCase
 {
     public function getFromJsonData(): iterable
     {

@@ -6,11 +6,14 @@ namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\ImageFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Image;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\ImageCategory;
+use JsonException;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use Tests\Chargemap\OCPI\InvalidPayloadException;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
-class ImageFactoryTest extends FactoryTestCase
+class ImageFactoryTest extends TestCase
 {
     public function getFromJsonData(): iterable
     {
@@ -25,14 +28,14 @@ class ImageFactoryTest extends FactoryTestCase
 
     /**
      * @param string $payload
-     * @throws \JsonException
+     * @throws JsonException|InvalidPayloadException
      * @dataProvider getFromJsonData()
      */
     public function testFromJson(string $payload): void
     {
         $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
 
-        $this->coerce( realpath( __DIR__.'/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/common.json' ). '#/definitions/image', $json );
+        OcpiTestCase::coerce( realpath( __DIR__.'/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/common.json' ). '#/definitions/image', $json );
 
         $image = ImageFactory::fromJson($json);
 

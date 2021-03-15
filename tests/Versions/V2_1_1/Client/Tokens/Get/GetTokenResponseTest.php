@@ -14,9 +14,9 @@ class GetTokenResponseTest extends TestCase
 {
     public function validPayloadProvider(): iterable
     {
-        foreach (scandir(__DIR__ . '/payloads/') as $filename) {
-            if (substr($filename, 0, 3) === 'ok_') {
-                yield basename(substr($filename, 3), '.json') => [__DIR__ . '/payloads/' . $filename];
+        foreach (scandir(__DIR__ . '/payloads/valid/') as $filename) {
+            if (!is_dir(__DIR__ . '/payloads/valid/' . $filename)) {
+                yield basename($filename, '.json') => [__DIR__ . '/payloads/valid/' . $filename];
             }
         }
     }
@@ -42,7 +42,7 @@ class GetTokenResponseTest extends TestCase
         $serverResponse = Psr17FactoryDiscovery::findResponseFactory()->createResponse(200)
             ->withHeader('Content-Type', 'application/json')
             ->withBody(
-                Psr17FactoryDiscovery::findStreamFactory()->createStream(file_get_contents(__DIR__ . '/payloads/ok_all_fields.json'))
+                Psr17FactoryDiscovery::findStreamFactory()->createStream(file_get_contents(__DIR__ . '/payloads/valid/ok_all_fields.json'))
             );
 
         $token = GetTokenResponse::from($serverResponse)->getToken();
@@ -60,9 +60,9 @@ class GetTokenResponseTest extends TestCase
 
     public function invalidPayloadProvider(): iterable
     {
-        foreach (scandir(__DIR__ . '/payloads/') as $filename) {
-            if (substr($filename, 0, 3) === 'ko_') {
-                yield basename(substr($filename, 3), '.json') => [__DIR__ . '/payloads/' . $filename];
+        foreach (scandir(__DIR__ . '/payloads/invalid/') as $filename) {
+            if (!is_dir(__DIR__ . '/payloads/invalid/' . $filename)) {
+                yield basename($filename, '.json') => [__DIR__ . '/payloads/invalid/' . $filename];
             }
         }
     }
