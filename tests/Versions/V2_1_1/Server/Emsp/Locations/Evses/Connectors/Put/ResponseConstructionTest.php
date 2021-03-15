@@ -8,6 +8,9 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Connector;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Connectors\Put\OcpiEmspConnectorPutResponse;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Connectors\Put\OcpiEmspConnectorPutResponse
+ */
 class ResponseConstructionTest extends TestCase
 {
     public function testDataShouldBeNull(): void

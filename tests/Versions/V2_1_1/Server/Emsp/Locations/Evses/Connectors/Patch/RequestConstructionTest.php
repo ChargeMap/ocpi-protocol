@@ -8,18 +8,34 @@ use Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Connectors\Patch\OcpiEmspConnectorPatchRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch\UnsupportedPatchException;
-use DateTime;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Tests\Chargemap\OCPI\OcpiTestCase;
+use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Models\PartialConnectorTest;
 
 /**
  * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Connectors\Patch\OcpiEmspConnectorPatchRequest
  */
 class RequestConstructionTest extends OcpiTestCase
 {
-    public function testShouldConstructRequestWithFullPayload(): void
+    public function validPayloadsProvider(): iterable
     {
-        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/ConnectorPatchFullPayload.json');
+        foreach (scandir(__DIR__ . '/payloads/valid/') as $filename) {
+            if( $filename !== '.' && $filename !== '..') {
+                yield basename($filename, '.json') => [
+                    'filename' =>  __DIR__ . '/payloads/valid/' . $filename,
+                ];
+            }
+        }
+    }
+
+    /**
+     * @dataProvider validPayloadsProvider
+     * @param string $filename
+     * @throws UnsupportedPatchException
+     */
+    public function testShouldConstructRequestWithFullPayload(string $filename): void
+    {
+        $serverRequestInterface = $this->createServerRequestInterface($filename);
 
         $request = new OcpiEmspConnectorPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
         $this->assertEquals('FR', $request->getCountryCode());
@@ -29,39 +45,7 @@ class RequestConstructionTest extends OcpiTestCase
         $this->assertEquals('1', $request->getConnectorId());
 
         $connector = $request->getPartialConnector();
-        $this->assertEquals('1', $connector->getId());
-        $this->assertEquals('IEC_62196_T2', $connector->getStandard()->getValue());
-        $this->assertEquals('CABLE', $connector->getFormat());
-        $this->assertEquals('AC_3_PHASE', $connector->getPowerType()->getValue());
-        $this->assertEquals(220, $connector->getVoltage());
-        $this->assertEquals(16, $connector->getAmperage());
-        $this->assertEquals('11', $connector->getTariffId());
-        $this->assertEquals('https://google.com', $connector->getTermsAndConditions());
-        $this->assertEquals(new DateTime('2015-03-16T10:10:02Z'), $connector->getLastUpdated());
-    }
-
-    public function testShouldConstructWithLastUpdated()
-    {
-        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/ConnectorPatchLastUpdatedPayload.json');
-
-        $request = new OcpiEmspConnectorPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
-        $partialConnector = $request->getPartialConnector();
-        $this->assertNull($partialConnector->getId());
-        $this->assertNull($partialConnector->getVoltage());
-        $this->assertNull($partialConnector->getPowerType());
-        $this->assertEquals(new DateTime('2015-03-16T10:10:02Z'), $partialConnector->getLastUpdated());
-    }
-
-    public function testShouldConstructWithNullTermsAndConditions()
-    {
-        $serverRequestInterface = $this->createServerRequestInterface(__DIR__ . '/payloads/ConnectorPatchNullPayload.json');
-
-        $request = new OcpiEmspConnectorPatchRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
-        $partialConnector = $request->getPartialConnector();
-        $this->assertNull($partialConnector->getId());
-        $this->assertNull($partialConnector->getVoltage());
-        $this->assertNull($partialConnector->getPowerType());
-        $this->assertEquals(null, $partialConnector->getTermsAndConditions());
+        PartialConnectorTest::assertJsonSerialization($connector, $request->getJsonBody());
     }
 
     public function invalidPayloadProvider(): array
