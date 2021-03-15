@@ -29,8 +29,10 @@ class SessionTest
             Assert::assertNotEmpty($json->location);
             Assert::assertSame($session->getMeterId(), $json->meter_id);
             Assert::assertSame($session->getCurrency(), $json->currency);
-            //TODO: use ChargingPeriodTest::assertJsonSerialization instead
             Assert::assertCount(count($session->getChargingPeriods()), $json->charging_periods);
+            foreach ($session->getChargingPeriods() as $index => $chargingPeriod) {
+                ChargingPeriodTest::assertJsonSerialization($chargingPeriod, $json->charging_periods[$index]);
+            }
             Assert::assertEquals($session->getTotalCost(), $json->total_cost);
             Assert::assertSame($session->getStatus()->getValue(), $json->status);
             Assert::assertSame(DateTimeFormatter::format($session->getLastUpdated()), $json->last_updated);
