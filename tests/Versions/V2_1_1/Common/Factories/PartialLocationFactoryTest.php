@@ -9,6 +9,7 @@ use JsonException;
 use PHPUnit\Framework\TestCase;
 use Tests\Chargemap\OCPI\InvalidPayloadException;
 use Tests\Chargemap\OCPI\OcpiTestCase;
+use stdClass;
 
 /**
  * @covers \Chargemap\OCPI\Versions\V2_1_1\Common\Factories\PartialLocationFactory
@@ -43,7 +44,7 @@ class PartialLocationFactoryTest extends TestCase
         self::assertPartialLocation($json, $location);
     }
 
-    public function assertPartialLocation($json, PartialLocation $location): void
+    public static function assertPartialLocation(stdClass $json, PartialLocation $location): void
     {
         if (property_exists($json, 'id')) {
             self::assertTrue($location->hasId());
