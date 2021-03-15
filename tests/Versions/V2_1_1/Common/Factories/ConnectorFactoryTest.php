@@ -14,7 +14,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class ConnectorFactoryTest extends FactoryTestCase
+class ConnectorFactoryTest extends TestCase
 {
     public function getFromJsonData(): iterable
     {

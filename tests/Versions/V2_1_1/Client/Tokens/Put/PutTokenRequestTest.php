@@ -8,26 +8,47 @@ use Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Put\PutTokenRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\TokenFactory;
 use Http\Discovery\Psr17FactoryDiscovery;
 use InvalidArgumentException;
+use JsonException;
 use PHPUnit\Framework\TestCase;
+use Tests\Chargemap\OCPI\InvalidPayloadException;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
 class PutTokenRequestTest extends TestCase
 {
     public function validParametersProvider(): iterable
     {
-        yield ['EN', 'CMP', '012345678'];
-        yield ['FR', 'CMP', '012345678'];
-        yield ['EN', 'CMP', '012345678012345678'];
+        $validParams = [
+            ['EN', 'CMP', '012345678'],
+            ['FR', 'CMP', '012345678'],
+            ['EN', 'CMP', '012345678012345678']
+        ];
+        foreach (scandir(__DIR__ . '/payloads/') as $filename) {
+            if (!is_dir(__DIR__ . '/payloads/' . $filename)) {
+                foreach ($validParams as $index => $validParam) {
+                    yield basename($filename, '.json') . "_$index" => [
+                        __DIR__ . '/payloads/' . $filename,
+                        ...$validParam
+                    ];
+                }
+            }
+        }
     }
 
     /**
      * @dataProvider validParametersProvider
+     * @param string $json
      * @param string $countryCode
      * @param string $partyId
      * @param string $tokenUid
+     * @throws InvalidPayloadException|JsonException
      */
-    public function testShouldConstructCorrectQuery(string $countryCode, string $partyId, string $tokenUid): void
-    {
-        $payload = json_decode(file_get_contents(__DIR__ . '/payloads/token.json'));
+    public function testShouldConstructCorrectQuery(
+        string $json,
+        string $countryCode,
+        string $partyId,
+        string $tokenUid
+    ): void {
+        $payload = json_decode(file_get_contents($json), false, 512, JSON_THROW_ON_ERROR);
         $token = TokenFactory::fromJson($payload);
         $request = new PutTokenRequest($countryCode, $partyId, $tokenUid, $token);
         $requestInterface = $request->getServerRequestInterface(
@@ -36,7 +57,10 @@ class PutTokenRequestTest extends TestCase
         );
         $this->assertSame("/$countryCode/$partyId/$tokenUid", $requestInterface->getUri()->getPath());
         $this->assertSame('PUT', $requestInterface->getMethod());
-        $this->assertEquals($payload, json_decode($requestInterface->getBody()->getContents()));
+        $requestBody = json_decode($requestInterface->getBody()->getContents());
+        $this->assertEquals($payload, $requestBody);
+        $schemaPath = __DIR__ . '/../../../../../../src/Versions/V2_1_1/Client/Schemas/token.schema.json';
+        OcpiTestCase::coerce($schemaPath, $requestBody);
     }
 
     public function invalidParametersProvider(): iterable

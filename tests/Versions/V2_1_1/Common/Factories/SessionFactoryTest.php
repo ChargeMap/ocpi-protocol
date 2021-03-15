@@ -9,9 +9,10 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Session;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\SessionStatus;
 use DateTime;
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class SessionFactoryTest extends FactoryTestCase
+class SessionFactoryTest extends TestCase
 {
     public function getFromJsonData(): iterable
     {

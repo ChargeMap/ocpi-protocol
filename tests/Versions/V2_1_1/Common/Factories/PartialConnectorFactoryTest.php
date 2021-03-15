@@ -6,12 +6,15 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\PartialConnectorFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\PartialConnector;
 use DateTime;
 use JsonException;
+use PHPUnit\Framework\TestCase;
 use stdClass;
+use Tests\Chargemap\OCPI\InvalidPayloadException;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
 /**
  * @covers \Chargemap\OCPI\Versions\V2_1_1\Common\Factories\PartialConnectorFactory
  */
-class PartialConnectorFactoryTest extends FactoryTestCase
+class PartialConnectorFactoryTest extends TestCase
 {
     public function getFromJsonData(): iterable
     {
@@ -33,7 +36,7 @@ class PartialConnectorFactoryTest extends FactoryTestCase
     {
         $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
 
-        $this->coerce( realpath( __DIR__.'/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/connectorPatch.schema.json' ), $json );
+        OcpiTestCase::coerce( realpath( __DIR__.'/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/connectorPatch.schema.json' ), $json );
 
         $connector = PartialConnectorFactory::fromJson($json);
 

@@ -7,11 +7,14 @@ namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories;
 use Chargemap\OCPI\Common\Server\Errors\OcpiError;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\HoursFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Hours;
+use JsonException;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use Tests\Chargemap\OCPI\InvalidPayloadException;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
-class HoursFactoryTest extends FactoryTestCase
+class HoursFactoryTest extends TestCase
 {
     public function getFromJsonData(): iterable
     {
@@ -26,14 +29,14 @@ class HoursFactoryTest extends FactoryTestCase
 
     /**
      * @param string $payload
-     * @throws \JsonException
+     * @throws JsonException|InvalidPayloadException
      * @dataProvider getFromJsonData()
      */
     public function testFromJson(string $payload): void
     {
         $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
 
-        $this->coerce( realpath( __DIR__.'/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/common.json' ). '#/definitions/hours', $json );
+        OcpiTestCase::coerce( realpath( __DIR__.'/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/common.json' ). '#/definitions/hours', $json );
 
         $hours = HoursFactory::fromJson($json);
 
@@ -85,9 +88,9 @@ class HoursFactoryTest extends FactoryTestCase
     }
 
     /**
-     * @param string $exceptionClass
      * @param string $payload
      * @dataProvider getFromJsonExceptionsData()
+     * @throws JsonException
      */
     public function testFromJsonExceptions(string $payload): void
     {
@@ -95,6 +98,6 @@ class HoursFactoryTest extends FactoryTestCase
 
         $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
 
-        $hours = HoursFactory::fromJson($json);
+        HoursFactory::fromJson($json);
     }
 }
