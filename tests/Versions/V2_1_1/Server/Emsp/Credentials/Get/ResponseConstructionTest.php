@@ -10,6 +10,9 @@ use PHPUnit\Framework\TestCase;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Models\CredentialsTest;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Credentials\Get\OcpiEmspCredentialsGetResponse
+ */
 class ResponseConstructionTest extends TestCase
 {
     public function testShouldConstructCorrectly(): void

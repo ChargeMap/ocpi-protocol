@@ -8,6 +8,9 @@ use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Credentials\Put\OcpiEmspCredentia
 use Tests\Chargemap\OCPI\OcpiTestCase;
 use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\CredentialsFactoryTest;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Credentials\Put\OcpiEmspCredentialsPutRequest
+ */
 class RequestConstructionTest extends OcpiTestCase
 {
     public function validPayloadsProvider(): iterable
@@ -29,7 +32,6 @@ class RequestConstructionTest extends OcpiTestCase
 
         $request = new OcpiEmspCredentialsPutRequest($serverRequestInterface);
 
-        CredentialsFactoryTest::assertCredentials(json_decode(file_get_contents($filename)),
-            $request->getCredentials());
+        CredentialsFactoryTest::assertCredentials($request->getJsonBody(), $request->getCredentials());
     }
 }
