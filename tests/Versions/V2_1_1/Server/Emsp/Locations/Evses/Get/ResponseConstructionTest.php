@@ -5,61 +5,44 @@ declare(strict_types=1);
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Get;
 
 use Chargemap\OCPI\Common\Server\StatusCodes\OcpiSuccessHttpCode;
-use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\EVSEFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Get\OcpiEmspEvseGetResponse;
-use DateTime;
-use Http\Discovery\Psr17FactoryDiscovery;
 use PHPUnit\Framework\TestCase;
+use Tests\Chargemap\OCPI\InvalidPayloadException;
+use Tests\Chargemap\OCPI\OcpiTestCase;
+use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Models\EvseTest;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Get\OcpiEmspEvseGetResponse
+ */
 class ResponseConstructionTest extends TestCase
 {
-    public function testShouldSerializeLocationCorrectlyWithFullPayload()
+    public function validPayloadsProvider(): iterable
     {
-        $evse = EVSEFactory::fromJson(json_decode(file_get_contents(__DIR__ . '/payloads/EvsePutFullPayload.json')));
-        $responseFactory = Psr17FactoryDiscovery::findResponseFactory();
-        $streamFactory = Psr17FactoryDiscovery::findStreamFactory();
+        foreach (scandir(__DIR__ . '/payloads/valid/') as $filename) {
+            if (!is_dir(__DIR__ . '/payloads/valid/' . $filename)) {
+                yield $filename => [
+                    'payload' => file_get_contents(__DIR__ . '/payloads/valid/' . $filename),
+                ];
+            }
+        }
+    }
+
+    /**
+     * @dataProvider validPayloadsProvider
+     * @param string $payload
+     * @throws InvalidPayloadException
+     */
+    public function testShouldSerializeLocationCorrectlyWithFullPayload(string $payload)
+    {
+        $evse = EVSEFactory::fromJson(json_decode($payload));
         $response = new OcpiEmspEvseGetResponse($evse);
 
-        $responseInterface = $response->getResponseInterface($responseFactory, $streamFactory);
+        $responseInterface = $response->getResponseInterface();
         $this->assertSame(OcpiSuccessHttpCode::HTTP_OK, $responseInterface->getStatusCode());
-        $jsonEvse = json_decode($responseInterface->getBody()->getContents(), true)['data'];
-        $this->assertSame('3256', $jsonEvse['uid']);
-        $this->assertSame('BE-BEC-E041503001', $jsonEvse['evse_id']);
-        $this->assertSame('AVAILABLE', $jsonEvse['status']);
-        $this->assertCount(2, $jsonEvse['status_schedule']);
-        $this->assertSame([
-                'period_begin' => DateTimeFormatter::format((new DateTime('2014-06-24T00:00:00Z'))),
-                'period_end' => DateTimeFormatter::format((new DateTime('2014-06-25T00:00:00Z'))),
-                'status' => 'INOPERATIVE'
-            ]
-            , $jsonEvse['status_schedule'][0]);
-        $this->assertCount(2, $jsonEvse['directions']);
-        $this->assertSame([
-            'language' => 'en',
-            'text' => 'Turn left'
-        ], $jsonEvse['directions'][0]);
-        $this->assertSame([
-            'PLUGGED',
-            'CUSTOMERS'
-        ], $jsonEvse['parking_restrictions']);
-        $this->assertSame([
-            'latitude' => '3.729944',
-            'longitude' => '51.047599'
-        ], $jsonEvse['coordinates']);
-        $this->assertSame(['RESERVABLE'], $jsonEvse['capabilities']);
-        $this->assertCount(2, $jsonEvse['connectors']);
-        $this->assertSame('1', $jsonEvse['physical_reference']);
-        $this->assertSame('-1', $jsonEvse['floor_level']);
-        $this->assertCount(2, $jsonEvse['images']);
-        $this->assertSame([
-            'url' => 'https://google.com',
-            'category' => 'NETWORK',
-            'type' => 'jpeg',
-            'thumbnail' => 'https://google.com',
-            'width' => 455,
-            'height' => 343
-        ], $jsonEvse['images'][0]);
-        $this->assertEquals(DateTimeFormatter::format(new DateTime('2015-06-28T08:12:01Z')), $jsonEvse['last_updated']);
+        $jsonEvse = json_decode($responseInterface->getBody()->getContents())->data;
+        $schemaPath = __DIR__ . '/../../../../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/evsePut.schema.json';
+        OcpiTestCase::coerce($schemaPath, $jsonEvse);
+        EvseTest::assertJsonSerialization($evse, $jsonEvse);
     }
 }

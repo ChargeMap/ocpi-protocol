@@ -8,6 +8,9 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Models\PartialEVSE;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Patch\OcpiEmspEvsePatchResponse;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Patch\OcpiEmspEvsePatchResponse
+ */
 class ResponseConstructionTest extends TestCase
 {
     public function testDataShouldBeNull(): void
