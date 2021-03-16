@@ -8,8 +8,11 @@ use Chargemap\OCPI\Common\Server\Errors\OcpiNotEnoughInformationClientError;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Connectors\Put\OcpiEmspConnectorPutRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
 use Tests\Chargemap\OCPI\OcpiTestCase;
-use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\ConnectorFactoryTest;
+use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Models\ConnectorTest;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Connectors\Put\OcpiEmspConnectorPutRequest
+ */
 class RequestConstructionTest extends OcpiTestCase
 {
     public function validParametersProvider(): iterable
@@ -29,7 +32,6 @@ class RequestConstructionTest extends OcpiTestCase
      */
     public function testShouldConstructRequestWithPayload(string $filename): void
     {
-        $json = json_decode(file_get_contents($filename));
         $serverRequestInterface = $this->createServerRequestInterface($filename);
 
         $request = new OcpiEmspConnectorPutRequest($serverRequestInterface, new LocationRequestParams('FR', 'TNM', 'LOC1', '3256', '1'));
@@ -39,7 +41,7 @@ class RequestConstructionTest extends OcpiTestCase
         $this->assertEquals('3256', $request->getEvseUid());
         $this->assertEquals('1', $request->getConnectorId());
 
-        ConnectorFactoryTest::assertConnector($json,$request->getConnector());
+        ConnectorTest::assertJsonSerialization($request->getConnector(), $request->getJsonBody());
     }
 
     public function testShouldFailWithoutConnectorId(): void
