@@ -7,6 +7,9 @@ namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Credentials\Delete;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Credentials\Delete\OcpiEmspCredentialsDeleteResponse;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Credentials\Delete\OcpiEmspCredentialsDeleteResponse
+ */
 class ResponseConstructionTest extends TestCase
 {
     public function testDataShouldBeNull(): void

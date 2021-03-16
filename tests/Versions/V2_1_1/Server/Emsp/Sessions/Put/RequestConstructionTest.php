@@ -6,11 +6,13 @@ namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Put;
 
 use Chargemap\OCPI\Common\Server\Errors\OcpiNotEnoughInformationClientError;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Put\OcpiEmspSessionPutRequest;
-use DateTime;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\SessionFactoryTest;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Put\OcpiEmspSessionPutRequest
+ */
 class RequestConstructionTest extends OcpiTestCase
 {
     public function validParametersProvider(): iterable
@@ -41,8 +43,6 @@ class RequestConstructionTest extends OcpiTestCase
      */
     public function testShouldConstructRequestWithPayload(string $payload): void
     {
-        $json = json_decode($payload);
-
         $serverRequestInterface = Psr17FactoryDiscovery::findServerRequestFactory()
             ->createServerRequest('GET', 'randomUrl')
             ->withQueryParams(['type' => 'rfid'])
@@ -55,7 +55,7 @@ class RequestConstructionTest extends OcpiTestCase
         $this->assertEquals('TNM', $request->getPartyId());
         $this->assertEquals('101', $request->getSessionId());
 
-        SessionFactoryTest::assertSession($json, $request->getSession());
+        SessionFactoryTest::assertSession($request->getJsonBody(), $request->getSession());
     }
 
     /**

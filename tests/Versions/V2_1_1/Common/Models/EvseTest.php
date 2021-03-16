@@ -29,14 +29,13 @@ class EvseTest
                     ImageTest::assertJsonSerialization($image, $json->images[$index]);
                 }
             }
-//            if (empty($evse->getDirections())) {
-//                Assert::assertEmpty($json->directions);
-//            } else {
-//                foreach ($evse->getDirections() as $index => $direction) {
-//                    //TODO: merge from master to fetch it
-//                    DisplayTextTest::assertJsonSerialization($direction, $json->directions[$index]);
-//                }
-//            }
+            if (empty($evse->getDirections())) {
+                Assert::assertEmpty($json->directions);
+            } else {
+                foreach ($evse->getDirections() as $index => $direction) {
+                    DisplayTextTest::assertJsonSerialization($direction, $json->directions[$index]);
+                }
+            }
             GeoLocationTest::assertJsonSerialization($evse->getCoordinates(), $json->coordinates);
             if (empty($evse->getCapabilities())) {
                 Assert::assertEmpty($json->capabilities);
