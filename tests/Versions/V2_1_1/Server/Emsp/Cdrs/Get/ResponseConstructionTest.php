@@ -10,8 +10,13 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Cdr;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Cdrs\Get\OcpiEmspCdrGetResponse;
 use Http\Discovery\Psr17FactoryDiscovery;
 use PHPUnit\Framework\TestCase;
+use Tests\Chargemap\OCPI\InvalidPayloadException;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\CdrFactoryTest;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Cdrs\Get\OcpiEmspCdrGetResponse
+ */
 class ResponseConstructionTest extends TestCase
 {
     public function validPayloadsProvider(): iterable
@@ -26,6 +31,7 @@ class ResponseConstructionTest extends TestCase
     /**
      * @dataProvider validPayloadsProvider
      * @param string $filename
+     * @throws InvalidPayloadException
      */
     public function testShouldSerializeCdrCorrectlyWithPayload(string $filename)
     {
@@ -38,19 +44,19 @@ class ResponseConstructionTest extends TestCase
         $responseInterface = $response->getResponseInterface($responseFactory, $streamFactory);
         $this->assertSame(OcpiSuccessHttpCode::HTTP_OK, $responseInterface->getStatusCode());
 
-        $jsonCdr = json_decode($responseInterface->getBody()->getContents());
-
-        CdrFactoryTest::assertCdr($jsonCdr->data, $cdr);
+        $jsonCdr = json_decode($responseInterface->getBody()->getContents())->data;
+        $schemaPath = __DIR__ . '/../../../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/cdrPost.schema.json';
+        OcpiTestCase::coerce($schemaPath, $jsonCdr);
+        //TODO: use CdrTest::assertJsonSerialization($cdr, $jsonCdr) instead
+        CdrFactoryTest::assertCdr($jsonCdr, $cdr);
     }
 
     public function testShouldAddMessage(): void
     {
         $cdr = $this->createMock(Cdr::class);
-        $responseFactory = Psr17FactoryDiscovery::findResponseFactory();
-        $streamFactory = Psr17FactoryDiscovery::findStreamFactory();
         $response = new OcpiEmspCdrGetResponse($cdr, 'Cdr is here');
 
-        $responseInterface = $response->getResponseInterface($responseFactory, $streamFactory);
+        $responseInterface = $response->getResponseInterface();
 
         $this->assertEquals(
             'Cdr is here',
