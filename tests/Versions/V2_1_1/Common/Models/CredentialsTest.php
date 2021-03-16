@@ -20,7 +20,7 @@ class CredentialsTest
             Assert::assertSame($credentials->getToken(), $json->token);
             Assert::assertSame($credentials->getPartyId(), $json->party_id);
             Assert::assertSame($credentials->getCountryCode(), $json->country_code);
-            BusinessDetailsTest::assertJsonSerialize($credentials->getBusinessDetails(), $json->business_details);
+            BusinessDetailsTest::assertJsonSerialization($credentials->getBusinessDetails(), $json->business_details);
         }
     }
 }
