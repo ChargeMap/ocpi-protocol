@@ -4,23 +4,24 @@ declare(strict_types=1);
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Tokens\Get;
 
-use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
-use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Token;
-use Chargemap\OCPI\Versions\V2_1_1\Common\Models\TokenType;
-use Chargemap\OCPI\Versions\V2_1_1\Common\Models\WhiteList;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\TokenFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Tokens\Get\OcpiEmspTokenGetRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Tokens\Get\OcpiEmspTokenGetResponse;
-use DateTime;
 use Http\Discovery\Psr17FactoryDiscovery;
 use PHPUnit\Framework\TestCase;
+use Tests\Chargemap\OCPI\OcpiTestCase;
+use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Models\TokenTest;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Tokens\Get\OcpiEmspTokenGetResponse
+ */
 class ResponseConstructionTest extends TestCase
 {
     public function testShouldReturnEmptyArrayWithoutTokens(): void
     {
         $response = new OcpiEmspTokenGetResponse(self::getRequest(), 0, 10);
         $responseInterface = $response->getResponseInterface();
-        $this->assertEquals([], json_decode($responseInterface->getBody()->getContents(), true)['data']);
+        $this->assertSame([], json_decode($responseInterface->getBody()->getContents(), true)['data']);
     }
 
     private function getRequest(): OcpiEmspTokenGetRequest
@@ -32,62 +33,35 @@ class ResponseConstructionTest extends TestCase
         );
     }
 
-    public function testShouldReturnDataWithToken(): void
+    public function validPayloadsProvider(): iterable
     {
-        $response = new OcpiEmspTokenGetResponse(self::getRequest(), 0, 10);
-        $response->addToken(new Token(
-            '123',
-            TokenType::RFID(),
-            'D2G23404',
-            '777',
-            'issuer',
-            true,
-            WhiteList::ALLOWED(),
-            'EN',
-            new DateTime()
-        ));
-        $responseInterface = $response->getResponseInterface();
-        $this->assertEquals([
-            [
-                'uid' => '123',
-                'type' => 'RFID',
-                'auth_id' => 'D2G23404',
-                'visual_number' => '777',
-                'issuer' => 'issuer',
-                'valid' => true,
-                'whitelist' => 'ALLOWED',
-                'language' => 'EN',
-                'last_updated' => DateTimeFormatter::format((new DateTime()))
-            ]
-        ], json_decode($responseInterface->getBody()->getContents(), true)['data']);
+        foreach (scandir(__DIR__ . '/payloads/valid/') as $filename) {
+            if ($filename !== '.' && $filename !== '..') {
+                yield basename($filename, '.json') => [
+                    'payload' => file_get_contents(__DIR__ . '/payloads/valid/' . $filename),
+                ];
+            }
+        }
     }
 
-    public function testShouldReturnDataWithTwoTokens(): void
+    /**
+     * @dataProvider validPayloadsProvider
+     * @param string $payload
+     */
+    public function testShouldReturnDataWithTokens(string $payload): void
     {
         $response = new OcpiEmspTokenGetResponse(self::getRequest(), 0, 10);
-        $response->addToken(new Token(
-            '123',
-            TokenType::RFID(),
-            'D2G23404',
-            '777',
-            'issuer',
-            true,
-            WhiteList::ALLOWED(),
-            'EN',
-            new DateTime()
-        ));
-        $response->addToken(new Token(
-            '321',
-            TokenType::RFID(),
-            'D2G23404',
-            '777',
-            'issuer',
-            true,
-            WhiteList::ALLOWED(),
-            'EN',
-            new DateTime()
-        ));
+        $tokens = [];
+        foreach (json_decode($payload)->data as $index => $jsonToken) {
+            $token = TokenFactory::fromJson($jsonToken);
+            $tokens[$index] = $token;
+            $response->addToken($token);
+        }
         $responseInterface = $response->getResponseInterface();
-        $this->assertCount(2, json_decode($responseInterface->getBody()->getContents(), true)['data']);
+        foreach (json_decode($responseInterface->getBody()->getContents())->data as $index => $jsonToken) {
+            TokenTest::assertJsonSerialization($tokens[$index], $jsonToken);
+            $schemaPath = __DIR__ . '/../../../../../../../src/Versions/V2_1_1/Client/Schemas/token.schema.json';
+            OcpiTestCase::coerce($schemaPath, $jsonToken);
+        }
     }
 }

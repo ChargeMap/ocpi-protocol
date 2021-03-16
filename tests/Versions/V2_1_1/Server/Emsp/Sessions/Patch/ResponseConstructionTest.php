@@ -8,6 +8,9 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Models\PartialSession;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Patch\OcpiEmspSessionPatchResponse;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Patch\OcpiEmspSessionPatchResponse
+ */
 class ResponseConstructionTest extends TestCase
 {
     public function testDataShouldBeNull(): void
