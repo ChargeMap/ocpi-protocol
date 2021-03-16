@@ -1,0 +1,40 @@
+{
+    "title": "V2.1.1\\Emsp\\Tokens\\Post",
+    "type": "object",
+    "properties": {
+        "allowed": {
+            "type": "string",
+            "enum": [
+                "ALLOWED",
+                "BLOCKED",
+                "EXPIRED",
+                "NO_CREDIT",
+                "NOT_ALLOWED"
+            ]
+        },
+        "location": {
+            "oneOf": [
+                {
+                    "type": "null"
+                },
+                {
+                    "$ref": "common.json#/definitions/location_references"
+                }
+            ]
+        },
+        "info": {
+            "oneOf": [
+                {
+                    "type": "null"
+                },
+                {
+                    "$ref": "common.json#/definitions/display_text"
+                }
+            ]
+        }
+    },
+    "required": [
+        "allowed"
+    ],
+    "additionalProperties": false
+}

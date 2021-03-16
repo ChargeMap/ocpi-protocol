@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\ChargingPeriodFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\CdrDimension;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\CdrDimensionType;
@@ -13,6 +14,9 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Common\Models\ChargingPeriod
+ */
 class ChargingPeriodTest extends TestCase
 {
     /**
@@ -71,12 +75,24 @@ class ChargingPeriodTest extends TestCase
     /**
      * @param stdClass $payload
      * @dataProvider getJsonSerializeData()
-     * @covers       \Chargemap\OCPI\Versions\V2_1_1\Common\Models\ChargingPeriod::jsonSerialize()
      */
     public function testJsonSerialize(stdClass $payload): void
     {
         $chargingPeriod = ChargingPeriodFactory::fromJson($payload);
 
-        Assert::assertEquals($payload, json_decode(json_encode($chargingPeriod)));
+        self::assertJsonSerialization($chargingPeriod, $payload);
+    }
+
+    public static function assertJsonSerialization(?ChargingPeriod $chargingPeriod, ?stdClass $json): void
+    {
+        if ($chargingPeriod === null) {
+            Assert::assertNull($json);
+        } else {
+            Assert::assertEquals(DateTimeFormatter::format($chargingPeriod->getStartDate()), $json->start_date_time);
+            Assert::assertSame(count($chargingPeriod->getCdrDimensions()), count($json->dimensions));
+            foreach ($chargingPeriod->getCdrDimensions() as $index => $dimension) {
+                CdrDimensionTest::assertJsonSerialization($dimension, $json->dimensions[$index],);
+            }
+        }
     }
 }

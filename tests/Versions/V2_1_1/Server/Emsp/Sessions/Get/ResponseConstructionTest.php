@@ -5,33 +5,42 @@ declare(strict_types=1);
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Get;
 
 use Chargemap\OCPI\Common\Server\StatusCodes\OcpiSuccessHttpCode;
-use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\SessionFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Get\OcpiEmspSessionGetResponse;
-use DateTime;
 use PHPUnit\Framework\TestCase;
+use Tests\Chargemap\OCPI\InvalidPayloadException;
+use Tests\Chargemap\OCPI\OcpiTestCase;
+use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Models\SessionTest;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Sessions\Get\OcpiEmspSessionGetResponse
+ */
 class ResponseConstructionTest extends TestCase
 {
-    public function testShouldSerializeSessionCorrectlyWithFullPayload(): void
+    public function validPayloadsProvider(): iterable
     {
-        $location = SessionFactory::fromJson(json_decode(file_get_contents(__DIR__ . '/payloads/SessionPutFullPayload.json')));
-        $response = new OcpiEmspSessionGetResponse($location);
+        foreach (scandir(__DIR__ . '/payloads/valid/') as $filename) {
+            if (!is_dir(__DIR__ . '/payloads/valid/' . $filename)) {
+                yield basename($filename, '.json') => [file_get_contents(__DIR__ . '/payloads/valid/' . $filename)];
+            }
+        }
+    }
+
+    /**
+     * @dataProvider validPayloadsProvider
+     * @param string $payload
+     * @throws InvalidPayloadException
+     */
+    public function testShouldSerializeSessionCorrectlyWithFullPayload(string $payload): void
+    {
+        $session = SessionFactory::fromJson(json_decode($payload));
+        $response = new OcpiEmspSessionGetResponse($session);
         $responseInterface = $response->getResponseInterface();
         $this->assertSame(OcpiSuccessHttpCode::HTTP_OK, $responseInterface->getStatusCode());
 
-        $jsonSession = json_decode($responseInterface->getBody()->getContents(), true)['data'];
-        $this->assertSame('101', $jsonSession['id']);
-        $this->assertSame(DateTimeFormatter::format((new DateTime('2015-06-29T22:39:09Z'))), $jsonSession['start_datetime']);
-        $this->assertEquals(0.00, $jsonSession['kwh']);
-        $this->assertSame('DE8ACC12E46L89', $jsonSession['auth_id']);
-        $this->assertSame('AUTH_REQUEST', $jsonSession['auth_method']);
-        $this->assertNotEmpty($jsonSession['location']);
-        $this->assertSame('random id', $jsonSession['meter_id']);
-        $this->assertSame('EUR', $jsonSession['currency']);
-        $this->assertCount(2, $jsonSession['charging_periods']);
-        $this->assertEquals(2.50, $jsonSession['total_cost']);
-        $this->assertSame('PENDING', $jsonSession['status']);
-        $this->assertSame(DateTimeFormatter::format((new DateTime('2015-06-29T22:39:09Z'))), $jsonSession['last_updated']);
+        $jsonSession = json_decode($responseInterface->getBody()->getContents())->data;
+        $schemaPath = __DIR__ . '/../../../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/sessionPut.schema.json';
+        OcpiTestCase::coerce($schemaPath, $jsonSession);
+        SessionTest::assertJsonSerialization($session, $jsonSession);
     }
 }

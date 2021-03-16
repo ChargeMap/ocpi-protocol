@@ -10,6 +10,9 @@ use DateTime;
 use InvalidArgumentException;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Tokens\Get\OcpiEmspTokenGetRequest
+ */
 class RequestConstructionTest extends OcpiTestCase
 {
     public function testShouldConstructWithoutDates(): void
