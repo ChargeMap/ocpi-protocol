@@ -2,15 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Tests\Chargemap\OCPI\Server\Versions\V2_1_1\Emsp\Locations;
+namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations;
 
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams
+ */
 class LocationRequestParamsTest extends TestCase
 {
-
     public function invalidParametersProvider(): array
     {
         return [

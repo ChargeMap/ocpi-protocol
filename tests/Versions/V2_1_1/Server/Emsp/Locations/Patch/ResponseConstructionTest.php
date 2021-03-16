@@ -8,6 +8,9 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Models\PartialLocation;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch\OcpiEmspLocationPatchResponse;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch\OcpiEmspLocationPatchResponse
+ */
 class ResponseConstructionTest extends TestCase
 {
     public function testDataShouldBeNull(): void
