@@ -7,11 +7,18 @@ namespace Chargemap\OCPI\Common\Client\Modules;
 use Chargemap\OCPI\Common\Client\Modules\Locations\GetListing\GetLocationsListingRequest;
 use Chargemap\OCPI\Common\Client\Modules\Locations\GetListing\GetLocationsListingResponse;
 use Chargemap\OCPI\Common\Client\Modules\Locations\GetListing\GetLocationsListingService;
+use Chargemap\OCPI\Common\Client\OcpiServiceNotFoundException;
+use JsonException;
 
 class Locations extends AbstractFeatures
 {
-    private GetLocationsListingService $locationListingService;
+    private ?GetLocationsListingService $locationListingService = null;
 
+    /**
+     * @param GetLocationsListingRequest $request
+     * @return GetLocationsListingResponse
+     * @throws OcpiServiceNotFoundException|JsonException
+     */
     public function getListing(GetLocationsListingRequest $request): GetLocationsListingResponse
     {
         if ($this->locationListingService === null) {
