@@ -29,7 +29,7 @@ abstract class AbstractResponse
     protected static function validate(stdClass $object, string $schemaPath): void
     {
         $validator = new Validator();
-        $validator->validate($object, json_decode(file_get_contents($schemaPath)));
+        $validator->validate($object, (object)['$ref' => 'file://' . $schemaPath]);
         if (!$validator->isValid()) {
             throw new UnexpectedValueException(sprintf("Content does not validate %s schema", $schemaPath));
         }
