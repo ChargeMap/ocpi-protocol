@@ -11,13 +11,13 @@
         "postal_code": "9000",
         "country": "BEL",
         "coordinates": {
-            "latitude": "51.04759",
-            "longitude": "3.72994"
+            "latitude": "51.047590",
+            "longitude": "3.729940"
         },
         "evses": [
             {
                 "uid": "3256",
-                "id": "BE-BEC-E041503001",
+                "evse_id": "BE-BEC-E041503001",
                 "status": "AVAILABLE",
                 "status_schedule": [],
                 "capabilities": [
@@ -51,7 +51,7 @@
             },
             {
                 "uid": "3257",
-                "id": "BE-BEC-E041503002",
+                "evse_id": "BE-BEC-E041503002",
                 "status": "RESERVED",
                 "capabilities": [
                     "RESERVABLE"
@@ -59,7 +59,6 @@
                 "connectors": [
                     {
                         "id": "1",
-                        "status": "RESERVED",
                         "standard": "IEC_62196_T2",
                         "format": "SOCKET",
                         "power_type": "AC_3_PHASE",
