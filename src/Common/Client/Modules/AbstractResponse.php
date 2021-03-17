@@ -31,7 +31,8 @@ abstract class AbstractResponse
         $validator = new Validator();
         $validator->validate($object, (object)['$ref' => 'file://' . $schemaPath]);
         if (!$validator->isValid()) {
-            throw new UnexpectedValueException(sprintf("Content does not validate %s schema", $schemaPath));
+            throw new UnexpectedValueException('Payload does not validate ('. $validator->getErrors()[0]['pointer'].' : '.$validator->getErrors()[0]['message'].')' );
+//            throw new UnexpectedValueException(sprintf("Content does not validate %s schema", $schemaPath));
         }
     }
 }
