@@ -56,6 +56,6 @@ class ResponseConstructionTest extends TestCase
 
         $this->assertSame($response->getAllowedType()->getValue(), $jsonPayload->allowed);
         LocationReferencesTest::assertJsonSerialization($response->getLocationReferences(), $jsonPayload->location);
-        DisplayTextTest::assertDisplayText($response->getInfo(), $jsonPayload->info);
+        DisplayTextTest::assertJsonSerialization($response->getInfo(), $jsonPayload->info);
     }
 }

@@ -9,6 +9,9 @@ use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
 use InvalidArgumentException;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Get\OcpiEmspEvseGetRequest
+ */
 class RequestConstructionTest extends OcpiTestCase
 {
     public function testShouldFailWithoutEvseUid(): void

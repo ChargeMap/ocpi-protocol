@@ -41,6 +41,7 @@ class RequestConstructionTest extends OcpiTestCase
      * @param string $countryCode
      * @param string $partyId
      * @param string $locationId
+     * @throws UnsupportedPatchException
      */
     public function testShouldConstructRequestWithFullPayload(string $filename, string $countryCode, string $partyId, string $locationId): void
     {
@@ -54,7 +55,7 @@ class RequestConstructionTest extends OcpiTestCase
 
         $location = $request->getPartialLocation();
 
-        PartialLocationFactoryTest::assertPartialLocation(json_decode(file_get_contents($filename)), $location);
+        PartialLocationFactoryTest::assertPartialLocation($request->getJsonBody(), $location);
     }
 
     public function testShouldFailWithPatchId(): void

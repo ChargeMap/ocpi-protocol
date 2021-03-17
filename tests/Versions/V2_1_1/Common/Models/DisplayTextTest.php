@@ -13,7 +13,7 @@ use stdClass;
  */
 class DisplayTextTest
 {
-    public static function assertDisplayText(?DisplayText $displayText, ?stdClass $json): void
+    public static function assertJsonSerialization(?DisplayText $displayText, ?stdClass $json): void
     {
         if ($displayText === null) {
             Assert::assertNull($json);

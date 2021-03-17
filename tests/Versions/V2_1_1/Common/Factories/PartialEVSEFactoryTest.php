@@ -7,6 +7,7 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Models\PartialEVSE;
 use DateTime;
 use JsonException;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 use Tests\Chargemap\OCPI\InvalidPayloadException;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 use function PHPUnit\Framework\assertSame;
@@ -43,7 +44,7 @@ class PartialEVSEFactoryTest extends TestCase
         self::assertPartialEVSE($json, $evse);
     }
 
-    public function assertPartialEVSE($json, PartialEVSE $evse): void
+    public static function assertPartialEVSE(stdClass $json, PartialEVSE $evse): void
     {
         if (property_exists($json, 'uid')) {
             self::assertTrue($evse->hasUid());
