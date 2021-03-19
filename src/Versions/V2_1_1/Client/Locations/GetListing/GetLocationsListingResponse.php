@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Chargemap\OCPI\Versions\V2_1_1\Client\Locations\GetListing;
 
-use Chargemap\OCPI\Common\Client\Modules\AbstractResponse;
+use Chargemap\OCPI\Common\Client\Modules\Locations\GetListing\GetLocationsListingResponse as BaseResponse;
 use Chargemap\OCPI\Common\Client\OcpiUnauthorizedException;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\LocationFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Location;
+use JsonException;
 use Psr\Http\Message\ResponseInterface;
 
-class GetLocationsListingResponse extends AbstractResponse
+class GetLocationsListingResponse extends BaseResponse
 {
     private ?GetLocationsListingRequest $nextRequest;
 
@@ -19,6 +20,13 @@ class GetLocationsListingResponse extends AbstractResponse
     /** @var Location[] */
     private array $locations = [];
 
+    /**
+     * @param GetLocationsListingRequest $request
+     * @param ResponseInterface $response
+     * @return GetLocationsListingResponse
+     * @throws OcpiUnauthorizedException
+     * @throws JsonException
+     */
     public static function from(GetLocationsListingRequest $request, ResponseInterface $response): GetLocationsListingResponse
     {
         if($response->getStatusCode() === 401) {

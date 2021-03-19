@@ -9,6 +9,7 @@ use Chargemap\OCPI\Versions\V2_1_1\Client\Locations\GetListing\GetLocationsListi
 use Chargemap\OCPI\Versions\V2_1_1\Client\Locations\GetListing\GetLocationsListingResponse;
 use Http\Discovery\Psr17FactoryDiscovery;
 use PHPUnit\Framework\TestCase;
+use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\LocationFactoryTest;
 
 class GetLocationsListingResponseTest extends TestCase
 {
@@ -17,10 +18,10 @@ class GetLocationsListingResponseTest extends TestCase
      */
     public function getFromData(): iterable
     {
-        foreach (scandir(__DIR__ . '/../payloads/Valid/') as $file) {
+        foreach (scandir(__DIR__ . '/payloads/Valid/') as $file) {
             if ($file !== '.' && $file !== '..') {
                 yield $file => [
-                    'payload' => file_get_contents(__DIR__ . '/../payloads/Valid/' . $file),
+                    'payload' => file_get_contents(__DIR__ . '/payloads/Valid/' . $file),
                 ];
             }
         }
@@ -43,23 +44,19 @@ class GetLocationsListingResponseTest extends TestCase
                 Psr17FactoryDiscovery::findStreamFactory()->createStream($payload)
             );
 
-        // first item of list
-        $location = GetLocationsListingResponse::from((new GetLocationsListingRequest())
+        $locations = GetLocationsListingResponse::from((new GetLocationsListingRequest())
             ->withOffset(0)
             ->withLimit(10), $serverResponse)
-            ->getLocations()[0];
+            ->getLocations();
 
-        $this->assertSame($json->data[0]->id, $location->getId());
-        $this->assertSame($json->data[0]->type, $location->getLocationType()->getValue());
-        $this->assertSame($json->data[0]->name, $location->getName());
-        $this->assertSame($json->data[0]->address, $location->getAddress());
+        foreach ($json->data as $index => $jsonLocation) {
+            LocationFactoryTest::assertLocation($jsonLocation, $locations[$index]);
+        }
     }
 
     public function testWith401Unauthorized(): void
     {
-        $this->expectException(OcpiUnauthorizedException::class);
-
-        $payload = file_get_contents(__DIR__ . '/../payloads/Invalid/sample_401.html');
+        $payload = file_get_contents(__DIR__ . '/payloads/Invalid/sample_401.html');
 
         $serverResponse = Psr17FactoryDiscovery::findResponseFactory()->createResponse(401)
             ->withHeader('Content-Type', 'application/json')
@@ -68,8 +65,10 @@ class GetLocationsListingResponseTest extends TestCase
                 Psr17FactoryDiscovery::findStreamFactory()->createStream($payload)
             );
 
+        $this->expectException(OcpiUnauthorizedException::class);
+
         // first item of list
-        $location = GetLocationsListingResponse::from((new GetLocationsListingRequest())
+        GetLocationsListingResponse::from((new GetLocationsListingRequest())
             ->withOffset(0)
             ->withLimit(10), $serverResponse)
             ->getLocations()[0];
