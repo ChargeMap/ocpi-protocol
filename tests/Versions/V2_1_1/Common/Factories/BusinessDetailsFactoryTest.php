@@ -34,7 +34,7 @@ class BusinessDetailsFactoryTest extends TestCase
     {
         $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
 
-        OcpiTestCase::coerce( realpath( __DIR__.'/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/common.json' ). '#/definitions/business_details', $json );
+        OcpiTestCase::coerce( 'Common/common.schema.json#/definitions/business_details', $json );
 
         $businessDetails = BusinessDetailsFactory::fromJson($json);
 

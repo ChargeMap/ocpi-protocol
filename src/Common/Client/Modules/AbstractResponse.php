@@ -29,9 +29,13 @@ abstract class AbstractResponse
     protected static function validate(stdClass $object, string $schemaPath): void
     {
         $validator = new Validator();
-        $validator->validate($object, (object)['$ref' => 'file://' . $schemaPath]);
+        $schemasPath = __DIR__ . '/../../../../resources/jsonSchemas/V2_1_1/eMSP/Client';
+        $validator->validate(
+            $object,
+            (object)['$ref' => 'file://' . realpath($schemasPath) . DIRECTORY_SEPARATOR . $schemaPath]
+        );
         if (!$validator->isValid()) {
-            throw new UnexpectedValueException('Payload does not validate ('. $validator->getErrors()[0]['pointer'].' : '.$validator->getErrors()[0]['message'].')' );
+            throw new UnexpectedValueException('Payload does not validate (' . $validator->getErrors()[0]['pointer'] . ' : ' . $validator->getErrors()[0]['message'] . ')');
         }
     }
 }

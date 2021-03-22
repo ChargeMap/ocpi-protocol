@@ -27,9 +27,9 @@ class GetTokenResponse extends BaseResponse
     {
         $json = self::toJson($response);
 
-        self::validate($json, __DIR__ . '/../../Schemas/token.schema.json');
+        self::validate($json, 'Tokens/tokenGetResponse.schema.json');
 
-        $token = TokenFactory::fromJson($json);
+        $token = TokenFactory::fromJson($json->data);
 
         return new self($token);
     }

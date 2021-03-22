@@ -37,7 +37,7 @@ class CdrFactoryTest extends TestCase
     {
         $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
 
-        OcpiTestCase::coerce(realpath(__DIR__ . '/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/cdrPost.schema.json'), $json);
+        OcpiTestCase::coerce('eMSP/Server/CDRs/cdrPostRequest.schema.json', $json);
 
         $cdr = CdrFactory::fromJson($json);
 

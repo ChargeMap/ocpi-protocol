@@ -31,10 +31,10 @@ class GetLocationResponse extends BaseResponse
             return $return;
         }
         $json = self::toJson($response);
+        self::validate($json, 'Locations/locationGetResponse.schema.json');
         if (empty($json->data)) {
             return $return;
         }
-        self::validate($json->data, __DIR__ . '/../../Schemas/location.schema.json');
         $return->location = LocationFactory::fromJson($json->data);
 
         return $return;
