@@ -1,0 +1,30 @@
+{
+    "title": "V2.1.1\\Emsp\\Server\\Cdrs\\Get",
+    "properties": {
+        "data": {
+            "$ref": "../../../Common/cdr.schema.json"
+        },
+        "status_code": {
+            "$ref": "../../../Common/common.schema.json#/definitions/status_code"
+        },
+        "status_message": {
+            "oneOf": [
+                {
+                    "type": "null"
+                },
+                {
+                    "$ref": "../../../Common/common.schema.json#/definitions/status_message"
+                }
+            ]
+        },
+        "timestamp": {
+            "$ref": "../../../Common/common.schema.json#/definitions/timestamp"
+        }
+    },
+    "required": [
+        "data",
+        "status_code",
+        "timestamp"
+    ],
+    "additionalProperties": false
+}

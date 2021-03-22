@@ -1,0 +1,20 @@
+{
+    "title": "V2.1.1\\Emsp\\Server\\Sessions\\Put",
+    "oneOf": [
+        {
+            "$ref": "../../../Common/session.schema.json",
+            "required": [
+                "id",
+                "start_datetime",
+                "kwh",
+                "auth_id",
+                "auth_method",
+                "location",
+                "currency",
+                "status",
+                "last_updated"
+            ],
+            "additionalProperties": false
+        }
+    ]
+}

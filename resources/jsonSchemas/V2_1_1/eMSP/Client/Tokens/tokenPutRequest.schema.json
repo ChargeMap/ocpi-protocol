@@ -1,0 +1,18 @@
+{
+    "title": "V2.1.1\\Emsp\\Client\\Token\\Put",
+    "oneOf": [
+        {
+            "$ref": "../../../Common/token.schema.json",
+            "required": [
+                "uid",
+                "type",
+                "auth_id",
+                "issuer",
+                "valid",
+                "whitelist",
+                "last_updated"
+            ],
+            "additionalProperties": false
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "title": "V2.1.1\\Emsp\\Server\\Locations\\Evses\\Connectors\\Put",
+    "oneOf": [
+        {
+            "$ref": "../../../../../Common/connector.schema.json",
+            "required": [
+                "id",
+                "standard",
+                "format",
+                "power_type",
+                "voltage",
+                "amperage",
+                "last_updated"
+            ],
+            "additionalProperties": false
+        }
+    ]
+}

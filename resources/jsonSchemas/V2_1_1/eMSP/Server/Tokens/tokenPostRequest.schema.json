@@ -1,0 +1,9 @@
+{
+    "title": "V2.1.1\\Emsp\\Server\\Tokens\\Post",
+    "oneOf": [
+        {
+            "$ref": "../../../Common/common.schema.json#/definitions/location_references",
+            "additionalProperties": false
+        }
+    ]
+}
