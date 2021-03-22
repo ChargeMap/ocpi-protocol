@@ -40,9 +40,8 @@ class ResponseConstructionTest extends TestCase
 
         $responseInterface = $response->getResponseInterface();
         $this->assertSame(OcpiSuccessHttpCode::HTTP_OK, $responseInterface->getStatusCode());
-        $jsonEvse = json_decode($responseInterface->getBody()->getContents())->data;
-        $schemaPath = __DIR__ . '/../../../../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/evsePut.schema.json';
-        OcpiTestCase::coerce($schemaPath, $jsonEvse);
-        EvseTest::assertJsonSerialization($evse, $jsonEvse);
+        $json = json_decode($responseInterface->getBody()->getContents());
+        OcpiTestCase::coerce('eMSP/Server/Locations/Evses/evseGetResponse.schema.json', $json);
+        EvseTest::assertJsonSerialization($evse, $json->data);
     }
 }

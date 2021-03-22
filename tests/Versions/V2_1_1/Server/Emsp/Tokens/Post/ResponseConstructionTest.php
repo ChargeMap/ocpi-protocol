@@ -27,9 +27,9 @@ class ResponseConstructionTest extends TestCase
             if (!is_dir(__DIR__ . '/payloads/responses/' . $filename)) {
                 $payload = json_decode(file_get_contents(__DIR__ . '/payloads/responses/' . $filename));
                 yield basename($filename, '.json') => [
-                    'allowed' => new AllowedType($payload->allowed),
-                    'location' => LocationReferencesFactory::fromJson($payload->location),
-                    'info' => DisplayTextFactory::fromJson($payload->info),
+                    'allowed' => new AllowedType($payload->data->allowed),
+                    'location' => LocationReferencesFactory::fromJson($payload->data->location),
+                    'info' => DisplayTextFactory::fromJson($payload->data->info),
                 ];
             }
         }
@@ -50,12 +50,11 @@ class ResponseConstructionTest extends TestCase
         $response = new OcpiEmspTokenPostResponse($allowedType, $locationReferences, $info);
         $responseInterface = $response->getResponseInterface();
 
-        $jsonPayload = json_decode($responseInterface->getBody()->getContents())->data;
-        $schemaPath = __DIR__ . '/../../../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/authorizationTokenPostResponse.schema.json';
-        OcpiTestCase::coerce($schemaPath, $jsonPayload);
+        $jsonPayload = json_decode($responseInterface->getBody()->getContents());
+        OcpiTestCase::coerce('eMSP/Server/Tokens/tokenPostResponse.schema.json', $jsonPayload);
 
-        $this->assertSame($response->getAllowedType()->getValue(), $jsonPayload->allowed);
-        LocationReferencesTest::assertJsonSerialization($response->getLocationReferences(), $jsonPayload->location);
-        DisplayTextTest::assertJsonSerialization($response->getInfo(), $jsonPayload->info);
+        $this->assertSame($response->getAllowedType()->getValue(), $jsonPayload->data->allowed);
+        LocationReferencesTest::assertJsonSerialization($response->getLocationReferences(), $jsonPayload->data->location);
+        DisplayTextTest::assertJsonSerialization($response->getInfo(), $jsonPayload->data->info);
     }
 }

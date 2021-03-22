@@ -13,7 +13,11 @@ final class PayloadValidation
     public static function coerce(string $schemaPath, stdClass $object): void
     {
         $jsonSchemaValidation = new Validator();
-        $jsonSchemaValidation->coerce($object, (object)['$ref' => 'file://' . dirname(realpath(__DIR__ . '/..')) . DIRECTORY_SEPARATOR . $schemaPath]);
+        $schemasPath = __DIR__ . '/../../../resources/jsonSchemas/V2_1_1/eMSP/Server';
+        $jsonSchemaValidation->coerce(
+            $object,
+            (object)['$ref' => 'file://' . realpath($schemasPath) . DIRECTORY_SEPARATOR . $schemaPath]
+        );
         if (!$jsonSchemaValidation->isValid()) {
             throw new OcpiInvalidPayloadClientError(sprintf('Payload does not validate %s', basename($schemaPath)));
         }

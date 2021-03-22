@@ -38,9 +38,8 @@ class ResponseConstructionTest extends TestCase
 
         $responseInterface = $response->getResponseInterface();
         $this->assertSame(OcpiSuccessHttpCode::HTTP_OK, $responseInterface->getStatusCode());
-        $jsonLocation = json_decode($responseInterface->getBody()->getContents())->data;
-        $schemaPath = __DIR__ . '/../../../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/locationPut.schema.json';
-        OcpiTestCase::coerce($schemaPath, $jsonLocation);
-        LocationTest::assertJsonSerialization($location, $jsonLocation);
+        $json = json_decode($responseInterface->getBody()->getContents());
+        OcpiTestCase::coerce('eMSP/Server/Locations/locationGetResponse.schema.json', $json);
+        LocationTest::assertJsonSerialization($location, $json->data);
     }
 }

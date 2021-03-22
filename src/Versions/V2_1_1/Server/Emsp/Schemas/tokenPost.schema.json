@@ -1,8 +1,0 @@
-{
-  "title": "V2.1.1\\Emsp\\Tokens\\Post",
-  "oneOf": [
-    {
-      "$ref": "common.json#/definitions/location_references"
-    }
-  ]
-}

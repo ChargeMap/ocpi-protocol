@@ -58,10 +58,10 @@ class ResponseConstructionTest extends TestCase
             $response->addToken($token);
         }
         $responseInterface = $response->getResponseInterface();
-        foreach (json_decode($responseInterface->getBody()->getContents())->data as $index => $jsonToken) {
+        $payload = json_decode($responseInterface->getBody()->getContents());
+        OcpiTestCase::coerce('eMSP/Server/Tokens/tokenGetResponse.schema.json', $payload);
+        foreach ($payload->data as $index => $jsonToken) {
             TokenTest::assertJsonSerialization($tokens[$index], $jsonToken);
-            $schemaPath = __DIR__ . '/../../../../../../../src/Versions/V2_1_1/Client/Schemas/token.schema.json';
-            OcpiTestCase::coerce($schemaPath, $jsonToken);
         }
     }
 }
