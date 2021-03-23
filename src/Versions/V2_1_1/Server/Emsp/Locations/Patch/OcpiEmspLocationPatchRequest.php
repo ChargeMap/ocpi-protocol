@@ -19,7 +19,7 @@ class OcpiEmspLocationPatchRequest extends OcpiLocationUpdateRequest
     public function __construct(ServerRequestInterface $request, LocationRequestParams $params)
     {
         parent::__construct($request, $params);
-        PayloadValidation::coerce('Locations/locationPatchRequest.schema.json', $this->jsonBody);
+        PayloadValidation::coerce('V2_1_1/eMSP/Server/Locations/locationPatchRequest.schema.json', $this->jsonBody);
         $partialLocation = PartialLocationFactory::fromJson($this->jsonBody);
         if ($partialLocation === null) {
             throw new UnexpectedValueException('PartialLocation cannot be null');

@@ -13,7 +13,7 @@ final class PayloadValidation
     public static function coerce(string $schemaPath, stdClass $object): void
     {
         $jsonSchemaValidation = new Validator();
-        $schemasPath = __DIR__ . '/../../../resources/jsonSchemas/V2_1_1/eMSP/Server';
+        $schemasPath = __DIR__ . '/../../../resources/jsonSchemas';
         $jsonSchemaValidation->coerce(
             $object,
             (object)['$ref' => 'file://' . realpath($schemasPath) . DIRECTORY_SEPARATOR . $schemaPath]

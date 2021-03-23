@@ -22,7 +22,7 @@ class ResponseConstructionTest extends TestCase
         $responseInterface = $response->getResponseInterface();
         $this->assertSame(201, $responseInterface->getStatusCode());
         $json = json_decode($responseInterface->getBody()->getContents());
-        OcpiTestCase::coerce('eMSP/Server/Credentials/credentialsPostResponse.schema.json', $json);
+        OcpiTestCase::coerce('V2_1_1/eMSP/Server/Credentials/credentialsPostResponse.schema.json', $json);
         CredentialsTest::assertJsonSerialize($credentials, $json->data);
     }
 }

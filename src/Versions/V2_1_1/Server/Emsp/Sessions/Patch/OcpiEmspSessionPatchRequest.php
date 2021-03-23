@@ -19,7 +19,7 @@ class OcpiEmspSessionPatchRequest extends OcpiSessionUpdateRequest
     public function __construct(ServerRequestInterface $request, string $countryCode, string $partyId, string $sessionId)
     {
         parent::__construct($request, $countryCode, $partyId, $sessionId);
-        PayloadValidation::coerce('Sessions/sessionPatchRequest.schema.json', $this->jsonBody);
+        PayloadValidation::coerce('V2_1_1/eMSP/Server/Sessions/sessionPatchRequest.schema.json', $this->jsonBody);
 
         $partialSession = PartialSessionFactory::fromJson($this->jsonBody);
         if ($partialSession === null) {

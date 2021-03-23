@@ -51,7 +51,7 @@ class ResponseConstructionTest extends TestCase
         $responseInterface = $response->getResponseInterface();
 
         $jsonPayload = json_decode($responseInterface->getBody()->getContents());
-        OcpiTestCase::coerce('eMSP/Server/Tokens/tokenPostResponse.schema.json', $jsonPayload);
+        OcpiTestCase::coerce('V2_1_1/eMSP/Server/Tokens/tokenPostResponse.schema.json', $jsonPayload);
 
         $this->assertSame($response->getAllowedType()->getValue(), $jsonPayload->data->allowed);
         LocationReferencesTest::assertJsonSerialization($response->getLocationReferences(), $jsonPayload->data->location);
