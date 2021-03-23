@@ -26,10 +26,10 @@ class GetCdrsListingResponse extends AbstractResponse
         }
 
         $json = self::toJson($response);
-        $return = new self();
+        self::validate($json, 'V2_1_1/eMSP/Client/CDRs/cdrGetResponse.schema.json');
 
-        foreach ($json->data as $item) {
-            self::validate($item, __DIR__ . '/../../Schemas/cdr.schema.json');
+        $return = new self();
+        foreach ($json->data ?? [] as $item) {
             $return->cdrs[] = CdrFactory::fromJson($item);
         }
 

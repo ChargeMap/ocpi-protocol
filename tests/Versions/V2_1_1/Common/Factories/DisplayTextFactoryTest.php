@@ -34,7 +34,7 @@ class DisplayTextFactoryTest extends TestCase
     {
         $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
 
-        OcpiTestCase::coerce( realpath( __DIR__.'/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/common.json' ). '#/definitions/display_text', $json );
+        OcpiTestCase::coerce('V2_1_1/Common/common.schema.json#/definitions/display_text', $json );
 
         $displayText = DisplayTextFactory::fromJson($json);
 
