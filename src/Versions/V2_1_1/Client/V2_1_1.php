@@ -8,11 +8,22 @@ use Chargemap\OCPI\Common\Client\Modules\AbstractFeatures;
 
 class V2_1_1 extends AbstractFeatures
 {
+    private Credentials $credentials;
+
     private Locations $locations;
 
     private Tokens $tokens;
 
     private Cdrs $cdrs;
+
+    public function credentials(): Credentials
+    {
+        if (!isset($this->credentials)) {
+            $this->credentials = new Credentials($this->ocpiConfiguration);
+        }
+
+        return $this->credentials;
+    }
 
     public function locations(): Locations
     {
