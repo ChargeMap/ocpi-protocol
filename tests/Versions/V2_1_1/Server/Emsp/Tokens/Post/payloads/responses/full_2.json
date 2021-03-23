@@ -1,7 +1,4 @@
 {
-    "status_code": 1000,
-    "status_message": "Success",
-    "timestamp": "2021-03-19T15:35:28Z",
     "data": {
         "allowed": "BLOCKED",
         "location": {
