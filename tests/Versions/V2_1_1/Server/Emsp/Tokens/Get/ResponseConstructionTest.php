@@ -59,7 +59,7 @@ class ResponseConstructionTest extends TestCase
         }
         $responseInterface = $response->getResponseInterface();
         $payload = json_decode($responseInterface->getBody()->getContents());
-        OcpiTestCase::coerce('eMSP/Server/Tokens/tokenGetResponse.schema.json', $payload);
+        OcpiTestCase::coerce('V2_1_1/eMSP/Server/Tokens/tokenGetResponse.schema.json', $payload);
         foreach ($payload->data as $index => $jsonToken) {
             TokenTest::assertJsonSerialization($tokens[$index], $jsonToken);
         }

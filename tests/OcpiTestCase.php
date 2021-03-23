@@ -31,7 +31,7 @@ class OcpiTestCase extends TestCase
     {
         $jsonSchemaValidation = new Validator();
 
-        $schemasPath = __DIR__ . '/../resources/jsonSchemas/V2_1_1/';
+        $schemasPath = __DIR__ . '/../resources/jsonSchemas';
         $definition = (object)['$ref' => 'file://' . realpath($schemasPath) . DIRECTORY_SEPARATOR . $schemaPath];
 
         $jsonSchemaValidation->coerce($object, $definition);

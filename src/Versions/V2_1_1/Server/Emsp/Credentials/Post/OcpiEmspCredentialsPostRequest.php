@@ -18,7 +18,7 @@ class OcpiEmspCredentialsPostRequest extends OcpiUpdateRequest
     public function __construct(ServerRequestInterface $request)
     {
         parent::__construct($request);
-        PayloadValidation::coerce('Credentials/credentialsPostRequest.schema.json', $this->jsonBody);
+        PayloadValidation::coerce('V2_1_1/eMSP/Server/Credentials/credentialsPostRequest.schema.json', $this->jsonBody);
         $credentials = CredentialsFactory::fromJson($this->jsonBody);
         if ($credentials === null) {
             throw new UnexpectedValueException('Credentials cannot be null');

@@ -19,7 +19,7 @@ class OcpiEmspEvsePutRequest extends BaseEvseUpdateRequest
     public function __construct(ServerRequestInterface $request, LocationRequestParams $params)
     {
         parent::__construct($request, $params);
-        PayloadValidation::coerce('Locations/Evses/evsePutRequest.schema.json', $this->jsonBody);
+        PayloadValidation::coerce('V2_1_1/eMSP/Server/Locations/Evses/evsePutRequest.schema.json', $this->jsonBody);
         $evse = EVSEFactory::fromJson($this->jsonBody);
         if ($evse === null) {
             throw new UnexpectedValueException('Evse cannot be null');
