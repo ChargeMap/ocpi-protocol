@@ -1,14 +1,16 @@
 {
-    "allowed": "ALLOWED",
-    "location": {
-        "location_id": "location_tartenpion",
-        "evse_uids": [
-            "evse_uid_1",
-            "evse_uid_2"
-        ],
-        "connector_ids": [
-            "connector_id_1",
-            "connector_id_2"
-        ]
+    "data": {
+        "allowed": "ALLOWED",
+        "location": {
+            "location_id": "location_tartenpion",
+            "evse_uids": [
+                "evse_uid_1",
+                "evse_uid_2"
+            ],
+            "connector_ids": [
+                "connector_id_1",
+                "connector_id_2"
+            ]
+        }
     }
 }

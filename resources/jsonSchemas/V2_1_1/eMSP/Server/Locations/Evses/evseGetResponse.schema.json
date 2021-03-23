@@ -1,0 +1,36 @@
+{
+    "title": "V2.1.1\\Emsp\\Server\\Locations\\Evses\\Get",
+    "properties": {
+        "data": {
+            "$ref": "../../../../Common/evse.schema.json",
+            "required": [
+                "uid",
+                "status",
+                "connectors",
+                "last_updated"
+            ]
+        },
+        "status_code": {
+            "$ref": "../../../../Common/common.schema.json#/definitions/status_code"
+        },
+        "status_message": {
+            "oneOf": [
+                {
+                    "type": "null"
+                },
+                {
+                    "$ref": "../../../../Common/common.schema.json#/definitions/status_message"
+                }
+            ]
+        },
+        "timestamp": {
+            "$ref": "../../../../Common/common.schema.json#/definitions/timestamp"
+        }
+    },
+    "required": [
+        "data",
+        "status_code",
+        "timestamp"
+    ],
+    "additionalProperties": false
+}

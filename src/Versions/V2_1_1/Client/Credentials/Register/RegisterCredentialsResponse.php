@@ -25,7 +25,7 @@ class RegisterCredentialsResponse extends AbstractResponse
             throw new ClientAlreadyRegisteredException();
         }
 
-        $json = self::toJson($response, __DIR__ . '/../../Schemas/postCredentialsResponse.schema.json');
+        $json = self::toJson($response, 'V2_1_1/eMSP/Client/Credentials/credentialPostResponse.schema.json');
 
         return new self(CredentialsFactory::fromJson($json->data));
     }

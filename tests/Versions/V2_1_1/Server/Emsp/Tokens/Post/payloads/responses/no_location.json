@@ -1,7 +1,9 @@
 {
-    "allowed": "ALLOWED",
-    "info": {
-        "language": "en",
-        "text": "Right"
+    "data": {
+        "allowed": "ALLOWED",
+        "info": {
+            "language": "en",
+            "text": "Right"
+        }
     }
 }

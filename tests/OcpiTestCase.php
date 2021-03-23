@@ -31,14 +31,13 @@ class OcpiTestCase extends TestCase
     {
         $jsonSchemaValidation = new Validator();
 
-        $definition = (object)[
-            '$ref' => 'file://' . $schemaPath
-        ];
+        $schemasPath = __DIR__ . '/../resources/jsonSchemas';
+        $definition = (object)['$ref' => 'file://' . realpath($schemasPath) . DIRECTORY_SEPARATOR . $schemaPath];
 
         $jsonSchemaValidation->coerce($object, $definition);
 
         if (!$jsonSchemaValidation->isValid()) {
-            throw new InvalidPayloadException('Payload does not validate ('. $jsonSchemaValidation->getErrors()[0]['pointer'].' : '.$jsonSchemaValidation->getErrors()[0]['message'].')' );
+            throw new InvalidPayloadException('Payload does not validate (' . $jsonSchemaValidation->getErrors()[0]['pointer'] . ' : ' . $jsonSchemaValidation->getErrors()[0]['message'] . ')');
         }
     }
 }

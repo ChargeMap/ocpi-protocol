@@ -35,7 +35,7 @@ class GeoLocationFactoryTest extends TestCase
     {
         $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
 
-        OcpiTestCase::coerce( realpath( __DIR__.'/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/common.json' ). '#/definitions/geo_location', $json );
+        OcpiTestCase::coerce('V2_1_1/Common/common.schema.json#/definitions/geo_location', $json );
 
         $geolocation = GeoLocationFactory::fromJson($json);
 
@@ -63,7 +63,7 @@ class GeoLocationFactoryTest extends TestCase
 
         $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
 
-        OcpiTestCase::coerce( realpath( __DIR__.'/../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/common.json' ). '#/definitions/geo_location', $json );
+        OcpiTestCase::coerce('V2_1_1/Common/common.schema.json#/definitions/geo_location', $json );
     }
 
 
