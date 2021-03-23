@@ -37,7 +37,7 @@ class PartialLocationFactoryTest extends TestCase
     {
         $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
 
-        OcpiTestCase::coerce('eMSP/Server/Locations/locationPatchRequest.schema.json', $json);
+        OcpiTestCase::coerce('V2_1_1/eMSP/Server/Locations/locationPatchRequest.schema.json', $json);
 
         $location = PartialLocationFactory::fromJson($json);
 

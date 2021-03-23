@@ -31,7 +31,7 @@ class GetLocationResponse extends BaseResponse
             return $return;
         }
         $json = self::toJson($response);
-        self::validate($json, 'Locations/locationGetResponse.schema.json');
+        self::validate($json, 'V2_1_1/eMSP/Client/Locations/locationGetResponse.schema.json');
         if (empty($json->data)) {
             return $return;
         }

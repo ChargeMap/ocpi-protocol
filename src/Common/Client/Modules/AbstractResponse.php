@@ -29,7 +29,7 @@ abstract class AbstractResponse
     protected static function validate(stdClass $object, string $schemaPath): void
     {
         $validator = new Validator();
-        $schemasPath = __DIR__ . '/../../../../resources/jsonSchemas/V2_1_1/eMSP/Client';
+        $schemasPath = __DIR__ . '/../../../../resources/jsonSchemas';
         $validator->validate(
             $object,
             (object)['$ref' => 'file://' . realpath($schemasPath) . DIRECTORY_SEPARATOR . $schemaPath]

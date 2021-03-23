@@ -35,7 +35,7 @@ class ImageFactoryTest extends TestCase
     {
         $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
 
-        OcpiTestCase::coerce( 'Common/common.schema.json#/definitions/image', $json );
+        OcpiTestCase::coerce('V2_1_1/Common/common.schema.json#/definitions/image', $json );
 
         $image = ImageFactory::fromJson($json);
 

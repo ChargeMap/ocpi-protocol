@@ -27,7 +27,7 @@ class GetTokenResponse extends BaseResponse
     {
         $json = self::toJson($response);
 
-        self::validate($json, 'Tokens/tokenGetResponse.schema.json');
+        self::validate($json, 'V2_1_1/eMSP/Client/Tokens/tokenGetResponse.schema.json');
 
         $token = TokenFactory::fromJson($json->data);
 
