@@ -26,7 +26,7 @@ class OcpiEmspEvsePatchRequest extends BaseEvseUpdateRequest
     public function __construct(ServerRequestInterface $request, LocationRequestParams $params)
     {
         parent::__construct($request, $params);
-        PayloadValidation::coerce('Versions/V2_1_1/Server/Emsp/Schemas/evsePatch.schema.json', $this->jsonBody);
+        PayloadValidation::coerce('V2_1_1/eMSP/Server/Locations/Evses/evsePatchRequest.schema.json', $this->jsonBody);
         $partialEvse = PartialEVSEFactory::fromJson($this->jsonBody);
 
         if ($partialEvse === null) {

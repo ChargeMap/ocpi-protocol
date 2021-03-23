@@ -38,9 +38,8 @@ class ResponseConstructionTest extends TestCase
 
         $responseInterface = $response->getResponseInterface();
         $this->assertSame(OcpiSuccessHttpCode::HTTP_OK, $responseInterface->getStatusCode());
-        $jsonConnector = json_decode($responseInterface->getBody()->getContents())->data;
-        $schemaPath = __DIR__ . '/../../../../../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/connectorPut.schema.json';
-        OcpiTestCase::coerce($schemaPath, $jsonConnector);
-        ConnectorTest::assertJsonSerialization($connector, $jsonConnector);
+        $json = json_decode($responseInterface->getBody()->getContents());
+        OcpiTestCase::coerce('V2_1_1/eMSP/Server/Locations/Evses/Connectors/connectorGetResponse.schema.json', $json);
+        ConnectorTest::assertJsonSerialization($connector, $json->data);
     }
 }

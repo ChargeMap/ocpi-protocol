@@ -1,0 +1,10 @@
+{
+    "title": "V2.1.1\\Emsp\\Client\\Token\\Patch",
+    "oneOf": [
+        {
+            "$ref": "../../../Common/token.schema.json",
+            "minProperties": 1,
+            "additionalProperties": false
+        }
+    ]
+}

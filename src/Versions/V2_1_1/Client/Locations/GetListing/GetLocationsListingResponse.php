@@ -34,10 +34,10 @@ class GetLocationsListingResponse extends BaseResponse
         }
 
         $json = self::toJson($response);
-        $return = new self();
+        self::validate($json, 'V2_1_1/eMSP/Client/Locations/locationGetListingResponse.schema.json');
 
-        foreach ($json->data as $item) {
-            self::validate($item, __DIR__ . '/../../Schemas/location.schema.json');
+        $return = new self();
+        foreach ($json->data ?? [] as $item) {
             $return->locations[] = LocationFactory::fromJson($item);
         }
 

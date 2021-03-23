@@ -1,0 +1,19 @@
+{
+    "title": "V2.1.1\\Emsp\\Server\\Locations\\Put",
+    "oneOf": [
+        {
+            "$ref": "../../../Common/location.schema.json",
+            "required": [
+                "id",
+                "type",
+                "address",
+                "city",
+                "postal_code",
+                "country",
+                "coordinates",
+                "last_updated"
+            ],
+            "additionalProperties": false
+        }
+    ]
+}

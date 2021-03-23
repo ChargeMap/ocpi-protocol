@@ -18,7 +18,7 @@ class OcpiEmspCdrPostRequest extends OcpiUpdateRequest
     public function __construct(ServerRequestInterface $request)
     {
         parent::__construct($request);
-        PayloadValidation::coerce('Versions/V2_1_1/Server/Emsp/Schemas/cdrPost.schema.json', $this->jsonBody);
+        PayloadValidation::coerce('V2_1_1/eMSP/Server/CDRs/cdrPostRequest.schema.json', $this->jsonBody);
         $cdr = CdrFactory::fromJson($this->jsonBody);
         if ($cdr === null) {
             throw new UnexpectedValueException('Cdr cannot be null');
