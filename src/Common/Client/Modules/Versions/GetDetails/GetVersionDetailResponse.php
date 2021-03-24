@@ -32,7 +32,7 @@ class GetVersionDetailResponse
 
         $result = new self();
 
-        foreach ($responseAsJson->data->modules as $item) {
+        foreach ($responseAsJson->data->endpoints as $item) {
             $endpoint = new OcpiEndpoint(
                 $version,
                 new OcpiModule($item->identifier),
