@@ -28,7 +28,7 @@ class RegisterCredentialsRequest extends BaseRequest
 
     public function getServerRequestInterface(ServerRequestFactoryInterface $serverRequestFactory, ?StreamFactoryInterface $streamFactory): ServerRequestInterface
     {
-        $request = $serverRequestFactory->createServerRequest('POST', 'credentials' );
+        $request = $serverRequestFactory->createServerRequest('POST', '' );
 
         if($streamFactory === null ) {
             $streamFactory = Psr17FactoryDiscovery::findStreamFactory();
