@@ -25,15 +25,16 @@ class GetAvailableVersionsResponse
             throw new InvalidTokenException();
         }
 
-        $response = new self();
-        foreach ($responseAsJson as $item) {
-            $response->versions[] = new VersionEndpoint(
+        $result = new self();
+
+        foreach ($responseAsJson->data as $item) {
+            $result->versions[] = new VersionEndpoint(
                 OcpiVersion::fromVersionNumber($item->version),
-                Psr17FactoryDiscovery::findUrlFactory()->createUri($item->url)
+                Psr17FactoryDiscovery::findUriFactory()->createUri($item->url)
             );
         }
 
-        return $responseAsJson;
+        return $result;
     }
 
     /** @return VersionEndpoint[] */
