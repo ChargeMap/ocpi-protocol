@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails;
 
+use Chargemap\OCPI\Common\Client\InvalidTokenException;
 use Chargemap\OCPI\Common\Client\OcpiEndpoint;
 use Chargemap\OCPI\Common\Client\OcpiModule;
 use Chargemap\OCPI\Common\Client\OcpiVersion;
@@ -17,19 +18,35 @@ class GetVersionDetailResponse
 
     public static function fromResponseInterface(ResponseInterface $response): self
     {
-        $responseAsJson = json_decode($response->getBody()->__toString());
-        $version = OcpiVersion::fromVersionNumber($responseAsJson->version);
-
-        $response = new self();
-        foreach ($responseAsJson->modules as $item) {
-            $response->ocpiEndpoints[] = new OcpiEndpoint(
-                $version,
-                new OcpiModule($item->identifier),
-                Psr17FactoryDiscovery::findUrlFactory()->createUri($item->url)
-            );
+        if($response->getStatusCode() === 404) {
+            throw new VersionDetailEndpointNotFoundException();
         }
 
-        return $responseAsJson;
+        $responseAsJson = json_decode($response->getBody()->__toString(), false, 512, JSON_THROW_ON_ERROR);
+
+        if($response->getStatusCode() === 401 || $responseAsJson->status_code === 2002) {
+            throw new InvalidTokenException();
+        }
+
+        $version = OcpiVersion::fromVersionNumber($responseAsJson->data->version);
+
+        $result = new self();
+
+        foreach ($responseAsJson->data->modules as $item) {
+            $endpoint = new OcpiEndpoint(
+                $version,
+                new OcpiModule($item->identifier),
+                Psr17FactoryDiscovery::findUriFactory()->createUri($item->url)
+            );
+            $result->addEndpoint($endpoint);
+        }
+
+        return $result;
+    }
+
+    private function addEndpoint(OcpiEndpoint $endpoint): void
+    {
+        $this->ocpiEndpoints[] = $endpoint;
     }
 
     /** @return OcpiEndpoint[] */

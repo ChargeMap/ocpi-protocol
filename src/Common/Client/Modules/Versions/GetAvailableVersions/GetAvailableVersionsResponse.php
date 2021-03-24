@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions;
 
+use Chargemap\OCPI\Common\Client\InvalidTokenException;
 use Chargemap\OCPI\Common\Client\OcpiVersion;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Psr\Http\Message\ResponseInterface;
