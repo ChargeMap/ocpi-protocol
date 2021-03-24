@@ -20,9 +20,8 @@ class ResponseConstructionTest extends TestCase
         $credentials = CredentialsFactory::fromJson(json_decode(file_get_contents(__DIR__ . '/payloads/CredentialsPayload.json')));
         $response = new OcpiEmspCredentialsGetResponse($credentials, 'Message!');
         $responseInterface = $response->getResponseInterface();
-        $jsonCredentials = json_decode($responseInterface->getBody()->getContents())->data;
-        $schemaPath = __DIR__ . '/../../../../../../../src/Versions/V2_1_1/Server/Emsp/Schemas/credentialsPost.schema.json';
-        OcpiTestCase::coerce($schemaPath, $jsonCredentials);
-        CredentialsTest::assertJsonSerialize($credentials, $jsonCredentials);
+        $json = json_decode($responseInterface->getBody()->getContents());
+        OcpiTestCase::coerce('V2_1_1/eMSP/Server/Credentials/credentialsPostResponse.schema.json', $json);
+        CredentialsTest::assertJsonSerialize($credentials, $json->data);
     }
 }

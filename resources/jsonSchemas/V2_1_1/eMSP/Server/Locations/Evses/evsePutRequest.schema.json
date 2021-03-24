@@ -1,0 +1,15 @@
+{
+    "title": "V2.1.1\\Emsp\\Server\\Locations\\Evses\\Put",
+    "oneOf": [
+        {
+            "$ref": "../../../../Common/evse.schema.json",
+            "required": [
+                "uid",
+                "status",
+                "connectors",
+                "last_updated"
+            ],
+            "additionalProperties": false
+        }
+    ]
+}

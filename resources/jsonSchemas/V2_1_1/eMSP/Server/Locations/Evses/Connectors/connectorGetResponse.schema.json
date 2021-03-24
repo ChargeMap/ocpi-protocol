@@ -1,0 +1,39 @@
+{
+    "title": "V2.1.1\\Emsp\\Server\\Locations\\Evses\\Connectors\\Get",
+    "properties": {
+        "data": {
+            "$ref": "../../../../../Common/connector.schema.json",
+            "required": [
+                "id",
+                "standard",
+                "format",
+                "power_type",
+                "voltage",
+                "amperage",
+                "last_updated"
+            ]
+        },
+        "status_code": {
+            "$ref": "../../../../../Common/common.schema.json#/definitions/status_code"
+        },
+        "status_message": {
+            "oneOf": [
+                {
+                    "type": "null"
+                },
+                {
+                    "$ref": "../../../../../Common/common.schema.json#/definitions/status_message"
+                }
+            ]
+        },
+        "timestamp": {
+            "$ref": "../../../../../Common/common.schema.json#/definitions/timestamp"
+        }
+    },
+    "required": [
+        "data",
+        "status_code",
+        "timestamp"
+    ],
+    "additionalProperties": false
+}

@@ -1,0 +1,10 @@
+{
+    "title": "V2.1.1\\Emsp\\Server\\Sessions\\Patch",
+    "oneOf": [
+        {
+            "$ref": "../../../Common/session.schema.json",
+            "minProperties": 1,
+            "additionalProperties": false
+        }
+    ]
+}

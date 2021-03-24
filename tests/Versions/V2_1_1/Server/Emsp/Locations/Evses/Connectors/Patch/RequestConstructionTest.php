@@ -10,7 +10,7 @@ use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Patch\UnsupportedPatchException;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Tests\Chargemap\OCPI\OcpiTestCase;
-use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Models\PartialConnectorTest;
+use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\PartialConnectorFactoryTest;
 
 /**
  * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Connectors\Patch\OcpiEmspConnectorPatchRequest
@@ -45,7 +45,7 @@ class RequestConstructionTest extends OcpiTestCase
         $this->assertEquals('1', $request->getConnectorId());
 
         $connector = $request->getPartialConnector();
-        PartialConnectorTest::assertJsonSerialization($connector, $request->getJsonBody());
+        PartialConnectorFactoryTest::assertPartialConnector($request->getJsonBody(), $connector);
     }
 
     public function invalidPayloadProvider(): array

@@ -1,0 +1,47 @@
+{
+    "title": "V2.1.1\\Emsp\\Server\\Token\\Get",
+    "properties": {
+        "data": {
+            "type": [
+                "array",
+                "null"
+            ],
+            "items": {
+                "$ref": "../../../Common/token.schema.json",
+                "required": [
+                    "uid",
+                    "type",
+                    "auth_id",
+                    "issuer",
+                    "valid",
+                    "whitelist",
+                    "last_updated"
+                ],
+                "additionalProperties": false
+            },
+            "additionalProperties": false
+        },
+        "status_code": {
+            "$ref": "../../../Common/common.schema.json#/definitions/status_code"
+        },
+        "status_message": {
+            "oneOf": [
+                {
+                    "type": "null"
+                },
+                {
+                    "$ref": "../../../Common/common.schema.json#/definitions/status_message"
+                }
+            ]
+        },
+        "timestamp": {
+            "$ref": "../../../Common/common.schema.json#/definitions/timestamp"
+        }
+    },
+    "required": [
+        "data",
+        "status_code",
+        "timestamp"
+    ],
+    "additionalProperties": false
+}
