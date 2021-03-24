@@ -10,7 +10,7 @@ use Chargemap\OCPI\Versions\V2_1_1\Client\Credentials\Register\RegisterCredentia
 
 class Credentials extends AbstractFeatures
 {
-    private RegisterCredentialsService $registerCredentialsService;
+    private ?RegisterCredentialsService $registerCredentialsService = null;
 
     public function register(RegisterCredentialsRequest $request): RegisterCredentialsResponse
     {
