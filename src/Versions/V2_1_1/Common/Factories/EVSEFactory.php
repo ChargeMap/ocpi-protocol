@@ -30,7 +30,7 @@ class EVSEFactory
                     $json->coordinates->latitude,
                     $json->coordinates->longitude
                 ) : null,
-            property_exists($json, 'physical_reference') ? $json->physical_reference : null,
+            isset($json->physical_reference) ? $json->physical_reference : null,
             new DateTime($json->last_updated)
         );
 
