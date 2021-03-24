@@ -15,6 +15,10 @@ class GetAvailableVersionsResponse
 
     public static function fromResponseInterface(ResponseInterface $response): self
     {
+        if($response->getStatusCode() === 404) {
+            throw new VersionsEndpointNotFoundException();
+        }
+
         $responseAsJson = json_decode($response->getBody()->__toString());
         $response = new self();
         foreach ($responseAsJson as $item) {
