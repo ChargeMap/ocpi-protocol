@@ -31,10 +31,13 @@ class OcpiConfiguration
 
     public function __construct(string $token)
     {
+        $this->versionEndpoint = null;
+        $this->endpoints = [];
+        $this->token = $token;
         $this->httpClient = Psr18ClientDiscovery::find();
         $this->serverRequestFactory = Psr17FactoryDiscovery::findServerRequestFactory();
         $this->streamFactory = Psr17FactoryDiscovery::findStreamFactory();
-        $this->token = $token;
+        $this->loggerInterface = null;
     }
 
     public function getHttpClient(): ClientInterface

@@ -33,6 +33,7 @@ class OcpiClient
         return new V2_1_1($this->configuration);
     }
 
+    /** @deprecated */
     public function autoConfigureEndpoints(): void
     {
         foreach ($this->versions->getAvailableVersions()->getVersions() as $version) {
