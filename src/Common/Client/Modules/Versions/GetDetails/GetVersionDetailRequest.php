@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails;
 
-use Chargemap\OCPI\Common\Client\Modules\AbstractRequest;
 use Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions\VersionEndpoint;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
-class GetVersionDetailRequest extends AbstractRequest
+class GetVersionDetailRequest
 {
     private VersionEndpoint $versionEndpoint;
 
