@@ -20,6 +20,11 @@ class GetAvailableVersionsResponse
         }
 
         $responseAsJson = json_decode($response->getBody()->__toString());
+
+        if($response->getStatusCode() === 401 || $responseAsJson->status_code === 2002) {
+            throw new InvalidTokenException();
+        }
+
         $response = new self();
         foreach ($responseAsJson as $item) {
             $response->versions[] = new VersionEndpoint(
