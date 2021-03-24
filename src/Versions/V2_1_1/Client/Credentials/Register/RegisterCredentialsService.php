@@ -10,8 +10,7 @@ class RegisterCredentialsService extends AbstractFeatures
 {
     public function handle(RegisterCredentialsRequest $request): RegisterCredentialsResponse
     {
-        $serverRequestInterface = $request->getServerRequestInterface($this->ocpiConfiguration->getServerRequestFactory(), $this->ocpiConfiguration->getStreamFactory());
-        $responseInterface = $this->ocpiConfiguration->getHttpClient()->sendRequest($serverRequestInterface);
+        $responseInterface = $this->sendRequest($request);
         return RegisterCredentialsResponse::fromResponseInterface($responseInterface);
     }
 }

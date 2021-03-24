@@ -19,7 +19,7 @@ class GetAvailableVersionsResponse
             throw new VersionsEndpointNotFoundException();
         }
 
-        $responseAsJson = json_decode($response->getBody()->__toString());
+        $responseAsJson = json_decode($response->getBody()->__toString(), false, 512, JSON_THROW_ON_ERROR);
 
         if($response->getStatusCode() === 401 || $responseAsJson->status_code === 2002) {
             throw new InvalidTokenException();

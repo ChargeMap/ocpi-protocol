@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions;
 
+use Chargemap\OCPI\Common\Client\Modules\AbstractRequest;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
-class GetAvailableVersionsRequest
+class GetAvailableVersionsRequest extends AbstractRequest
 {
     private string $versionsUrl;
 
@@ -16,7 +18,7 @@ class GetAvailableVersionsRequest
         $this->versionsUrl = $versionsUrl;
     }
 
-    public function getServerRequestInterface(ServerRequestFactoryInterface $serverRequestFactory): ServerRequestInterface
+    public function getServerRequestInterface(ServerRequestFactoryInterface $serverRequestFactory, ?StreamFactoryInterface $streamFactory): ServerRequestInterface
     {
         return $serverRequestFactory->createServerRequest('GET', $this->versionsUrl);
     }
