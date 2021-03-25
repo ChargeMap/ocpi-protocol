@@ -5,13 +5,19 @@ declare(strict_types=1);
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Client\Credentials\Register;
 
 use Chargemap\OCPI\Common\Client\OcpiConfiguration;
+use Chargemap\OCPI\Common\Client\OcpiEndpoint;
 use Chargemap\OCPI\Versions\V2_1_1\Client\Credentials\Register\RegisterCredentialsRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Client\Credentials\Register\RegisterCredentialsService;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\CredentialsFactory;
+use Http\Discovery\Psr17FactoryDiscovery;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\UriInterface;
+use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\CredentialsFactoryTest;
 
 class RegisterCredentialsServiceTest extends TestCase
 {
@@ -20,7 +26,10 @@ class RegisterCredentialsServiceTest extends TestCase
      */
     private $configuration;
 
-    private RegisterCredentialsService $service;
+    /**
+     * @var RegisterCredentialsService|MockObject
+     */
+    private $service;
 
     public function setUp(): void
     {
@@ -28,7 +37,10 @@ class RegisterCredentialsServiceTest extends TestCase
 
         $this->configuration = $this->createMock(OcpiConfiguration::class);
 
-        $this->service = new RegisterCredentialsService($this->configuration);
+        $this->service = $this->getMockBuilder(RegisterCredentialsService::class)
+            ->onlyMethods(['sendRequest'])
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 
     public function getHandleData(): iterable
@@ -48,14 +60,11 @@ class RegisterCredentialsServiceTest extends TestCase
      */
     public function testHandle(string $payload): void
     {
-        $json = json_decode($payload, true, 512, JSON_THROW_ON_ERROR);
-
+        $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
+        
         $request = $this->createMock(RegisterCredentialsRequest::class);
 
-        // The service needs to take the json data from the request
-        $request->expects(TestCase::atLeastOnce())->method('getServerRequestInterface');
-
-        // The service must call a sendRequest()
+        // Emulate sendRequest()
         $body = $this->createMock(StreamInterface::class);
 
         $invokerCountMatcher = TestCase::once();
@@ -66,11 +75,10 @@ class RegisterCredentialsServiceTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
         $response->expects(TestCase::atLeastOnce())->method('getBody')->willReturn( $body );
 
-        $httpClient = $this->createMock(ClientInterface::class);
-        $httpClient->expects(TestCase::once())->method('sendRequest')->willReturn($response);
+        $this->service->expects(TestCase::once())->method('sendRequest')->with($request)->willReturn($response);
 
-        $this->configuration->expects(TestCase::atLeastOnce())->method('getHttpClient')->willReturn($httpClient);
+        $result = $this->service->handle($request);
 
-        $this->service->handle($request);
+        CredentialsFactoryTest::assertCredentials($json->data, $result->getCredentials());
     }
 }
