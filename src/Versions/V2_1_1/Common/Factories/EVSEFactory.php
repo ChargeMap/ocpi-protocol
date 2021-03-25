@@ -9,7 +9,6 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Models\EVSE;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\EVSEStatus;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\GeoLocation;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\ParkingRestriction;
-use Chargemap\OCPI\Versions\V2_1_1\Common\Models\StatusSchedule;
 use DateTime;
 use stdClass;
 
@@ -26,7 +25,7 @@ class EVSEFactory
             property_exists($json, 'evse_id') ? $json->evse_id : null,
             new EVSEStatus($json->status),
             property_exists($json, 'floor_level') ? $json->floor_level : null,
-            property_exists($json, 'coordinates') ?
+            isset($json->coordinates) ?
                 new GeoLocation(
                     $json->coordinates->latitude,
                     $json->coordinates->longitude
