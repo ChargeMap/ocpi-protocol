@@ -6,6 +6,8 @@ namespace Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions;
 
 use Chargemap\OCPI\Common\Client\InvalidTokenException;
 use Chargemap\OCPI\Common\Client\OcpiVersion;
+use Chargemap\OCPI\Common\Factories\VersionEndpointFactory;
+use Chargemap\OCPI\Common\Models\VersionEndpoint;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Psr\Http\Message\ResponseInterface;
 
@@ -29,10 +31,7 @@ class GetAvailableVersionsResponse
         $result = new self();
 
         foreach ($responseAsJson->data as $item) {
-            $result->versions[] = new VersionEndpoint(
-                OcpiVersion::fromVersionNumber($item->version),
-                Psr17FactoryDiscovery::findUriFactory()->createUri($item->url)
-            );
+            $result->versions[] = VersionEndpointFactory::fromJson($item);
         }
 
         return $result;

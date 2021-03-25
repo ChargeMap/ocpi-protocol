@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails;
 
 use Chargemap\OCPI\Common\Client\InvalidTokenException;
-use Chargemap\OCPI\Common\Client\OcpiEndpoint;
 use Chargemap\OCPI\Common\Client\OcpiModule;
 use Chargemap\OCPI\Common\Client\OcpiVersion;
+use Chargemap\OCPI\Common\Factories\OcpiEndpointFactory;
+use Chargemap\OCPI\Common\Models\OcpiEndpoint;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Psr\Http\Message\ResponseInterface;
 
@@ -33,12 +34,7 @@ class GetVersionDetailResponse
         $result = new self();
 
         foreach ($responseAsJson->data->endpoints as $item) {
-            $endpoint = new OcpiEndpoint(
-                $version,
-                new OcpiModule($item->identifier),
-                Psr17FactoryDiscovery::findUriFactory()->createUri($item->url)
-            );
-            $result->addEndpoint($endpoint);
+            $result->addEndpoint(OcpiEndpointFactory::fromJson($version, $item));
         }
 
         return $result;

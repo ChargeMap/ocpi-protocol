@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Chargemap\OCPI\Common\Client;
+namespace Chargemap\OCPI\Common\Models;
 
+use Chargemap\OCPI\Common\Client\OcpiModule;
+use Chargemap\OCPI\Common\Client\OcpiVersion;
 use Psr\Http\Message\UriInterface;
 
 class OcpiEndpoint

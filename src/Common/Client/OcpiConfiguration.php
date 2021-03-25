@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Chargemap\OCPI\Common\Client;
 
+use Chargemap\OCPI\Common\Models\OcpiEndpoint;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use Psr\Http\Client\ClientInterface;

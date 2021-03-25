@@ -8,9 +8,10 @@ use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\CredentialsFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
+use Tests\Chargemap\OCPI\OcpiResponseTestCase;
 use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\CredentialsFactoryTest;
 
-class RegisterCredentialsResponseTest extends TestCase
+class RegisterCredentialsResponseTest extends OcpiResponseTestCase
 {
     public function getFromResponseInterfaceData(): iterable
     {
@@ -31,16 +32,9 @@ class RegisterCredentialsResponseTest extends TestCase
      */
     public function testFromResponseInterface(string $payload): void
     {
-        $streamInterface = $this->createMock(StreamInterface::class);
-
-        // The body contents must be read
-        $streamInterface->expects(TestCase::once())->method('__toString')->willReturn($payload);
-
-        $responseInterface = $this->createMock(ResponseInterface::class);
-
-        $responseInterface->expects(TestCase::atLeastOnce())->method('getBody')->willReturn($streamInterface);
-
         $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
+
+        $responseInterface = $this->createResponseInterface($payload);
 
         $credentialsResponse = RegisterCredentialsResponse::fromResponseInterface($responseInterface);
 

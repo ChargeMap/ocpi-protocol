@@ -20,11 +20,11 @@ class TokenTest
             Assert::assertSame($token->getUid(), $json->uid);
             Assert::assertSame($token->getType()->getValue(), $json->type);
             Assert::assertSame($token->getAuthId(), $json->auth_id);
-            Assert::assertSame($token->getVisualNumber(), $json->visual_number);
+            Assert::assertSame($token->getVisualNumber(), $json->visual_number ?? null);
             Assert::assertSame($token->getIssuer(), $json->issuer);
             Assert::assertSame($token->isValid(), $json->valid);
             Assert::assertSame($token->getWhiteList()->getValue(), $json->whitelist);
-            Assert::assertSame($token->getLanguage(), $json->language);
+            Assert::assertSame($token->getLanguage(), $json->language ?? null);
             Assert::assertSame(DateTimeFormatter::format($token->getLastUpdated()), $json->last_updated);
 
         }

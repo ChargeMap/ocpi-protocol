@@ -19,8 +19,8 @@ class EnergyMixTest
             Assert::assertNull($json);
         } else {
             Assert::assertSame($energyMix->isGreenEnergy(), $json->is_green_energy);
-            Assert::assertSame($energyMix->getSupplierName(), $json->supplier_name);
-            Assert::assertSame($energyMix->getEnergyProductName(), $json->energy_product_name);
+            Assert::assertSame($energyMix->getSupplierName(), $json->supplier_name ?? null);
+            Assert::assertSame($energyMix->getEnergyProductName(), $json->energy_product_name ?? null);
 
             if (empty($energyMix->getEnergySources())) {
                 Assert::assertEmpty($json->energy_sources);

@@ -20,8 +20,19 @@ class SessionTest
             Assert::assertNull($json);
         } else {
             Assert::assertSame($session->getId(), $json->id);
-            Assert::assertSame(DateTimeFormatter::format($session->getStartDate()), $json->start_datetime);
-            Assert::assertSame(DateTimeFormatter::format($session->getEndDate()), $json->end_datetime);
+
+            if( is_null( $json->start_datetime ?? null ) ) {
+                Assert::assertNull( $session->getStartDate() );
+            } else {
+                Assert::assertSame(DateTimeFormatter::format($session->getStartDate()), $json->start_datetime);
+            }
+
+            if( is_null( $json->end_datetime ?? null ) ) {
+                Assert::assertNull( $session->getEndDate());
+            } else {
+                Assert::assertSame(DateTimeFormatter::format($session->getEndDate()), $json->end_datetime);
+            }
+
             Assert::assertEquals($session->getKwh(), $json->kwh);
             Assert::assertSame($session->getAuthId(), $json->auth_id);
             Assert::assertSame($session->getAuthMethod()->getValue(), $json->auth_method);
