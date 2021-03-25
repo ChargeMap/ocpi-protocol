@@ -20,12 +20,7 @@ class SessionTest
             Assert::assertNull($json);
         } else {
             Assert::assertSame($session->getId(), $json->id);
-
-            if( is_null( $json->start_datetime ?? null ) ) {
-                Assert::assertNull( $session->getStartDate() );
-            } else {
-                Assert::assertSame(DateTimeFormatter::format($session->getStartDate()), $json->start_datetime);
-            }
+            Assert::assertSame(DateTimeFormatter::format($session->getStartDate()), $json->start_datetime);
 
             if( is_null( $json->end_datetime ?? null ) ) {
                 Assert::assertNull( $session->getEndDate());
