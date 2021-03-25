@@ -17,7 +17,7 @@ class GetAvailableVersionsRequest
         $this->versionsUrl = $versionsUrl;
     }
 
-    public function getServerRequestInterface(ServerRequestFactoryInterface $serverRequestFactory, ?StreamFactoryInterface $streamFactory): ServerRequestInterface
+    public function getServerRequestInterface(ServerRequestFactoryInterface $serverRequestFactory): ServerRequestInterface
     {
         return $serverRequestFactory->createServerRequest('GET', $this->versionsUrl);
     }

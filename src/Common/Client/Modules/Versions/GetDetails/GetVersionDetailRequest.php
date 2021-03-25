@@ -18,7 +18,7 @@ class GetVersionDetailRequest
         $this->versionEndpoint = $versionEndpoint;
     }
 
-    public function getServerRequestInterface(ServerRequestFactoryInterface $serverRequestFactory, ?StreamFactoryInterface $streamFactory): ServerRequestInterface
+    public function getServerRequestInterface(ServerRequestFactoryInterface $serverRequestFactory): ServerRequestInterface
     {
         return $serverRequestFactory->createServerRequest('GET', $this->versionEndpoint->getUri()->__toString());
     }
