@@ -8,7 +8,7 @@ use Chargemap\OCPI\Common\Server\Errors\OcpiNotEnoughInformationClientError;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Connectors\Put\OcpiEmspConnectorPutRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\LocationRequestParams;
 use Tests\Chargemap\OCPI\OcpiTestCase;
-use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Models\ConnectorTest;
+use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\ConnectorFactoryTest;
 
 /**
  * @covers \Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Locations\Evses\Connectors\Put\OcpiEmspConnectorPutRequest
@@ -41,7 +41,7 @@ class RequestConstructionTest extends OcpiTestCase
         $this->assertEquals('3256', $request->getEvseUid());
         $this->assertEquals('1', $request->getConnectorId());
 
-        ConnectorTest::assertJsonSerialization($request->getConnector(), $request->getJsonBody());
+        ConnectorFactoryTest::assertConnector($request->getJsonBody(), $request->getConnector());
     }
 
     public function testShouldFailWithoutConnectorId(): void

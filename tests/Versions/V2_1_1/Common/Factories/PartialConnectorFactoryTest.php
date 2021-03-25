@@ -43,7 +43,7 @@ class PartialConnectorFactoryTest extends TestCase
         self::assertPartialConnector($json, $connector);
     }
 
-    public function assertPartialConnector(?stdClass $json, PartialConnector $connector)
+    public static function assertPartialConnector(?stdClass $json, PartialConnector $connector)
     {
         if (property_exists($json, 'id')) {
             self::assertTrue($connector->hasId());
