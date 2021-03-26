@@ -1,0 +1,45 @@
+{
+  "title": "V2.1.1\\Emsp\\Client\\Version\\Get",
+  "properties": {
+    "data": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "version": {
+          "$ref": "../../../Common/common.schema.json#/definitions/version"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "required": [
+          "version",
+          "url"
+        ]
+      },
+      "additionalProperties": false
+    },
+    "status_code": {
+      "$ref": "../../../Common/common.schema.json#/definitions/status_code"
+    },
+    "status_message": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "../../../Common/common.schema.json#/definitions/status_message"
+        }
+      ]
+    },
+    "timestamp": {
+      "$ref": "../../../Common/common.schema.json#/definitions/timestamp"
+    }
+  },
+  "required": [
+    "data",
+    "status_code",
+    "timestamp"
+  ],
+  "additionalProperties": false
+}

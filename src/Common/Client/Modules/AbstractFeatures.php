@@ -33,8 +33,12 @@ class AbstractFeatures
 
         $uri = self::forgeUri($endpointUri, $serverRequestInterface->getUri());
 
-        return $serverRequestInterface->withUri($uri)
-            ->withHeader('Authorization', 'Token ' . $this->ocpiConfiguration->getToken());
+        return $this->addAuthorization($serverRequestInterface->withUri($uri));
+    }
+
+    protected function addAuthorization(ServerRequestInterface $request): ServerRequestInterface
+    {
+        return $request->withHeader('Authorization', 'Token ' . $this->ocpiConfiguration->getToken());
     }
 
     private static function forgeUri(UriInterface $baseUri, UriInterface $requestUri): UriInterface

@@ -33,6 +33,7 @@ class OcpiClient
         return new V2_1_1($this->configuration);
     }
 
+    /** @deprecated */
     public function autoConfigureEndpoints(): void
     {
         foreach ($this->versions->getAvailableVersions()->getVersions() as $version) {
@@ -51,6 +52,7 @@ class OcpiClient
         return $this->versions;
     }
 
+    /** @deprecated Use V2_1_1()->locations() */
     public function locations(): Locations
     {
         if ($this->locations === null) {
@@ -60,6 +62,7 @@ class OcpiClient
         return $this->locations;
     }
 
+    /** @deprecated Use V2_1_1()->tokens() */
     public function tokens(): Tokens
     {
         if ($this->tokens === null) {
@@ -69,6 +72,7 @@ class OcpiClient
         return $this->tokens;
     }
 
+    /** @deprecated Use V2_1_1()->cdrs() */
     public function cdrs(): Cdrs
     {
         if ($this->cdrs === null) {

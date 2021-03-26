@@ -29,7 +29,7 @@ class ResponseConstructionTest extends TestCase
                 yield basename($filename, '.json') => [
                     'allowed' => new AllowedType($payload->data->allowed),
                     'location' => LocationReferencesFactory::fromJson($payload->data->location),
-                    'info' => DisplayTextFactory::fromJson($payload->data->info),
+                    'info' => DisplayTextFactory::fromJson($payload->data->info ?? null),
                 ];
             }
         }

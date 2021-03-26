@@ -1,6 +1,34 @@
 {
     "title": "V2.1.1\\Common",
     "definitions": {
+        "credentials": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 64
+                },
+                "url": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "business_details": {
+                    "$ref": "common.schema.json#/definitions/business_details"
+                },
+                "party_id": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 3
+                },
+                "country_code": {
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 2
+                }
+            },
+            "additionalProperties": false
+        },
         "status_code": {
             "type": "integer"
         },
@@ -395,6 +423,14 @@
             },
             "required": [
                 "location_id"
+            ]
+        },
+        "version": {
+            "type": "string",
+            "enum": [
+                "2.0",
+                "2.1",
+                "2.1.1"
             ]
         }
     }

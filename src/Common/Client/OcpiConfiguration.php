@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Chargemap\OCPI\Common\Client;
 
+use Chargemap\OCPI\Common\Models\OcpiEndpoint;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use Psr\Http\Client\ClientInterface;
@@ -31,10 +32,13 @@ class OcpiConfiguration
 
     public function __construct(string $token)
     {
+        $this->versionEndpoint = null;
+        $this->endpoints = [];
+        $this->token = $token;
         $this->httpClient = Psr18ClientDiscovery::find();
         $this->serverRequestFactory = Psr17FactoryDiscovery::findServerRequestFactory();
         $this->streamFactory = Psr17FactoryDiscovery::findStreamFactory();
-        $this->token = $token;
+        $this->loggerInterface = null;
     }
 
     public function getHttpClient(): ClientInterface

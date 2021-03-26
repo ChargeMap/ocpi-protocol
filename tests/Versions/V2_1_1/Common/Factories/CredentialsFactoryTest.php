@@ -2,12 +2,44 @@
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories;
 
+use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\CredentialsFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Credentials;
+use JsonException;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 use PHPUnit\Framework\Assert;
+use Tests\Chargemap\OCPI\InvalidPayloadException;
+use Tests\Chargemap\OCPI\OcpiTestCase;
 
-class CredentialsFactoryTest
+class CredentialsFactoryTest extends TestCase
 {
+    public function getFromJsonData(): iterable
+    {
+        foreach (scandir(__DIR__ . '/Payloads/Credentials/') as $filename) {
+            if ($filename !== '.' && $filename !== '..') {
+                yield $filename => [
+                    'payload' => file_get_contents(__DIR__ . '/Payloads/Credentials/' . $filename),
+                ];
+            }
+        }
+    }
+
+    /**
+     * @param string $payload
+     * @throws JsonException|InvalidPayloadException
+     * @dataProvider getFromJsonData()
+     */
+    public function testFromJson(string $payload): void
+    {
+        $json = json_decode($payload, false, 512, JSON_THROW_ON_ERROR);
+
+        OcpiTestCase::coerce(  'V2_1_1/Common/credentials.schema.json', $json );
+
+        $credentials = CredentialsFactory::fromJson($json);
+
+        self::assertCredentials($json, $credentials);
+    }
+
     public static function assertCredentials(?stdClass $json, ?Credentials $credentials): void
     {
         if ($json === null) {

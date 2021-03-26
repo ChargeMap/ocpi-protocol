@@ -27,6 +27,8 @@ class OcpiTestCase extends TestCase
         return $serverRequestInterface;
     }
 
+
+
     public static function coerce(string $schemaPath, stdClass $object): void
     {
         $jsonSchemaValidation = new Validator();

@@ -19,8 +19,8 @@ class BusinessDetailsTest
             Assert::assertNull($json);
         } else {
             Assert::assertSame($businessDetails->getName(), $json->name);
-            Assert::assertSame($businessDetails->getWebsite(), $json->website);
-            ImageTest::assertJsonSerialization($businessDetails->getLogo(), $json->logo);
+            Assert::assertSame($businessDetails->getWebsite(), $json->website ?? null);
+            ImageTest::assertJsonSerialization($businessDetails->getLogo(), $json->logo ?? null);
         }
     }
 }

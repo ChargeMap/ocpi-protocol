@@ -21,7 +21,7 @@ class HoursTest
             Assert::assertSame($hours->isTwentyFourSeven(), $json->twentyfourseven ?? false);
 
             if (empty($hours->getRegularHours())) {
-                Assert::assertEmpty($json->regular_hours);
+                Assert::assertEmpty($json->regular_hours ?? null);
             } else {
                 foreach ($hours->getRegularHours() as $index => $regularHour) {
                     RegularHoursTest::assertJsonSerialization($regularHour, $json->regular_hours[$index]);
@@ -29,7 +29,7 @@ class HoursTest
             }
 
             if (empty($hours->getExceptionalOpenings())) {
-                Assert::assertEmpty($json->exceptional_openings);
+                Assert::assertEmpty($json->exceptional_openings ?? null);
             } else {
                 foreach ($hours->getExceptionalOpenings() as $index => $exceptionalPeriod) {
                     ExceptionalPeriodTest::assertJsonSerialization($exceptionalPeriod, $json->exceptional_openings[$index]);
@@ -37,7 +37,7 @@ class HoursTest
             }
 
             if (empty($hours->getExceptionalClosings())) {
-                Assert::assertEmpty($json->exceptional_closings);
+                Assert::assertEmpty($json->exceptional_closings ?? null);
             } else {
                 foreach ($hours->getExceptionalClosings() as $index => $exceptionalPeriod) {
                     ExceptionalPeriodTest::assertJsonSerialization($exceptionalPeriod, $json->exceptional_closings[$index]);

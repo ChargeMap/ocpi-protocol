@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails;
 
-use Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions\VersionEndpoint;
+use Chargemap\OCPI\Common\Models\VersionEndpoint;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
 class GetVersionDetailRequest
 {
