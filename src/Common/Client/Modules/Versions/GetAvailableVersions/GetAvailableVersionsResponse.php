@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions;
 
-use Chargemap\OCPI\Common\Client\InvalidTokenException;
 use Chargemap\OCPI\Common\Client\Modules\AbstractResponse;
 use Chargemap\OCPI\Common\Factories\VersionEndpointFactory;
 use Chargemap\OCPI\Common\Models\VersionEndpoint;
+use Chargemap\OCPI\Common\Server\Errors\OcpiGenericClientError;
+use Chargemap\OCPI\Common\Server\Errors\OcpiInvalidTokenClientError;
 use JsonException;
 use Psr\Http\Message\ResponseInterface;
 
@@ -19,21 +20,20 @@ class GetAvailableVersionsResponse extends AbstractResponse
     /**
      * @param ResponseInterface $response
      * @return static
-     * @throws InvalidTokenException
-     * @throws VersionsEndpointNotFoundException
      * @throws JsonException
      */
     public static function fromResponseInterface(ResponseInterface $response): self
     {
         if($response->getStatusCode() === 404) {
-            throw new VersionsEndpointNotFoundException();
+            throw new OcpiGenericClientError();
         }
 
         $responseAsJson = self::toJson($response, 'V2_1_1/eMSP/Client/Versions/versionGetAvailableResponse.schema.json');
 
 
         if($response->getStatusCode() === 401 || $responseAsJson->status_code === 2002) {
-            throw new InvalidTokenException();
+            //TODO reorganize namespace
+            throw new OcpiInvalidTokenClientError();
         }
 
         $result = new self();
