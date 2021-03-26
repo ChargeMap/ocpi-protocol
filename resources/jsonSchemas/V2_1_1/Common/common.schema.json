@@ -424,6 +424,14 @@
             "required": [
                 "location_id"
             ]
+        },
+        "version": {
+            "type": "string",
+            "enum": [
+                "2.0",
+                "2.1",
+                "2.1.1"
+            ]
         }
     }
 }
