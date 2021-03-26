@@ -6,7 +6,6 @@ namespace Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions;
 
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\StreamFactoryInterface;
 
 class GetAvailableVersionsRequest
 {

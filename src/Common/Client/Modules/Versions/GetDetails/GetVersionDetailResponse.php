@@ -5,25 +5,32 @@ declare(strict_types=1);
 namespace Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails;
 
 use Chargemap\OCPI\Common\Client\InvalidTokenException;
-use Chargemap\OCPI\Common\Client\OcpiModule;
+use Chargemap\OCPI\Common\Client\Modules\AbstractResponse;
 use Chargemap\OCPI\Common\Client\OcpiVersion;
 use Chargemap\OCPI\Common\Factories\OcpiEndpointFactory;
 use Chargemap\OCPI\Common\Models\OcpiEndpoint;
-use Http\Discovery\Psr17FactoryDiscovery;
+use JsonException;
 use Psr\Http\Message\ResponseInterface;
 
-class GetVersionDetailResponse
+class GetVersionDetailResponse extends AbstractResponse
 {
     /** @var OcpiEndpoint[] */
     private array $ocpiEndpoints = [];
 
+    /**
+     * @param ResponseInterface $response
+     * @return static
+     * @throws InvalidTokenException
+     * @throws VersionDetailEndpointNotFoundException
+     * @throws JsonException
+     */
     public static function fromResponseInterface(ResponseInterface $response): self
     {
         if($response->getStatusCode() === 404) {
             throw new VersionDetailEndpointNotFoundException();
         }
+        $responseAsJson = self::toJson($response, 'V2_1_1/eMSP/Client/Versions/versionGetDetailResponse.schema.json');
 
-        $responseAsJson = json_decode($response->getBody()->__toString(), false, 512, JSON_THROW_ON_ERROR);
 
         if($response->getStatusCode() === 401 || $responseAsJson->status_code === 2002) {
             throw new InvalidTokenException();
