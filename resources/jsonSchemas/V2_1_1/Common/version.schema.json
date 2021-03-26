@@ -2,7 +2,9 @@
   "title": "V2.1.1\\Version",
   "type": "object",
   "properties": {
-    "$ref": "../../../Common/common.schema.json#/definitions/version",
+    "version" : {
+      "$ref": "common.schema.json#/definitions/version"
+    },
     "endpoints": {
       "type": [
         "array"

@@ -11,6 +11,9 @@ use PHPUnit\Framework\TestCase;
 use Tests\Chargemap\OCPI\InvalidPayloadException;
 use Tests\Chargemap\OCPI\OcpiTestCase;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Client\Credentials\Register\RegisterCredentialsRequest
+ */
 class RegisterCredentialsRequestTest extends TestCase
 {
     public function getGetServerRequestInterfaceData(): iterable

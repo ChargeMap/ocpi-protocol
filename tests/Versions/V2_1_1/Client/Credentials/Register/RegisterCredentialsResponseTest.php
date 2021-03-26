@@ -3,14 +3,15 @@ declare(strict_types=1);
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Client\Credentials\Register;
 
+use Chargemap\OCPI\Common\Client\Modules\Credentials\Register\ClientAlreadyRegisteredException;
 use Chargemap\OCPI\Versions\V2_1_1\Client\Credentials\Register\RegisterCredentialsResponse;
-use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\CredentialsFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
+use JsonException;
 use Tests\Chargemap\OCPI\OcpiResponseTestCase;
 use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\CredentialsFactoryTest;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Client\Credentials\Register\RegisterCredentialsResponse
+ */
 class RegisterCredentialsResponseTest extends OcpiResponseTestCase
 {
     public function getFromResponseInterfaceData(): iterable
@@ -26,8 +27,8 @@ class RegisterCredentialsResponseTest extends OcpiResponseTestCase
 
     /**
      * @param string $payload
-     * @throws \Chargemap\OCPI\Common\Client\Modules\Credentials\Register\ClientAlreadyRegisteredException
-     * @throws \JsonException
+     * @throws ClientAlreadyRegisteredException
+     * @throws JsonException
      * @dataProvider getFromResponseInterfaceData()
      */
     public function testFromResponseInterface(string $payload): void

@@ -3,15 +3,16 @@ declare(strict_types=1);
 
 namespace Tests\Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails;
 
-use Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions\GetAvailableVersionsRequest;
 use Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails\GetVersionDetailRequest;
 use Chargemap\OCPI\Common\Client\OcpiVersion;
 use Chargemap\OCPI\Common\Models\VersionEndpoint;
 use Http\Discovery\Psr17FactoryDiscovery;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestFactoryInterface;
-use Psr\Http\Message\StreamFactoryInterface;
 
+/**
+ * @covers \Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails\GetVersionDetailRequest
+ */
 class GetVersionDetailRequestTest extends TestCase
 {
     public function testGetServerRequestInterface()

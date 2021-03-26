@@ -3,15 +3,16 @@ declare(strict_types=1);
 
 namespace Tests\Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails;
 
-use Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions\GetAvailableVersionsResponse;
 use Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails\GetVersionDetailResponse;
 use Chargemap\OCPI\Common\Client\OcpiVersion;
+use JsonException;
 use PHPUnit\Framework\Assert;
-use PHPUnit\Framework\TestCase;
 use Tests\Chargemap\OCPI\Common\Factories\OcpiEndpointFactoryTest;
-use Tests\Chargemap\OCPI\Common\Factories\VersionEndpointFactoryTest;
 use Tests\Chargemap\OCPI\OcpiResponseTestCase;
 
+/**
+ * @covers \Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions\GetAvailableVersionsResponse
+ */
 class GetVersionDetailResponseTest extends OcpiResponseTestCase
 {
     public function getFromResponseInterfaceData(): iterable
@@ -27,7 +28,8 @@ class GetVersionDetailResponseTest extends OcpiResponseTestCase
 
     /**
      * @dataProvider getFromResponseInterfaceData()
-     * @covers \Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails\GetVersionDetailResponse::fromResponseInterface()
+     * @param string $payload
+     * @throws JsonException
      */
     public function testFromResponseInterface(string $payload): void
     {

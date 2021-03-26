@@ -9,11 +9,12 @@ use Chargemap\OCPI\Versions\V2_1_1\Client\Credentials\Register\RegisterCredentia
 use Chargemap\OCPI\Versions\V2_1_1\Client\Credentials\Register\RegisterCredentialsService;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
 use Tests\Chargemap\OCPI\OcpiResponseTestCase;
 use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\CredentialsFactoryTest;
 
+/**
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Client\Credentials\Register\RegisterCredentialsService
+ */
 class RegisterCredentialsServiceTest extends OcpiResponseTestCase
 {
     /**

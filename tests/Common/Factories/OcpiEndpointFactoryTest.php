@@ -12,6 +12,9 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
+/**
+ * @covers \Chargemap\OCPI\Common\Factories\OcpiEndpointFactory
+ */
 class OcpiEndpointFactoryTest extends TestCase
 {
     public function getFromJsonData(): iterable
@@ -27,7 +30,6 @@ class OcpiEndpointFactoryTest extends TestCase
 
     /**
      * @param string $payload
-     * @covers OcpiEndpointFactory::fromJson()
      * @dataProvider getFromJsonData()
      */
     public function testFromJson(string $payload): void

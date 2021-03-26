@@ -6,18 +6,16 @@ namespace Tests\Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersio
 use Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions\GetAvailableVersionsRequest;
 use Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions\GetAvailableVersionsService;
 use Chargemap\OCPI\Common\Client\OcpiConfiguration;
-use Chargemap\OCPI\Common\Factories\VersionEndpointFactory;
-use Chargemap\OCPI\Versions\V2_1_1\Client\Credentials\Register\RegisterCredentialsRequest;
-use Chargemap\OCPI\Versions\V2_1_1\Client\Credentials\Register\RegisterCredentialsService;
 use Http\Client\HttpClient;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\StreamInterface;
 use Tests\Chargemap\OCPI\Common\Factories\VersionEndpointFactoryTest;
 use Tests\Chargemap\OCPI\OcpiResponseTestCase;
 
+/**
+ * @covers \Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions\GetAvailableVersionsService
+ */
 class GetAvailableVersionsServiceTest extends OcpiResponseTestCase
 {
     /**
@@ -55,7 +53,6 @@ class GetAvailableVersionsServiceTest extends OcpiResponseTestCase
 
     /**
      * @param string $payload
-     * @covers \Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions\GetAvailableVersionsService::get()
      * @dataProvider getGetData()
      */
     public function testGet(string $payload): void
@@ -80,7 +77,7 @@ class GetAvailableVersionsServiceTest extends OcpiResponseTestCase
 
         $response = $this->service->get($request);
 
-        foreach($json->data as $index => $availableVersion) {
+        foreach ($json->data as $index => $availableVersion) {
             VersionEndpointFactoryTest::assertVersionEndpoint($availableVersion, $response->getVersions()[$index]);
         }
     }

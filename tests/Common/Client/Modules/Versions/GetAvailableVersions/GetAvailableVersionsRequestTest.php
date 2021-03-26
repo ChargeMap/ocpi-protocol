@@ -6,8 +6,10 @@ namespace Tests\Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersio
 use Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions\GetAvailableVersionsRequest;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestFactoryInterface;
-use Psr\Http\Message\StreamFactoryInterface;
 
+/**
+ * @covers \Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions\GetAvailableVersionsRequest
+ */
 class GetAvailableVersionsRequestTest extends TestCase
 {
     public function testGetServerRequestInterface()
