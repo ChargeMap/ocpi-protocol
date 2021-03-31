@@ -7,7 +7,9 @@ namespace Chargemap\OCPI\Versions\V2_1_1\Client\Cdrs\GetListing;
 use Chargemap\OCPI\Common\Client\Modules\ListingRequest;
 use Chargemap\OCPI\Common\Client\Modules\Cdrs\GetListing\GetCdrsListingRequest as BaseRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Client\VersionTrait;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Models\ModuleId;
 use DateTime;
+use DateTimeInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -38,6 +40,11 @@ class GetCdrsListingRequest extends BaseRequest
         return $this;
     }
 
+    public function getModule(): ModuleId
+    {
+        return ModuleId::CDRS();
+    }
+
     public function getServerRequestInterface(ServerRequestFactoryInterface $serverRequestFactory, ?StreamFactoryInterface $streamFactory): ServerRequestInterface
     {
         return $serverRequestFactory->createServerRequest('GET', '?' . $this->getQueryString());
@@ -56,11 +63,11 @@ class GetCdrsListingRequest extends BaseRequest
         }
 
         if (!empty($this->dateFrom)) {
-            $parameters['date_from'] = $this->dateFrom->format(DateTime::RFC3339);
+            $parameters['date_from'] = $this->dateFrom->format(DateTimeInterface::RFC3339);
         }
 
         if (!empty($this->dateTo)) {
-            $parameters['date_to'] = $this->dateTo->format(DateTime::RFC3339);
+            $parameters['date_to'] = $this->dateTo->format(DateTimeInterface::RFC3339);
         }
 
         return http_build_query($parameters);

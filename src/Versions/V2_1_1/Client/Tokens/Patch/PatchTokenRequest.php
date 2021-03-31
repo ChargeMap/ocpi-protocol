@@ -7,6 +7,7 @@ namespace Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Patch;
 
 use Chargemap\OCPI\Common\Client\Modules\Tokens\Patch\PatchTokenRequest as BaseRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Client\VersionTrait;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Models\ModuleId;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\PartialToken;
 use Http\Discovery\Psr17FactoryDiscovery;
 use InvalidArgumentException;
@@ -41,6 +42,11 @@ class PatchTokenRequest extends BaseRequest
         $this->tokenUid = $tokenUid;
         $this->countryCode = $countryCode;
         $this->partialToken = $partialToken;
+    }
+
+    public function getModule(): ModuleId
+    {
+        return ModuleId::TOKENS();
     }
 
     public function getServerRequestInterface(ServerRequestFactoryInterface $serverRequestFactory, ?StreamFactoryInterface $streamFactory): ServerRequestInterface

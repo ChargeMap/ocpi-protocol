@@ -2,21 +2,33 @@
 
 declare(strict_types=1);
 
-namespace Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails;
+namespace Chargemap\OCPI\Versions\V2_1_1\Client\Versions\GetDetails;
 
 use Chargemap\OCPI\Common\Client\Modules\AbstractResponse;
 use Chargemap\OCPI\Common\Client\OcpiVersion;
-use Chargemap\OCPI\Common\Factories\OcpiEndpointFactory;
-use Chargemap\OCPI\Common\Models\OcpiEndpoint;
 use Chargemap\OCPI\Common\Server\Errors\OcpiGenericClientError;
 use Chargemap\OCPI\Common\Server\Errors\OcpiInvalidTokenClientError;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\EndpointFactory;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Endpoint;
 use JsonException;
 use Psr\Http\Message\ResponseInterface;
 
 class GetVersionDetailResponse extends AbstractResponse
 {
-    /** @var OcpiEndpoint[] */
-    private array $ocpiEndpoints = [];
+    private OcpiVersion $version;
+
+    /** @var Endpoint[] */
+    private array $endpoints = [];
+
+    public function __construct(OcpiVersion $version)
+    {
+        $this->version = $version;
+    }
+
+    public function getVersion(): OcpiVersion
+    {
+        return $this->version;
+    }
 
     /**
      * @param ResponseInterface $response
@@ -28,8 +40,8 @@ class GetVersionDetailResponse extends AbstractResponse
         if($response->getStatusCode() === 404) {
             throw new OcpiGenericClientError();
         }
-        $responseAsJson = self::toJson($response, 'V2_1_1/eMSP/Client/Versions/versionGetDetailResponse.schema.json');
 
+        $responseAsJson = self::toJson($response, 'V2_1_1/eMSP/Client/Versions/versionGetDetailResponse.schema.json');
 
         if($response->getStatusCode() === 401 || $responseAsJson->status_code === 2002) {
             throw new OcpiInvalidTokenClientError();
@@ -37,23 +49,23 @@ class GetVersionDetailResponse extends AbstractResponse
 
         $version = OcpiVersion::fromVersionNumber($responseAsJson->data->version);
 
-        $result = new self();
+        $result = new self($version);
 
         foreach ($responseAsJson->data->endpoints as $item) {
-            $result->addEndpoint(OcpiEndpointFactory::fromJson($version, $item));
+            $result->addEndpoint(EndpointFactory::fromJson($item));
         }
 
         return $result;
     }
 
-    private function addEndpoint(OcpiEndpoint $endpoint): void
+    private function addEndpoint(Endpoint $endpoint): void
     {
-        $this->ocpiEndpoints[] = $endpoint;
+        $this->endpoints[] = $endpoint;
     }
 
-    /** @return OcpiEndpoint[] */
-    public function getOcpiEndpoints(): array
+    /** @return Endpoint[] */
+    public function getEndpoints(): array
     {
-        return $this->ocpiEndpoints;
+        return $this->endpoints;
     }
 }

@@ -1,17 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails;
+namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Client\Versions\GetDetails;
 
-use Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails\GetVersionDetailRequest;
 use Chargemap\OCPI\Common\Client\OcpiVersion;
 use Chargemap\OCPI\Common\Models\VersionEndpoint;
+use Chargemap\OCPI\Versions\V2_1_1\Client\Versions\GetDetails\GetVersionDetailRequest;
 use Http\Discovery\Psr17FactoryDiscovery;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 
 /**
- * @covers \Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails\GetVersionDetailRequest
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Client\Versions\GetDetails\GetVersionDetailRequest
  */
 class GetVersionDetailRequestTest extends TestCase
 {

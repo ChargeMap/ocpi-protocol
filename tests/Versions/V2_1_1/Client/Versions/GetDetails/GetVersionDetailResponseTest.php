@@ -1,17 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails;
+namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Client\Versions\GetDetails;
 
-use Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails\GetVersionDetailResponse;
 use Chargemap\OCPI\Common\Client\OcpiVersion;
+use Chargemap\OCPI\Versions\V2_1_1\Client\Versions\GetDetails\GetVersionDetailResponse;
 use JsonException;
 use PHPUnit\Framework\Assert;
-use Tests\Chargemap\OCPI\Common\Factories\OcpiEndpointFactoryTest;
 use Tests\Chargemap\OCPI\OcpiResponseTestCase;
+use Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories\EndpointFactoryTest;
 
 /**
- * @covers \Chargemap\OCPI\Common\Client\Modules\Versions\GetAvailableVersions\GetAvailableVersionsResponse
+ * @covers \Chargemap\OCPI\Versions\V2_1_1\Client\Versions\GetDetails\GetAvailableVersionsResponse
  */
 class GetVersionDetailResponseTest extends OcpiResponseTestCase
 {
@@ -39,9 +39,10 @@ class GetVersionDetailResponseTest extends OcpiResponseTestCase
 
         $response = GetVersionDetailResponse::fromResponseInterface($responseInterface);
 
+        Assert::assertEquals(OcpiVersion::fromVersionNumber($json->data->version), $response->getVersion());
+
         foreach($json->data->endpoints as $index => $ocpiEndpoint) {
-            Assert::assertEquals(OcpiVersion::fromVersionNumber($json->data->version), $response->getOcpiEndpoints()[$index]->getProtocolVersion());
-            OcpiEndpointFactoryTest::assertOcpiEndpoint($ocpiEndpoint, $response->getOcpiEndpoints()[$index]);
+            EndpointFactoryTest::assertEndpoint($ocpiEndpoint, $response->getEndpoints()[$index]);
         }
     }
 }

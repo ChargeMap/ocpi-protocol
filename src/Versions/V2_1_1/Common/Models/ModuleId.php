@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
-use MyCLabs\Enum\Enum;
+use Chargemap\OCPI\Common\Models\BaseModuleId;
 
 /**
  * @method static self CDRS()
@@ -15,7 +15,7 @@ use MyCLabs\Enum\Enum;
  * @method static self TARIFFS()
  * @method static self TOKENS()
  */
-class ModuleId extends Enum
+class ModuleId extends BaseModuleId
 {
     public const CDRS = 'cdrs';
     public const COMMANDS = 'commands';

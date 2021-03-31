@@ -22,7 +22,7 @@ class OcpiVersion extends Enum
     public const V2_1_1 = 'V2_1_1';
 
     /** @var array<string,int>  */
-    private static $scores = [
+    private static array $scores = [
         self::V1_9 => 0,
         self::V2_0 => 1,
         self::V2_1_0 => 2,

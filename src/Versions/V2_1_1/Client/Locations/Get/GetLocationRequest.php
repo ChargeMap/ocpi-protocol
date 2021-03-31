@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Chargemap\OCPI\Versions\V2_1_1\Client\Locations\Get;
 
 use Chargemap\OCPI\Common\Client\Modules\Locations\Get\GetLocationRequest as BaseRequest;
+use Chargemap\OCPI\Common\Models\BaseModuleId;
 use Chargemap\OCPI\Versions\V2_1_1\Client\VersionTrait;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Models\ModuleId;
 use InvalidArgumentException;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -24,6 +26,11 @@ class GetLocationRequest extends BaseRequest
         }
 
         $this->locationId = $locationId;
+    }
+
+    public function getModule(): ModuleId
+    {
+        return ModuleId::LOCATIONS();
     }
 
     public function getLocationId(): string

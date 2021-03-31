@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Chargemap\OCPI\Common\Client;
 
-use Chargemap\OCPI\Common\Models\OcpiEndpoint;
+use Chargemap\OCPI\Common\Models\BaseModuleId;
+use Chargemap\OCPI\Common\Models\BaseEndpoint;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\Psr18ClientDiscovery;
 use Psr\Http\Client\ClientInterface;
@@ -17,7 +18,7 @@ class OcpiConfiguration
 {
     protected ?UriInterface $versionEndpoint;
 
-    /** @var OcpiEndpoint[] */
+    /** @var array<OcpiVersion,BaseEndpoint[]> */
     protected array $endpoints;
 
     protected string $token;
@@ -71,15 +72,13 @@ class OcpiConfiguration
         return $this->versionEndpoint;
     }
 
-    public function getEndpoint(OcpiModule $module, OcpiVersion $version): OcpiEndpoint
+    public function getEndpoint(BaseModuleId $module, OcpiVersion $version): BaseEndpoint
     {
-        foreach ($this->endpoints as $endpoint) {
-            if ($module->equals($endpoint->getModule()) && $version->equals($endpoint->getProtocolVersion())) {
-                return $endpoint;
-            }
+        if(!array_key_exists($version->getValue(), $this->endpoints) || !array_key_exists($module->getValue(), $this->endpoints[$version->getValue()]) ) {
+            throw new OcpiEndpointNotFoundException(sprintf('Module %s URL not found in version %s', $module->getValue(), $version->getValue()));
         }
 
-        throw new OcpiEndpointNotFoundException(sprintf('Module %s URL not found in version %s', $module->getValue(), $version->getValue()));
+        return $this->endpoints[$version->getValue()][$module->getValue()];
     }
 
     public function withHttpClient(ClientInterface $client): self
@@ -112,10 +111,15 @@ class OcpiConfiguration
         return $this;
     }
 
-    public function withEndpoint(OcpiEndpoint $endpoint): self
+    public function withEndpoint(OcpiVersion $version, BaseEndpoint $endpoint): self
     {
+        if(!array_key_exists($version->getValue(), $this->endpoints)) {
+            $this->endpoints[$version->getValue()] = [];
+        }
+
         // @todo rajouter une vérification du endpoint
-        $this->endpoints[] = $endpoint;
+        $this->endpoints[$endpoint->getModuleId()->getValue()] = $endpoint;
+
         return $this;
     }
 }

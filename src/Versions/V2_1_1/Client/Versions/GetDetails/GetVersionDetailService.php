@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails;
+namespace Chargemap\OCPI\Versions\V2_1_1\Client\Versions\GetDetails;
 
 use Chargemap\OCPI\Common\Client\Modules\AbstractFeatures;
 

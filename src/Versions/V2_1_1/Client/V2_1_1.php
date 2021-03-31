@@ -16,6 +16,8 @@ class V2_1_1 extends AbstractFeatures
 
     private Cdrs $cdrs;
 
+    private Versions $versions;
+
     public function credentials(): Credentials
     {
         if (!isset($this->credentials)) {
@@ -50,5 +52,14 @@ class V2_1_1 extends AbstractFeatures
         }
 
         return $this->cdrs;
+    }
+
+    public function versions(): Versions
+    {
+        if(!isset($this->versions)) {
+            $this->versions = new Versions($this->ocpiConfiguration);
+        }
+
+        return $this->versions;
     }
 }

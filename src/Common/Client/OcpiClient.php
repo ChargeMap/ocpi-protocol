@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Chargemap\OCPI\Common\Client;
 
+use Chargemap\OCPI\Common\Client\Modules\Cdrs;
 use Chargemap\OCPI\Common\Client\Modules\Locations;
 use Chargemap\OCPI\Common\Client\Modules\Tokens;
-use Chargemap\OCPI\Common\Client\Modules\Cdrs;
 use Chargemap\OCPI\Common\Client\Modules\Versions;
-use Chargemap\OCPI\Common\Client\Modules\Versions\GetDetails\GetVersionDetailRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Client\V2_1_1;
 
 class OcpiClient
@@ -31,16 +30,6 @@ class OcpiClient
     public function V2_1_1(): V2_1_1
     {
         return new V2_1_1($this->configuration);
-    }
-
-    /** @deprecated */
-    public function autoConfigureEndpoints(): void
-    {
-        foreach ($this->versions->getAvailableVersions()->getVersions() as $version) {
-            foreach ($this->versions->getVersionDetail(new GetVersionDetailRequest($version))->getOcpiEndpoints() as $endpoint) {
-                $this->configuration->withEndpoint($endpoint);
-            }
-        }
     }
 
     public function versions(): Versions

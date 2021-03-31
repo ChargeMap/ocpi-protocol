@@ -6,7 +6,9 @@ namespace Chargemap\OCPI\Versions\V2_1_1\Client\Credentials\Register;
 
 use Chargemap\OCPI\Common\Client\Modules\Credentials\CredentialsRequest as BaseRequest;
 use Chargemap\OCPI\Common\Client\OcpiVersion;
+use Chargemap\OCPI\Common\Models\BaseModuleId;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Credentials;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Models\ModuleId;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -19,6 +21,11 @@ class RegisterCredentialsRequest extends BaseRequest
     public function __construct(Credentials $credentials)
     {
         $this->credentials = $credentials;
+    }
+
+    public function getModule(): ModuleId
+    {
+        return ModuleId::CRED_AND_REG();
     }
 
     public function getVersion(): OcpiVersion
