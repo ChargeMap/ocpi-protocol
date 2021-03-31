@@ -118,7 +118,7 @@ class OcpiConfiguration
         }
 
         // @todo rajouter une vérification du endpoint
-        $this->endpoints[$endpoint->getModuleId()->getValue()] = $endpoint;
+        $this->endpoints[$version->getValue()][$endpoint->getModuleId()->getValue()] = $endpoint;
 
         return $this;
     }
