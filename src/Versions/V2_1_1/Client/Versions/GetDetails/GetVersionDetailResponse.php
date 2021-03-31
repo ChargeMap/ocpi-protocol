@@ -41,9 +41,13 @@ class GetVersionDetailResponse extends AbstractResponse
             throw new OcpiGenericClientError('Url was not found');
         }
 
+        if($response->getStatusCode() === 401) {
+            throw new OcpiInvalidTokenClientError();
+        }
+
         $responseAsJson = self::toJson($response, 'V2_1_1/eMSP/Client/Versions/versionGetDetailResponse.schema.json');
 
-        if($response->getStatusCode() === 401 || $responseAsJson->status_code === 2002) {
+        if($responseAsJson->status_code === 2002) {
             throw new OcpiInvalidTokenClientError();
         }
 
