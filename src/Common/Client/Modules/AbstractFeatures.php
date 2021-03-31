@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Chargemap\OCPI\Common\Client\Modules;
 
 use Chargemap\OCPI\Common\Client\OcpiConfiguration;
+use Http\Discovery\Psr17FactoryDiscovery;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
@@ -26,7 +27,11 @@ class AbstractFeatures
 
     private function getServerRequestInterface(AbstractRequest $request): ServerRequestInterface
     {
-        $endpointUri = $this->ocpiConfiguration->getEndpoint($request->getModule(), $request->getVersion())->getUri();
+        $uriFactory = Psr17FactoryDiscovery::findUriFactory();
+
+        $url = $this->ocpiConfiguration->getEndpoint($request->getModule(), $request->getVersion())->getUrl();
+
+        $endpointUri = $uriFactory->createUri($url);
 
         $serverRequestInterface = $request->getServerRequestInterface($this->ocpiConfiguration->getServerRequestFactory(),
             $this->ocpiConfiguration->getStreamFactory());
