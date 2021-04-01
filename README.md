@@ -61,6 +61,7 @@ $response = $tokenGetResponse->getResponseInterface();
 ### Request the CPO ###
 This part provides an API SDK to request the CPO. To use it, you need to instantiate the OcpiClient
 with OcpiConfiguration and needed endpoints. Then you can perform the requests like that:
+
 ```php
 use Chargemap\OCPI\Versions\V2_1_1\Client\Locations\GetListing\GetLocationsListingRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Location;
@@ -68,13 +69,13 @@ use Chargemap\OCPI\Common\Client\OcpiClient;
 use Chargemap\OCPI\Common\Client\OcpiConfiguration;
 use Chargemap\OCPI\Common\Client\OcpiEndpoint;
 use Chargemap\OCPI\Common\Client\OcpiVersion;
-use Chargemap\OCPI\Common\Client\OcpiModule;
+use Chargemap\OCPI\Common\Models\BaseModuleId;
 
 $ocpiClient = new OcpiClient(
             (new OcpiConfiguration($supervisorAuthString))
                 ->withEndpoint(new OcpiEndpoint(
                     OcpiVersion::V2_1_1(),
-                    OcpiModule::LOCATIONS(),
+                    BaseModuleId::LOCATIONS(),
                     new Uri('ocpi/cpo2.0/locations'))
                 )
         );
@@ -89,19 +90,20 @@ $locations = $locationResponse->getLocations();
 //Some code...
 ```
 #### Listing request/response ####
+
 ```php
 use Chargemap\OCPI\Versions\V2_1_1\Client\Locations\GetListing\GetLocationsListingRequest;
 use Chargemap\OCPI\Common\Client\OcpiClient;
 use Chargemap\OCPI\Common\Client\OcpiConfiguration;
 use Chargemap\OCPI\Common\Client\OcpiEndpoint;
 use Chargemap\OCPI\Common\Client\OcpiVersion;
-use Chargemap\OCPI\Common\Client\OcpiModule;
+use Chargemap\OCPI\Common\Models\BaseModuleId;
 
 $ocpiClient = new OcpiClient(
             (new OcpiConfiguration($supervisorAuth))
                 ->withEndpoint(new OcpiEndpoint(
                     OcpiVersion::V2_1_1(),
-                    OcpiModule::LOCATIONS(),
+                    BaseModuleId::LOCATIONS(),
                     new Uri('ocpi/cpo2.0/locations'))
                 )
         );

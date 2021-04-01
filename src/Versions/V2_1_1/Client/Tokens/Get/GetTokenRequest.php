@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Get;
 
 use Chargemap\OCPI\Common\Client\Modules\Tokens\Get\GetTokenRequest as BaseRequest;
+use Chargemap\OCPI\Common\Models\BaseModuleId;
 use Chargemap\OCPI\Versions\V2_1_1\Client\VersionTrait;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Models\ModuleId;
 use InvalidArgumentException;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -36,6 +38,11 @@ class GetTokenRequest extends BaseRequest
         $this->partyId = $partyId;
         $this->tokenUid = $tokenUid;
         $this->countryCode = $countryCode;
+    }
+
+    public function getModule(): ModuleId
+    {
+        return ModuleId::TOKENS();
     }
 
     public function getServerRequestInterface(ServerRequestFactoryInterface $serverRequestFactory, ?StreamFactoryInterface $streamFactory): ServerRequestInterface

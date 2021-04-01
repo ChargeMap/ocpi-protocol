@@ -25,13 +25,17 @@ class GetAvailableVersionsResponse extends AbstractResponse
     public static function fromResponseInterface(ResponseInterface $response): self
     {
         if($response->getStatusCode() === 404) {
-            throw new OcpiGenericClientError();
+            throw new OcpiGenericClientError('Url was not found');
         }
 
-        $responseAsJson = self::toJson($response, 'V2_1_1/eMSP/Client/Versions/versionGetAvailableResponse.schema.json');
+        if($response->getStatusCode() === 401) {
+            //TODO reorganize namespace
+            throw new OcpiInvalidTokenClientError();
+        }
 
+        $responseAsJson = self::toJson($response, 'eMSP/Client/Versions/versionGetAvailableResponse.schema.json');
 
-        if($response->getStatusCode() === 401 || $responseAsJson->status_code === 2002) {
+        if($responseAsJson->status_code === 2002) {
             //TODO reorganize namespace
             throw new OcpiInvalidTokenClientError();
         }

@@ -33,7 +33,7 @@ class OcpiEmspVersionDetailsGetResponse extends OcpiSuccessResponse
     protected function getData(): array
     {
         if (count($this->endpoints) < 1) {
-            throw new InvalidArgumentException('Version details response must contain at least 1 endpoint');
+            throw new InvalidArgumentException('Versions details response must contain at least 1 endpoint');
         }
 
         return [

@@ -7,6 +7,7 @@ namespace Chargemap\OCPI\Versions\V2_1_1\Client\Locations\GetListing;
 use Chargemap\OCPI\Common\Client\Modules\ListingRequest;
 use Chargemap\OCPI\Common\Client\Modules\Locations\GetListing\GetLocationsListingRequest as BaseRequest;
 use Chargemap\OCPI\Versions\V2_1_1\Client\VersionTrait;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Models\ModuleId;
 use DateTime;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -24,6 +25,11 @@ class GetLocationsListingRequest extends BaseRequest
     public static function builder(): self
     {
         return new self();
+    }
+
+    public function getModule(): ModuleId
+    {
+        return ModuleId::LOCATIONS();
     }
 
     public function withDateFrom(DateTime $dateFrom): self

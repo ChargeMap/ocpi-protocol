@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
+use Chargemap\OCPI\Common\Models\BaseEndpoint;
 use JsonSerializable;
 
-class Endpoint implements JsonSerializable
+class Endpoint extends BaseEndpoint implements JsonSerializable
 {
     private ModuleId $moduleId;
 

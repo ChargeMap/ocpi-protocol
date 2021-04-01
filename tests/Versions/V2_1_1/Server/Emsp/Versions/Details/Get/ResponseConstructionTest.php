@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Server\Emsp\Versions\Details\Get;
 
+use Chargemap\OCPI\Common\Models\BaseModuleId;
 use Chargemap\OCPI\Common\Server\Models\VersionNumber;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Endpoint;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\ModuleId;

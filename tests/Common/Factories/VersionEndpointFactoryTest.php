@@ -6,7 +6,6 @@ namespace Tests\Chargemap\OCPI\Common\Factories;
 use Chargemap\OCPI\Common\Client\OcpiVersion;
 use Chargemap\OCPI\Common\Factories\VersionEndpointFactory;
 use Chargemap\OCPI\Common\Models\VersionEndpoint;
-use Chargemap\OCPI\Common\Server\Models\Version;
 use Http\Discovery\Psr17FactoryDiscovery;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
@@ -27,7 +26,7 @@ class VersionEndpointFactoryTest extends TestCase
 
     /**
      * @param string $payload
-     * @covers \Chargemap\OCPI\Common\Factories\VersionEndpointFactory::fromJson()
+     * @covers \Chargemap\OCPI\Versions\V2_1_1\Common\Factories\VersionEndpointFactory::fromJson()
      * @dataProvider getFromJsonData()
      */
     public function testFromJson(string $payload): void
