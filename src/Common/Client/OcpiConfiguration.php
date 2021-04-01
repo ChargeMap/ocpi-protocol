@@ -18,7 +18,7 @@ class OcpiConfiguration
 {
     protected ?UriInterface $versionEndpoint;
 
-    /** @var array<OcpiVersion,BaseEndpoint[]> */
+    /** @var array<string, array<string, BaseEndpoint>> */
     protected array $endpoints;
 
     protected string $token;
@@ -72,6 +72,12 @@ class OcpiConfiguration
         return $this->versionEndpoint;
     }
 
+    /**
+     * @param BaseModuleId $module
+     * @param OcpiVersion $version
+     * @return BaseEndpoint
+     * @throws OcpiEndpointNotFoundException
+     */
     public function getEndpoint(BaseModuleId $module, OcpiVersion $version): BaseEndpoint
     {
         if(!array_key_exists($version->getValue(), $this->endpoints) || !array_key_exists($module->getValue(), $this->endpoints[$version->getValue()]) ) {
