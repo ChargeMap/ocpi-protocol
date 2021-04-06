@@ -51,11 +51,21 @@
                     "maxLength": 100
                 },
                 "website": {
-                    "type": "string",
+                    "type": [
+                        "string",
+                        "null"
+                    ],
                     "format": "uri"
                 },
                 "logo": {
-                    "$ref": "#/definitions/image"
+                    "oneOf": [
+                        {
+                            "type": "null"
+                        },
+                        {
+                            "$ref":"#/definitions/image"
+                        }
+                    ]
                 }
             },
             "required": [
