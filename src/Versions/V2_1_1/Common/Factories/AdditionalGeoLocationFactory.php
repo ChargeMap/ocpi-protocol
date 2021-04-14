@@ -17,7 +17,7 @@ class AdditionalGeoLocationFactory
 
         return new AdditionalGeoLocation(
             GeoLocationFactory::fromJson($json),
-            DisplayTextFactory::fromJson($json->name)
+            DisplayTextFactory::fromJson($json->name ?? null)
         );
     }
 }

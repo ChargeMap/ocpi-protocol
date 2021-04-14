@@ -43,7 +43,7 @@ class AdditionalGeoLocationFactoryTest extends TestCase
             Assert::assertNull($additionalGeoLocation);
         } else {
             GeoLocationFactoryTest::assertGeolocation($json, $additionalGeoLocation->getGeoLocation());
-            DisplayTextFactoryTest::assertDisplayText($json->name, $additionalGeoLocation->getName());
+            DisplayTextFactoryTest::assertDisplayText($json->name ?? null, $additionalGeoLocation->getName());
         }
     }
 }
