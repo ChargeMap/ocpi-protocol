@@ -24,13 +24,9 @@ class EVSEFactory
             $json->uid,
             property_exists($json, 'evse_id') ? $json->evse_id : null,
             new EVSEStatus($json->status),
-            property_exists($json, 'floor_level') ? $json->floor_level : null,
-            isset($json->coordinates) ?
-                new GeoLocation(
-                    $json->coordinates->latitude,
-                    $json->coordinates->longitude
-                ) : null,
-            property_exists($json, 'physical_reference') ? $json->physical_reference : null,
+            FloorLevelFactory::fromString($json->floor_level ?? null),
+            GeoLocationFactory::fromJson($json->coordinates ?? null),
+            PhysicalReferenceFactory::fromString($json->physical_reference ?? null),
             new DateTime($json->last_updated)
         );
 
