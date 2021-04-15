@@ -41,6 +41,8 @@ class RegisterCredentialsRequest extends BaseRequest
             $streamFactory = Psr17FactoryDiscovery::findStreamFactory();
         }
 
-        return $request->withBody($streamFactory->createStream(json_encode($this->credentials->jsonSerialize())));
+        return $request
+            ->withHeader('Content-Type', 'application/json; charset=utf-8')
+            ->withBody($streamFactory->createStream(json_encode($this->credentials->jsonSerialize())));
     }
 }
