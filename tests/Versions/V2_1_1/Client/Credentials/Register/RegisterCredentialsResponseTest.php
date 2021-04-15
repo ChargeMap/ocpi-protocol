@@ -16,10 +16,10 @@ class RegisterCredentialsResponseTest extends OcpiResponseTestCase
 {
     public function getFromResponseInterfaceData(): iterable
     {
-        foreach (scandir(__DIR__ . '/Payloads/RegisterCredentialsResponse/') as $filename) {
+        foreach (scandir(__DIR__ . '/Payloads/RegisterCredentialsResponse/Valid') as $filename) {
             if ($filename !== '.' && $filename !== '..') {
                 yield $filename => [
-                    'payload' => file_get_contents(__DIR__ . '/Payloads/RegisterCredentialsResponse/' . $filename),
+                    'payload' => file_get_contents(__DIR__ . '/Payloads/RegisterCredentialsResponse/Valid/' . $filename),
                 ];
             }
         }
@@ -40,5 +40,34 @@ class RegisterCredentialsResponseTest extends OcpiResponseTestCase
         $credentialsResponse = RegisterCredentialsResponse::fromResponseInterface($responseInterface);
 
         CredentialsFactoryTest::assertCredentials($json->data, $credentialsResponse->getCredentials());
+    }
+
+    public function getFromResponseInterfaceExceptionData(): iterable
+    {
+        foreach (scandir(__DIR__ . '/Payloads/RegisterCredentialsResponse/Invalid') as $filename) {
+            if ($filename !== '.' && $filename !== '..') {
+                yield $filename => [
+                    'payload' => file_get_contents(__DIR__ . '/Payloads/RegisterCredentialsResponse/Invalid/' . $filename),
+                ];
+            }
+        }
+    }
+
+    /**
+     * @param string $payload
+     * @throws \JsonException
+     * @dataProvider getFromResponseInterfaceExceptionData()
+     */
+    public function testFromResponseInterfaceException(string $payload): void
+    {
+        $json = json_decode($payload);
+
+        if($json === null && json_last_error() !== null) {
+            $this->expectException(JsonException::class);
+        }
+
+        $responseInterface = $this->createResponseInterface($payload);
+
+        $credentialsResponse = RegisterCredentialsResponse::fromResponseInterface($responseInterface);
     }
 }

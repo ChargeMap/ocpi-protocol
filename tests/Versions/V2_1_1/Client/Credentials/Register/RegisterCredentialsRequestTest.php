@@ -7,6 +7,7 @@ use Chargemap\OCPI\Versions\V2_1_1\Client\Credentials\Register\RegisterCredentia
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Credentials;
 use Http\Discovery\Psr17FactoryDiscovery;
 use JsonException;
+use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use Tests\Chargemap\OCPI\InvalidPayloadException;
 use Tests\Chargemap\OCPI\OcpiTestCase;
@@ -44,6 +45,8 @@ class RegisterCredentialsRequestTest extends TestCase
 
         $serverRequestInterface = $registerCredentialsRequest->getServerRequestInterface(Psr17FactoryDiscovery::findServerRequestFactory(), null);
 
+        Assert::assertCount(1, $serverRequestInterface->getHeader('Content-Type'));
+        Assert::assertSame('application/json; charset=utf-8', $serverRequestInterface->getHeader('Content-Type')[0]);
         self::assertJsonStringEqualsJsonString($payload, $serverRequestInterface->getBody()->getContents());
     }
 }
