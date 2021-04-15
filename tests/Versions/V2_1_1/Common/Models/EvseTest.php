@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Models;
 
 use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\FloorLevelFactory;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\PhysicalReferenceFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\EVSE;
 use PHPUnit\Framework\Assert;
 use stdClass;
@@ -51,7 +53,8 @@ class EvseTest
                     ConnectorTest::assertJsonSerialization($connector, $json->connectors[$index]);
                 }
             }
-            Assert::assertSame($evse->getFloorLevel(), $json->floor_level);
+            Assert::assertSame(FloorLevelFactory::fromString($json->floor_level ?? null),$evse->getFloorLevel());
+
             if (empty($evse->getParkingRestrictions())) {
                 Assert::assertEmpty($json->parking_restrictions ?? null);
             } else {
@@ -59,7 +62,9 @@ class EvseTest
                     Assert::assertSame($parkingRestriction->getValue(), $json->parking_restrictions[$index]);
                 }
             }
-            Assert::assertSame($evse->getPhysicalReference(), $json->physical_reference);
+
+            Assert::assertSame(PhysicalReferenceFactory::fromString($json->physical_reference ?? null), $evse->getPhysicalReference());
+
             Assert::assertSame($evse->getStatus()->getValue(), $json->status);
             if (empty($evse->getStatusSchedule())) {
                 Assert::assertEmpty($json->status_schedule ?? null);
