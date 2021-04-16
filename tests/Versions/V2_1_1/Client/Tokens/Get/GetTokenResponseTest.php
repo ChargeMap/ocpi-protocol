@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Get;
 
+use Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError;
 use Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Get\GetTokenResponse;
 use DateTime;
 use Http\Discovery\Psr17FactoryDiscovery;
 use PHPUnit\Framework\TestCase;
-use UnexpectedValueException;
 
 class GetTokenResponseTest extends TestCase
 {
@@ -79,7 +79,7 @@ class GetTokenResponseTest extends TestCase
                 Psr17FactoryDiscovery::findStreamFactory()->createStream(file_get_contents($filename))
             );
 
-        $this->expectException(UnexpectedValueException::class);
+        $this->expectException(OcpiInvalidPayloadClientError::class);
 
         GetTokenResponse::from($serverResponse)->getToken();
     }
