@@ -35,7 +35,7 @@ class OcpiListingResponseTest extends OcpiTestCase
         $responseInterface = $mock->getResponseInterface();
 
         $this->assertEquals(OcpiSuccessHttpCode::HTTP_OK, $responseInterface->getStatusCode());
-        $this->assertEquals('/test?offset=20&limit=10', $responseInterface->getHeader('Link')[0]);
+        $this->assertEquals('</test?offset=20&limit=10>; rel="next"', $responseInterface->getHeader('Link')[0]);
         $this->assertEquals(45, $responseInterface->getHeader('X-Total-Count')[0]);
         $this->assertEquals(10, $responseInterface->getHeader('X-Limit')[0]);
     }
