@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories;
 
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\EVSEFactory;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\FloorLevelFactory;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\PhysicalReferenceFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Capability;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\EVSE;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\EVSEStatus;
@@ -83,7 +85,7 @@ class EvseFactoryTest extends TestCase
                 }
             }
 
-            Assert::assertSame($json->floor_level ?? null, $evse->getFloorLevel());
+            Assert::assertSame(FloorLevelFactory::fromString($json->floor_level ?? null), $evse->getFloorLevel());
 
             if(!property_exists($json, 'parking_restrictions' ) || $json->parking_restrictions === null ) {
                 Assert::assertCount(0, $evse->getParkingRestrictions());
@@ -93,7 +95,7 @@ class EvseFactoryTest extends TestCase
                 }
             }
 
-            Assert::assertSame($json->physical_reference ?? null, $evse->getPhysicalReference());
+            Assert::assertSame(PhysicalReferenceFactory::fromString($json->physical_reference ?? null), $evse->getPhysicalReference());
             Assert::assertEquals(new EVSEStatus($json->status), $evse->getStatus());
 
             if(!property_exists($json, 'status_schedule' ) || $json->status_schedule === null ) {

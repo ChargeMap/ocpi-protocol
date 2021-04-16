@@ -31,14 +31,14 @@ class PartialEVSEFactory
             $evse->withStatus(new EVSEStatus($json->status));
         }
         if (property_exists($json, 'floor_level')) {
-            $evse->withFloorLevel($json->floor_level);
+            $evse->withFloorLevel(FloorLevelFactory::fromString($json->floor_level));
         }
         if (property_exists($json, 'coordinates')) {
             $evse->withCoordinates(GeoLocationFactory::fromJson($json->coordinates));
         }
 
         if (property_exists($json, "physical_reference")) {
-            $evse->withPhysicalReference($json->physical_reference);
+            $evse->withPhysicalReference(PhysicalReferenceFactory::fromString($json->physical_reference));
         }
 
         if (property_exists($json, 'last_updated')) {

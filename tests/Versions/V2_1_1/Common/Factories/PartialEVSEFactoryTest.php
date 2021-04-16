@@ -2,7 +2,9 @@
 
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Common\Factories;
 
+use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\FloorLevelFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\PartialEVSEFactory;
+use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\PhysicalReferenceFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\PartialEVSE;
 use DateTime;
 use JsonException;
@@ -84,7 +86,7 @@ class PartialEVSEFactoryTest extends TestCase
         }
         if (property_exists($json, 'floor_level')) {
             self::assertTrue($evse->hasFloorLevel());
-            self::assertSame($json->floor_level, $evse->getFloorLevel());
+            self::assertSame(FloorLevelFactory::fromString($json->floor_level ?? null), $evse->getFloorLevel());
         } else {
             self::assertFalse($evse->hasFloorLevel());
         }
@@ -96,7 +98,7 @@ class PartialEVSEFactoryTest extends TestCase
         }
         if (property_exists($json, 'physical_reference')) {
             self::assertTrue($evse->hasPhysicalReference());
-            assertSame($json->physical_reference, $evse->getPhysicalReference());
+            assertSame(PhysicalReferenceFactory::fromString($json->physical_reference), $evse->getPhysicalReference());
         } else {
             self::assertFalse($evse->hasPhysicalReference());
         }
