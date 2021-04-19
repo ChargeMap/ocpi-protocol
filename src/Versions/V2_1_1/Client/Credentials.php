@@ -12,6 +12,12 @@ class Credentials extends AbstractFeatures
 {
     private ?RegisterCredentialsService $registerCredentialsService = null;
 
+    /**
+     * @throws \Chargemap\OCPI\Common\Client\Modules\Credentials\Register\ClientAlreadyRegisteredException
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @throws \Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError
+     * @throws \Chargemap\OCPI\Common\Client\OcpiEndpointNotFoundException
+     */
     public function register(RegisterCredentialsRequest $request): RegisterCredentialsResponse
     {
         if($this->registerCredentialsService === null) {

@@ -9,7 +9,6 @@ use Chargemap\OCPI\Common\Factories\VersionEndpointFactory;
 use Chargemap\OCPI\Common\Models\VersionEndpoint;
 use Chargemap\OCPI\Common\Server\Errors\OcpiGenericClientError;
 use Chargemap\OCPI\Common\Server\Errors\OcpiInvalidTokenClientError;
-use JsonException;
 use Psr\Http\Message\ResponseInterface;
 
 class GetAvailableVersionsResponse extends AbstractResponse
@@ -20,7 +19,9 @@ class GetAvailableVersionsResponse extends AbstractResponse
     /**
      * @param ResponseInterface $response
      * @return static
-     * @throws JsonException
+     * @throws \Chargemap\OCPI\Common\Server\Errors\OcpiGenericClientError
+     * @throws \Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError
+     * @throws \Chargemap\OCPI\Common\Server\Errors\OcpiInvalidTokenClientError
      */
     public static function fromResponseInterface(ResponseInterface $response): self
     {
