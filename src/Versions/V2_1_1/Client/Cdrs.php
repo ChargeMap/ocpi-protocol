@@ -11,6 +11,12 @@ use Chargemap\OCPI\Versions\V2_1_1\Client\Cdrs\GetListing\GetCdrsListingService;
 
 class Cdrs extends AbstractFeatures
 {
+    /**
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     * @throws \Chargemap\OCPI\Common\Client\OcpiUnauthorizedException
+     * @throws \Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError
+     * @throws \Chargemap\OCPI\Common\Client\OcpiEndpointNotFoundException
+     */
     public function getListing(?GetCdrsListingRequest $listingRequest = null): GetCdrsListingResponse
     {
         if ($listingRequest === null) {
