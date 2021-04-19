@@ -10,7 +10,6 @@ use Chargemap\OCPI\Common\Server\Errors\OcpiGenericClientError;
 use Chargemap\OCPI\Common\Server\Errors\OcpiInvalidTokenClientError;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\EndpointFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Endpoint;
-use JsonException;
 use Psr\Http\Message\ResponseInterface;
 
 class GetVersionDetailResponse extends AbstractResponse
@@ -33,7 +32,9 @@ class GetVersionDetailResponse extends AbstractResponse
     /**
      * @param ResponseInterface $response
      * @return static
-     * @throws JsonException
+     * @throws \Chargemap\OCPI\Common\Server\Errors\OcpiGenericClientError
+     * @throws \Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError
+     * @throws \Chargemap\OCPI\Common\Server\Errors\OcpiInvalidTokenClientError
      */
     public static function fromResponseInterface(ResponseInterface $response): self
     {

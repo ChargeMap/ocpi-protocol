@@ -15,11 +15,15 @@ abstract class AbstractResponse
      * @param ResponseInterface $response
      * @param string|null $schemaPath
      * @return mixed
-     * @throws OcpiInvalidPayloadClientError|JsonException
+     * @throws OcpiInvalidPayloadClientError
      */
     protected static function toJson(ResponseInterface $response, string $schemaPath = null)
     {
-        $jsonObject = json_decode($response->getBody()->__toString(), false, 512, JSON_THROW_ON_ERROR);
+        try {
+            $jsonObject = json_decode($response->getBody()->__toString(), false, 512, JSON_THROW_ON_ERROR);
+        } catch (JsonException $exception) {
+            throw new OcpiInvalidPayloadClientError('Received payload is not valid JSON');
+        }
         if ($schemaPath !== null) {
             PayloadValidation::coerce($schemaPath, $jsonObject);
         }

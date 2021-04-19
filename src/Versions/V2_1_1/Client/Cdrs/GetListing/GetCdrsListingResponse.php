@@ -9,7 +9,6 @@ use Chargemap\OCPI\Common\Client\OcpiUnauthorizedException;
 use Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\CdrFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Cdr;
-use JsonException;
 use Psr\Http\Message\ResponseInterface;
 
 class GetCdrsListingResponse extends AbstractResponse
@@ -26,7 +25,7 @@ class GetCdrsListingResponse extends AbstractResponse
      * @param ResponseInterface $response
      * @return GetCdrsListingResponse
      * @throws OcpiUnauthorizedException
-     * @throws JsonException|OcpiInvalidPayloadClientError
+     * @throws OcpiInvalidPayloadClientError
      */
     public static function from(GetCdrsListingRequest $request, ResponseInterface $response): GetCdrsListingResponse
     {

@@ -8,7 +8,6 @@ use Chargemap\OCPI\Common\Client\Modules\Tokens\Get\GetTokenResponse as BaseResp
 use Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\TokenFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Token;
-use JsonException;
 use Psr\Http\Message\ResponseInterface;
 
 class GetTokenResponse extends BaseResponse
@@ -26,7 +25,7 @@ class GetTokenResponse extends BaseResponse
     }
 
     /**
-     * @throws OcpiInvalidPayloadClientError|JsonException
+     * @throws OcpiInvalidPayloadClientError
      */
     public static function from(ResponseInterface $response): GetTokenResponse
     {

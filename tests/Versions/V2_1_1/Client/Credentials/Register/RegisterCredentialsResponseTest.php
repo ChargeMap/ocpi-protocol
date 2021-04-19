@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Tests\Chargemap\OCPI\Versions\V2_1_1\Client\Credentials\Register;
 
 use Chargemap\OCPI\Common\Client\Modules\Credentials\Register\ClientAlreadyRegisteredException;
+use Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError;
 use Chargemap\OCPI\Versions\V2_1_1\Client\Credentials\Register\RegisterCredentialsResponse;
 use JsonException;
 use Tests\Chargemap\OCPI\OcpiResponseTestCase;
@@ -55,19 +56,19 @@ class RegisterCredentialsResponseTest extends OcpiResponseTestCase
 
     /**
      * @param string $payload
-     * @throws \JsonException
      * @dataProvider getFromResponseInterfaceExceptionData()
+     * @throws \Chargemap\OCPI\Common\Client\Modules\Credentials\Register\ClientAlreadyRegisteredException
      */
     public function testFromResponseInterfaceException(string $payload): void
     {
         $json = json_decode($payload);
 
-        if($json === null && json_last_error() !== null) {
-            $this->expectException(JsonException::class);
+        if ($json === null && json_last_error() !== null) {
+            $this->expectException(OcpiInvalidPayloadClientError::class);
         }
 
         $responseInterface = $this->createResponseInterface($payload);
 
-        $credentialsResponse = RegisterCredentialsResponse::fromResponseInterface($responseInterface);
+        RegisterCredentialsResponse::fromResponseInterface($responseInterface);
     }
 }

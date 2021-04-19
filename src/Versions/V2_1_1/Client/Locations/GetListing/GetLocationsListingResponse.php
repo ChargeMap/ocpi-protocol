@@ -9,7 +9,6 @@ use Chargemap\OCPI\Common\Client\OcpiUnauthorizedException;
 use Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\LocationFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Location;
-use JsonException;
 use Psr\Http\Message\ResponseInterface;
 
 class GetLocationsListingResponse extends BaseResponse
@@ -26,7 +25,7 @@ class GetLocationsListingResponse extends BaseResponse
      * @param ResponseInterface $response
      * @return GetLocationsListingResponse
      * @throws OcpiUnauthorizedException
-     * @throws JsonException|OcpiInvalidPayloadClientError
+     * @throws OcpiInvalidPayloadClientError
      */
     public static function from(GetLocationsListingRequest $request, ResponseInterface $response): GetLocationsListingResponse
     {
