@@ -8,11 +8,11 @@ use Chargemap\OCPI\Common\Server\OcpiErrorResponse;
 use Chargemap\OCPI\Common\Server\StatusCodes\OcpiErrorHttpCode;
 use Chargemap\OCPI\Common\Server\StatusCodes\OcpiErrorStatusCode;
 use Chargemap\OCPI\Common\Server\StatusCodes\OcpiStatusCode;
-use Error;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
-abstract class OcpiError extends Error
+abstract class OcpiError extends Exception
 {
     protected OcpiStatusCode $ocpiStatusCode;
 

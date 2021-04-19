@@ -10,6 +10,11 @@ use stdClass;
 
 final class PayloadValidation
 {
+    /**
+     * @param string $schemaPath
+     * @param stdClass $object
+     * @throws OcpiInvalidPayloadClientError
+     */
     public static function coerce(string $schemaPath, stdClass $object): void
     {
         $jsonSchemaValidation = new Validator();

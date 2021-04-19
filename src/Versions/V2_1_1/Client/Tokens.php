@@ -17,6 +17,11 @@ use Chargemap\OCPI\Versions\V2_1_1\Client\Tokens\Put\PutTokenService;
 
 class Tokens extends AbstractFeatures
 {
+    /**
+     * @throws \Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError
+     * @throws \Chargemap\OCPI\Common\Client\OcpiEndpointNotFoundException
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
     public function get(GetTokenRequest $request): GetTokenResponse
     {
         return (new GetTokenService($this->ocpiConfiguration))->handle($request);

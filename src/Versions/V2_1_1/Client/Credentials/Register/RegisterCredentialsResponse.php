@@ -19,6 +19,10 @@ class RegisterCredentialsResponse extends AbstractResponse
         $this->credentials = $credentials;
     }
 
+    /**
+     * @throws \Chargemap\OCPI\Common\Client\Modules\Credentials\Register\ClientAlreadyRegisteredException
+     * @throws \Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError
+     */
     public static function fromResponseInterface(ResponseInterface $response): self
     {
         if ($response->getStatusCode() === 405) {

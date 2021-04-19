@@ -6,9 +6,9 @@ namespace Chargemap\OCPI\Versions\V2_1_1\Client\Locations\Get;
 
 use Chargemap\OCPI\Common\Client\Modules\Locations\Get\GetLocationResponse as BaseResponse;
 use Chargemap\OCPI\Common\Client\OcpiUnauthorizedException;
+use Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\LocationFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Location;
-use JsonException;
 use Psr\Http\Message\ResponseInterface;
 
 class GetLocationResponse extends BaseResponse
@@ -19,7 +19,7 @@ class GetLocationResponse extends BaseResponse
      * @param ResponseInterface $response
      * @return static
      * @throws OcpiUnauthorizedException
-     * @throws JsonException
+     * @throws OcpiInvalidPayloadClientError
      */
     public static function from(ResponseInterface $response): self
     {
@@ -30,8 +30,7 @@ class GetLocationResponse extends BaseResponse
         if ($response->getStatusCode() === 404 || $response->getBody()->__toString() === "") {
             return $return;
         }
-        $json = self::toJson($response);
-        self::validate($json, 'V2_1_1/eMSP/Client/Locations/locationGetResponse.schema.json');
+        $json = self::toJson($response, 'V2_1_1/eMSP/Client/Locations/locationGetResponse.schema.json');
         if (empty($json->data)) {
             return $return;
         }

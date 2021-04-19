@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Chargemap\OCPI\Common\Client\Modules;
 
 use Chargemap\OCPI\Common\Client\OcpiConfiguration;
+use Chargemap\OCPI\Common\Client\OcpiEndpointNotFoundException;
 use Http\Discovery\Psr17FactoryDiscovery;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
@@ -19,12 +21,18 @@ class AbstractFeatures
         $this->ocpiConfiguration = $ocpiConfiguration;
     }
 
+    /**
+     * @throws ClientExceptionInterface|OcpiEndpointNotFoundException
+     */
     protected function sendRequest(AbstractRequest $request): ResponseInterface
     {
         $serverRequestInterface = $this->getServerRequestInterface($request);
         return $this->ocpiConfiguration->getHttpClient()->sendRequest($serverRequestInterface);
     }
 
+    /**
+     * @throws OcpiEndpointNotFoundException
+     */
     private function getServerRequestInterface(AbstractRequest $request): ServerRequestInterface
     {
         $uriFactory = Psr17FactoryDiscovery::findUriFactory();

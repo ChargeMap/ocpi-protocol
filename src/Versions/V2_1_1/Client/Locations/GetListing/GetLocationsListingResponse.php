@@ -6,9 +6,9 @@ namespace Chargemap\OCPI\Versions\V2_1_1\Client\Locations\GetListing;
 
 use Chargemap\OCPI\Common\Client\Modules\Locations\GetListing\GetLocationsListingResponse as BaseResponse;
 use Chargemap\OCPI\Common\Client\OcpiUnauthorizedException;
+use Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\LocationFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Location;
-use JsonException;
 use Psr\Http\Message\ResponseInterface;
 
 class GetLocationsListingResponse extends BaseResponse
@@ -25,7 +25,7 @@ class GetLocationsListingResponse extends BaseResponse
      * @param ResponseInterface $response
      * @return GetLocationsListingResponse
      * @throws OcpiUnauthorizedException
-     * @throws JsonException
+     * @throws OcpiInvalidPayloadClientError
      */
     public static function from(GetLocationsListingRequest $request, ResponseInterface $response): GetLocationsListingResponse
     {
@@ -33,8 +33,7 @@ class GetLocationsListingResponse extends BaseResponse
             throw new OcpiUnauthorizedException();
         }
 
-        $json = self::toJson($response);
-        self::validate($json, 'V2_1_1/eMSP/Client/Locations/locationGetListingResponse.schema.json');
+        $json = self::toJson($response, 'V2_1_1/eMSP/Client/Locations/locationGetListingResponse.schema.json');
 
         $return = new self();
         foreach ($json->data ?? [] as $item) {
