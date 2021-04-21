@@ -6,6 +6,7 @@ namespace Chargemap\OCPI\Versions\V2_1_1\Client\Cdrs\GetListing;
 
 use Chargemap\OCPI\Common\Client\Modules\ListingRequest;
 use Chargemap\OCPI\Common\Client\Modules\Cdrs\GetListing\GetCdrsListingRequest as BaseRequest;
+use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use Chargemap\OCPI\Versions\V2_1_1\Client\VersionTrait;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\ModuleId;
 use DateTime;
@@ -63,11 +64,11 @@ class GetCdrsListingRequest extends BaseRequest
         }
 
         if (!empty($this->dateFrom)) {
-            $parameters['date_from'] = $this->dateFrom->format(DateTimeInterface::RFC3339);
+            $parameters['date_from'] = DateTimeFormatter::format($this->dateFrom);
         }
 
         if (!empty($this->dateTo)) {
-            $parameters['date_to'] = $this->dateTo->format(DateTimeInterface::RFC3339);
+            $parameters['date_to'] = DateTimeFormatter::format($this->dateTo);
         }
 
         return http_build_query($parameters);
