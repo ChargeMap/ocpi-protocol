@@ -15,8 +15,6 @@ class GetCdrsListingResponse extends AbstractResponse
 {
     private ?GetCdrsListingRequest $nextRequest;
 
-    private ?GetCdrsListingRequest $previousRequest;
-
     /** @var Cdr[] */
     private array $cdrs = [];
 
@@ -40,20 +38,20 @@ class GetCdrsListingResponse extends AbstractResponse
             $return->cdrs[] = CdrFactory::fromJson($item);
         }
 
-        $totalCount = (int)$response->getHeader('X-Total-Count')[0];
-
         $nextRequest = null;
-        if (($nextOffset = $request->nextOffset($totalCount)) !== null) {
-            $nextRequest = (clone $request)->withOffset($nextOffset);
-        }
 
-        $previousRequest = null;
-        if (($previousOffset = $request->previousOffset()) !== null) {
-            $previousRequest = (clone $request)->withOffset($previousOffset);
+        $nextOffset = $request->getNextOffset($response);
+        $nextLimit = $request->getNextLimit($response);
+
+        if ($nextOffset !== null) {
+            $nextRequest = (clone $request)->withOffset($nextOffset);
+
+            if($nextLimit !== null) {
+                $nextRequest = $nextRequest->withLimit($nextLimit);
+            }
         }
 
         $return->nextRequest = $nextRequest;
-        $return->previousRequest = $previousRequest;
 
         return $return;
     }
@@ -67,10 +65,5 @@ class GetCdrsListingResponse extends AbstractResponse
     public function getNextRequest(): ?GetCdrsListingRequest
     {
         return $this->nextRequest;
-    }
-
-    public function getPreviousRequest(): ?GetCdrsListingRequest
-    {
-        return $this->previousRequest;
     }
 }

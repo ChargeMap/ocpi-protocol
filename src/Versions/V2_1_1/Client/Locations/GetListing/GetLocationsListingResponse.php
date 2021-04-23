@@ -15,8 +15,6 @@ class GetLocationsListingResponse extends BaseResponse
 {
     private ?GetLocationsListingRequest $nextRequest;
 
-    private ?GetLocationsListingRequest $previousRequest;
-
     /** @var Location[] */
     private array $locations = [];
 
@@ -40,20 +38,20 @@ class GetLocationsListingResponse extends BaseResponse
             $return->locations[] = LocationFactory::fromJson($item);
         }
 
-        $totalCount = (int)$response->getHeader('X-Total-Count')[0];
-
         $nextRequest = null;
-        if (($nextOffset = $request->nextOffset($totalCount)) !== null) {
-            $nextRequest = (clone $request)->withOffset($nextOffset);
-        }
 
-        $previousRequest = null;
-        if (($previousOffset = $request->previousOffset()) !== null) {
-            $previousRequest = (clone $request)->withOffset($previousOffset);
+        $nextOffset = $request->getNextOffset($response);
+        $nextLimit = $request->getNextLimit($response);
+
+        if ($nextOffset !== null) {
+            $nextRequest = (clone $request)->withOffset($nextOffset);
+
+            if($nextLimit !== null) {
+                $nextRequest = $nextRequest->withLimit($nextLimit);
+            }
         }
 
         $return->nextRequest = $nextRequest;
-        $return->previousRequest = $previousRequest;
 
         return $return;
     }
@@ -67,10 +65,5 @@ class GetLocationsListingResponse extends BaseResponse
     public function getNextRequest(): ?GetLocationsListingRequest
     {
         return $this->nextRequest;
-    }
-
-    public function getPreviousRequest(): ?GetLocationsListingRequest
-    {
-        return $this->previousRequest;
     }
 }
