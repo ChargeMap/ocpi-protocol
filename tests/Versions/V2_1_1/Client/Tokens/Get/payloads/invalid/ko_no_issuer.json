@@ -1,9 +1,13 @@
 {
-    "uid": "012345678",
-    "type": "RFID",
-    "auth_id": "DE8ACC12E46L89",
-    "visual_number": "DF000-2001-8999",
-    "valid": true,
-    "whitelist": "ALWAYS",
-    "last_updated": "2015-06-29T22:39:09Z"
+    "status_code": 1000,
+    "timestamp": "2015-06-29T22:39:09Z",
+    "data": {
+        "uid": "012345678",
+        "type": "RFID",
+        "auth_id": "DE8ACC12E46L89",
+        "visual_number": "DF000-2001-8999",
+        "valid": true,
+        "whitelist": "ALWAYS",
+        "last_updated": "2015-06-29T22:39:09Z"
+    }
 }
