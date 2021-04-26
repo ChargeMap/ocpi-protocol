@@ -24,7 +24,12 @@ final class PayloadValidation
             (object)['$ref' => 'file://' . realpath($schemasPath) . DIRECTORY_SEPARATOR . $schemaPath]
         );
         if (!$jsonSchemaValidation->isValid()) {
-            throw new OcpiInvalidPayloadClientError(sprintf('Payload does not validate %s', basename($schemaPath)));
+            $errors = [];
+            foreach ($jsonSchemaValidation->getErrors() as $error) {
+                $errors[] = "property: " . $error['property'] . ', error: ' . $error['message'] . '. ';
+            }
+            throw new OcpiInvalidPayloadClientError(sprintf('Payload does not validate %s. Issues: %s',
+                basename($schemaPath), implode($errors)));
         }
     }
 }
