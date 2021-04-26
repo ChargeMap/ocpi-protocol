@@ -32,7 +32,7 @@ class SessionTest
             Assert::assertSame($session->getAuthId(), $json->auth_id);
             Assert::assertSame($session->getAuthMethod()->getValue(), $json->auth_method);
             LocationTest::assertJsonSerialization($session->getLocation(), $json->location);
-            Assert::assertSame($session->getMeterId(), $json->meter_id);
+            Assert::assertSame($session->getMeterId(), $json->meter_id ?? null);
             Assert::assertSame($session->getCurrency(), $json->currency);
             Assert::assertCount(count($session->getChargingPeriods()), $json->charging_periods);
             foreach ($session->getChargingPeriods() as $index => $chargingPeriod) {

@@ -21,30 +21,30 @@ class LocationTest
         } else {
             Assert::assertSame($location->getId(), $json->id);
             Assert::assertSame($location->getName(), $json->name);
-            BusinessDetailsTest::assertJsonSerialization($location->getOperator(), $json->operator);
-            BusinessDetailsTest::assertJsonSerialization($location->getOwner(), $json->owner);
+            BusinessDetailsTest::assertJsonSerialization($location->getOperator(), $json->operator ?? null);
+            BusinessDetailsTest::assertJsonSerialization($location->getOwner(), $json->owner ?? null);
             Assert::assertSame($location->getAddress(), $json->address);
-            Assert::assertSame($location->getChargingWhenClosed(), $json->charging_when_closed);
+            Assert::assertSame($location->getChargingWhenClosed(), $json->charging_when_closed ?? null);
             Assert::assertSame($location->getCity(), $json->city);
             GeoLocationTest::assertJsonSerialization($location->getCoordinates(), $json->coordinates);
             Assert::assertSame($location->getCountry(), $json->country);
 
             if (empty($location->getDirections())) {
-                Assert::assertEmpty($json->directions);
+                Assert::assertEmpty($json->directions ?? null);
             } else {
                 foreach ($location->getDirections() as $index => $direction) {
                     DisplayTextTest::assertJsonSerialization($direction, $json->directions[$index]);
                 }
             }
 
-            EnergyMixTest::assertJsonSerialization($location->getEnergyMix(), $json->energy_mix);
+            EnergyMixTest::assertJsonSerialization($location->getEnergyMix(), $json->energy_mix ?? null);
 
             foreach ($location->getEvses() as $index => $evse) {
                 EvseTest::assertJsonSerialization($evse, $json->evses[$index]);
             }
 
             if (empty($location->getFacilities())) {
-                Assert::assertEmpty($json->facilities);
+                Assert::assertEmpty($json->facilities ?? null);
             } else {
                 foreach ($location->getFacilities() as $index => $facility) {
                     Assert::assertSame($facility->getValue(), $json->facilities[$index]);
@@ -52,7 +52,7 @@ class LocationTest
             }
 
             if (empty($location->getImages())) {
-                Assert::assertEmpty($json->images);
+                Assert::assertEmpty($json->images ?? null);
             } else {
                 foreach ($location->getImages() as $index => $image) {
                     ImageTest::assertJsonSerialization($image, $json->images[$index]);
@@ -65,15 +65,15 @@ class LocationTest
             Assert::assertSame($location->getPostalCode(), $json->postal_code);
 
             if (empty($location->getRelatedLocations())) {
-                Assert::assertEmpty($json->related_locations);
+                Assert::assertEmpty($json->related_locations ?? null);
             } else {
                 foreach ($location->getRelatedLocations() as $index => $image) {
                     AdditionalGeoLocationTest::assertJsonSerialization($image, $json->related_locations[$index]);
                 }
             }
 
-            BusinessDetailsTest::assertJsonSerialization($location->getSuboperator(), $json->suboperator);
-            Assert::assertSame($location->getTimeZone(), $json->time_zone);
+            BusinessDetailsTest::assertJsonSerialization($location->getSuboperator(), $json->suboperator ?? null);
+            Assert::assertSame($location->getTimeZone(), $json->time_zone ?? null);
         }
     }
 }
