@@ -1,4 +1,7 @@
-image: php:7.4
+image:
+  name: hebabil/php-7.4-cli
+  username: $DOCKER_HUB_USERNAME
+  password: $DOCKER_HUB_PASSWORD
 
 pipelines:
   default:
@@ -6,7 +9,5 @@ pipelines:
         caches:
           - composer
         script:
-          - apt-get update && apt-get install -y unzip
-          - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
           - composer install
           - vendor/bin/phpunit

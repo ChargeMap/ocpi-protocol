@@ -1,9 +1,11 @@
 version: '3'
 services:
   chargemap_emp_ocpi_test:
-    build:
-      context: .
-      dockerfile: .docker/Dockerfile
+    image: hebabil/php-7.4-cli
     container_name: chargemap_emp_ocpi_test
     volumes:
       - .:/opt/project
+networks:
+  default:
+    external:
+      name: chargemap
