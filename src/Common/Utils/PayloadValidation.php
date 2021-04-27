@@ -17,12 +17,7 @@ final class PayloadValidation
      */
     public static function coerce(string $schemaPath, stdClass $object): void
     {
-        $jsonSchemaValidation = new Validator();
-        $schemasPath = __DIR__ . '/../../../resources/jsonSchemas';
-        $jsonSchemaValidation->coerce(
-            $object,
-            (object)['$ref' => 'file://' . realpath($schemasPath) . DIRECTORY_SEPARATOR . $schemaPath]
-        );
+        $jsonSchemaValidation = self::validator($schemaPath,$object);
         if (!$jsonSchemaValidation->isValid()) {
             $errors = [];
             foreach ($jsonSchemaValidation->getErrors() as $error) {
@@ -31,5 +26,22 @@ final class PayloadValidation
             throw new OcpiInvalidPayloadClientError(sprintf('Payload does not validate %s. Issues: %s',
                 basename($schemaPath), implode($errors)));
         }
+    }
+
+    public static function isValidJson(string $schemaPath,stdClass $json): bool
+    {
+        $jsonSchemaValidation = self::validator($schemaPath,$json);
+        return $jsonSchemaValidation->isValid();
+    }
+
+    private static function validator(string $schemaPath, stdClass $json): Validator
+    {
+        $jsonSchemaValidation = new Validator();
+        $schemasPath = __DIR__ . '/../../../resources/jsonSchemas/';
+        $jsonSchemaValidation->coerce(
+            $json,
+            (object)['$ref' => 'file://' . realpath($schemasPath) . DIRECTORY_SEPARATOR . $schemaPath]
+        );
+        return $jsonSchemaValidation;
     }
 }
