@@ -76,7 +76,7 @@ class GetLocationsListingResponseTest extends TestCase
 
     public function testWithPartialValidLocation(): void
     {
-        $payload = file_get_contents(__DIR__ . '/payloads/PartialValid/location.json');
+        $payload = file_get_contents(__DIR__ . '/payloads/PartialValid/locations.json');
 
         $serverResponse = Psr17FactoryDiscovery::findResponseFactory()->createResponse(200)
             ->withHeader('Content-Type', 'application/json')
