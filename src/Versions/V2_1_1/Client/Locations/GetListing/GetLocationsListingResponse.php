@@ -7,6 +7,7 @@ namespace Chargemap\OCPI\Versions\V2_1_1\Client\Locations\GetListing;
 use Chargemap\OCPI\Common\Client\Modules\Locations\GetListing\GetLocationsListingResponse as BaseResponse;
 use Chargemap\OCPI\Common\Client\OcpiUnauthorizedException;
 use Chargemap\OCPI\Common\Server\Errors\OcpiInvalidPayloadClientError;
+use Chargemap\OCPI\Common\Utils\PayloadValidation;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Factories\LocationFactory;
 use Chargemap\OCPI\Versions\V2_1_1\Common\Models\Location;
 use Psr\Http\Message\ResponseInterface;
@@ -27,7 +28,7 @@ class GetLocationsListingResponse extends BaseResponse
      */
     public static function from(GetLocationsListingRequest $request, ResponseInterface $response): GetLocationsListingResponse
     {
-        if($response->getStatusCode() === 401) {
+        if ($response->getStatusCode() === 401) {
             throw new OcpiUnauthorizedException();
         }
 
@@ -35,7 +36,9 @@ class GetLocationsListingResponse extends BaseResponse
 
         $return = new self();
         foreach ($json->data ?? [] as $item) {
-            $return->locations[] = LocationFactory::fromJson($item);
+            if (PayloadValidation::isValidJson('V2_1_1/eMSP/Client/Locations/location.schema.json', $item)) {
+                $return->locations[] = LocationFactory::fromJson($item);
+            }
         }
 
         $nextRequest = null;
@@ -46,7 +49,7 @@ class GetLocationsListingResponse extends BaseResponse
         if ($nextOffset !== null) {
             $nextRequest = (clone $request)->withOffset($nextOffset);
 
-            if($nextLimit !== null) {
+            if ($nextLimit !== null) {
                 $nextRequest = $nextRequest->withLimit($nextLimit);
             }
         }

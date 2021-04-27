@@ -20,19 +20,7 @@
                 "null"
             ],
             "items": {
-                "type": "object",
-                "$ref": "../../../Common/location.schema.json",
-                "required": [
-                    "id",
-                    "type",
-                    "address",
-                    "city",
-                    "postal_code",
-                    "country",
-                    "coordinates",
-                    "last_updated"
-                ],
-                "additionalProperties": false
+                "type": "object"
             },
             "additionalProperties": false
         },
