@@ -1,4 +1,5 @@
 {
+  "title": "V2.1.1\\Emsp\\Client\\Locations\\Location",
   "oneOf": [
     {
       "$ref": "../../../Common/location.schema.json",
