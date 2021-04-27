@@ -73,4 +73,23 @@ class GetLocationsListingResponseTest extends TestCase
             ->withLimit(10), $serverResponse)
             ->getLocations()[0];
     }
+
+    public function testWithPartialValidLocation(): void
+    {
+        $payload = file_get_contents(__DIR__ . '/payloads/PartialValid/locations.json');
+
+        $serverResponse = Psr17FactoryDiscovery::findResponseFactory()->createResponse(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->withHeader('X-Total-Count', 2)
+            ->withBody(
+                Psr17FactoryDiscovery::findStreamFactory()->createStream($payload)
+            );
+
+        $locations = GetLocationsListingResponse::from((new GetLocationsListingRequest())
+            ->withOffset(0)
+            ->withLimit(10), $serverResponse)
+            ->getLocations();
+
+        $this->assertCount(1,$locations);
+    }
 }
