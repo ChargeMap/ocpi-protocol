@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Chargemap\OCPI\Common\Client\Modules;
 
-use Http\Discovery\Psr17FactoryDiscovery;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\UriInterface;
 use UnexpectedValueException;
 
 trait ListingRequest
@@ -55,8 +53,8 @@ trait ListingRequest
             throw new UnexpectedValueException('More than one "Link" header found');
         }
 
-        if( preg_match( '%^<(.*?)>\s*;\s*rel\s*=\s*"next"\s*$%', $headers[0], $matches) !== 1 ) {
-            throw new UnexpectedValueException($headers[0].' does not match the pattern %^<(.*?)>\s*;\s*rel\s*=\s*"next"\s*$%' );
+        if( preg_match( '%^<(.*?)>\s*;\s*rel\s*=\s*["\']next["\']\s*$%', $headers[0], $matches) !== 1 ) {
+            throw new UnexpectedValueException($headers[0].' does not match the pattern %^<(.*?)>\s*;\s*rel\s*=\s*["\']next["\']\s*$%' );
         }
 
         $queryString = parse_url($matches[1], PHP_URL_QUERY);

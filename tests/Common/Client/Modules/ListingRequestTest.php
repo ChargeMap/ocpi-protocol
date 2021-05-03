@@ -30,6 +30,11 @@ class ListingRequestTest extends TestCase
             'input' => [ '<http://example.com/>; rel="next"'],
         ];
 
+        yield 'Header with nothing and single quotes' => [
+            'expectation' => null,
+            'input' => [ '<http://example.com/>; rel=\'next\''],
+        ];
+
         yield 'Header with offset at 0' => [
             'expectation' => 0,
             'input' => [ '<http://example.com/?offset=0>; rel="next"'],
@@ -89,6 +94,11 @@ class ListingRequestTest extends TestCase
         yield 'Header with nothing' => [
             'expectation' => null,
             'input' => [ '<http://example.com/>; rel="next"'],
+        ];
+
+        yield 'Header with nothing and single quotes' => [
+            'expectation' => null,
+            'input' => [ '<http://example.com/>; rel=\'next\''],
         ];
 
         yield 'Header with limit at 0' => [
