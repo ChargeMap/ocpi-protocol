@@ -25,6 +25,16 @@ trait ListingRequest
         return $this;
     }
 
+    public function getOffset(): int
+    {
+        return $this->offset;
+    }
+
+    public function getLimit(): int
+    {
+        return $this->limit;
+    }
+
     public function getNextOffset(ResponseInterface $response): ?int
     {
         return $this->getUriParameter('offset', $response);
