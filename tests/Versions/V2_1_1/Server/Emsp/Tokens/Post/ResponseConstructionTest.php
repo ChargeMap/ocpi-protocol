@@ -28,7 +28,7 @@ class ResponseConstructionTest extends TestCase
                 $payload = json_decode(file_get_contents(__DIR__ . '/payloads/responses/' . $filename));
                 yield basename($filename, '.json') => [
                     'allowed' => new AllowedType($payload->data->allowed),
-                    'location' => LocationReferencesFactory::fromJson($payload->data->location),
+                    'location' => LocationReferencesFactory::fromJson($payload->data->location ?? null),
                     'info' => DisplayTextFactory::fromJson($payload->data->info ?? null),
                 ];
             }
