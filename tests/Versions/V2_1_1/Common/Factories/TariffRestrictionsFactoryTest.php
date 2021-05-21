@@ -17,12 +17,12 @@ class TariffRestrictionsFactoryTest
             Assert::assertSame($json->end_time ?? null, $tariffRestrictions->getEndTime());
             Assert::assertSame($json->start_date ?? null, $tariffRestrictions->getStartDate());
             Assert::assertSame($json->end_date ?? null, $tariffRestrictions->getEndDate());
-            Assert::assertSame($json->min_kwh === null ? null : (float)$json->min_kwh, $tariffRestrictions->getMinKwh());
-            Assert::assertSame($json->max_kwh === null ? null : (float)$json->max_kwh, $tariffRestrictions->getMaxKwh());
-            Assert::assertSame($json->min_power === null ? null : (float)$json->min_power, $tariffRestrictions->getMinPower());
-            Assert::assertSame($json->max_power === null ? null : (float)$json->max_power, $tariffRestrictions->getMaxPower());
-            Assert::assertSame($json->min_duration === null ? null : (int)$json->min_duration, $tariffRestrictions->getMinDuration());
-            Assert::assertSame($json->max_duration === null ? null : (int)$json->max_duration, $tariffRestrictions->getMaxDuration());
+            Assert::assertSame(($json->min_kwh ?? null) === null ? null : (float)$json->min_kwh, $tariffRestrictions->getMinKwh());
+            Assert::assertSame(($json->max_kwh ?? null) === null ? null : (float)$json->max_kwh, $tariffRestrictions->getMaxKwh());
+            Assert::assertSame(($json->min_power ?? null) === null ? null : (float)$json->min_power, $tariffRestrictions->getMinPower());
+            Assert::assertSame(($json->max_power ?? null) === null ? null : (float)$json->max_power, $tariffRestrictions->getMaxPower());
+            Assert::assertSame(($json->min_duration ?? null) === null ? null : (int)$json->min_duration, $tariffRestrictions->getMinDuration());
+            Assert::assertSame(($json->max_duration ?? null) === null ? null : (int)$json->max_duration, $tariffRestrictions->getMaxDuration());
 
             if (property_exists($json, 'day_of_week')) {
                 foreach ($tariffRestrictions->getDaysOfWeek() as $index => $dayOfWeek) {
