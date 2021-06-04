@@ -6,6 +6,7 @@ namespace Tests\Chargemap\OCPI\Common\Utils;
 
 use Chargemap\OCPI\Common\Utils\DateTimeFormatter;
 use DateTime;
+use DateTimeInterface;
 use DateTimeZone;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
@@ -32,11 +33,11 @@ class DateTimeFormatterTest extends TestCase
 
     /**
      * @param string|null $expectation
-     * @param DateTime|null $dateTime
+     * @param DateTimeInterface|null $dateTime
      * @covers       \Chargemap\OCPI\Common\Utils\DateTimeFormatter::format()
      * @dataProvider getFormatData()
      */
-    public function testFormat(?string $expectation, ?DateTime $dateTime): void
+    public function testFormat(?string $expectation, ?DateTimeInterface $dateTime): void
     {
         Assert::assertSame($expectation, DateTimeFormatter::format($dateTime));
     }
