@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Chargemap\OCPI\Common\Utils;
 
-use DateTime;
+use DateTimeInterface;
 use DateTimeZone;
 
 class DateTimeFormatter
 {
-    public static function format(?DateTime $date): ?string
+    public static function format(?DateTimeInterface $date): ?string
     {
         if ($date === null) {
             return null;
