@@ -238,7 +238,7 @@ class Session implements JsonSerializable
                     $diff = [];
                 }
                 $diff[] = $otherPeriod;
-            } elseif ($chargingPeriods[$timestamp]->getCdrDimensions() !== $otherPeriod->getCdrDimensions()) {
+            } elseif ($chargingPeriods[$timestamp]->getCdrDimensions() != $otherPeriod->getCdrDimensions()) {
                 if ($diff === null) {
                     $diff = [];
                 }

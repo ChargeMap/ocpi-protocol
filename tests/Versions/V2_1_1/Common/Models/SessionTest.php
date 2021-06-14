@@ -189,6 +189,12 @@ class SessionTest extends TestCase
             [$chargingPeriod]
         ];
 
+        yield 'second session has added one more period' => [
+            [$chargingPeriod],
+            [$chargingPeriod, $chargingPeriod2],
+            [$chargingPeriod2]
+        ];
+
         $chargingPeriod2 = new ChargingPeriod($startDate2);
         $chargingPeriod2->addDimension(new CdrDimension(CdrDimensionType::TIME(), 1.0));
 
