@@ -288,21 +288,7 @@ class SessionTest extends TestCase
         yield 'no difference' => [
             'first' => $session1,
             'second' => $session2,
-            'hassersWithExpectation' => [
-                'hasId' => false,
-                'hasStartDate' => false,
-                'hasEndDate' => false,
-                'hasKwh' => false,
-                'hasAuthId' => false,
-                'hasAuthMethod' => false,
-                'hasLocation' => false,
-                'hasMeterId' => false,
-                'hasCurrency' => false,
-                'hasChargingPeriods' => false,
-                'hasTotalCost' => false,
-                'hasStatus' => false,
-                'hasLastUpdated' => false,
-            ],
+            'hassersWithExpectation' => [],
             'accessorsWithExpectation' => []
         ];
 
@@ -533,6 +519,9 @@ class SessionTest extends TestCase
         array $accessorsWithExpectation
     ): void {
         $diff = $first->diff($second);
+        if (empty($hassersWithExpectation)) {
+            $this->assertNull($diff);
+        }
         foreach ($hassersWithExpectation as $hasser => $expectation) {
             $this->assertSame($expectation, $diff->$hasser(), "$hasser is not " . ($expectation ? 'true' : 'false'));
         }
