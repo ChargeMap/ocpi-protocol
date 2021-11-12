@@ -13,14 +13,7 @@
             "$ref": "../../../Common/common.schema.json#/definitions/status_code"
         },
         "status_message": {
-            "oneOf": [
-                {
-                    "type": "null"
-                },
-                {
-                    "$ref": "../../../Common/common.schema.json#/definitions/status_message"
-                }
-            ]
+            "$ref": "../../../Common/common.schema.json#/definitions/status_message"
         },
         "timestamp": {
             "$ref": "../../../Common/common.schema.json#/definitions/timestamp"

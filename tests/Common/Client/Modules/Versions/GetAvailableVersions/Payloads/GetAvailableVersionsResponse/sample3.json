@@ -1,0 +1,11 @@
+{
+  "data": [
+    {
+      "version": "2.1.1",
+      "url": "https://example.com/api/ocpi/cpo/version/2.1.1"
+    }
+  ],
+  "status_code": 1000,
+  "status_message": "The status",
+  "timestamp": "2021-11-12T14:32:45Z"
+}
